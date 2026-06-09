@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/prepare-pages.mjs",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "preview:pages": "npm run build && rm -rf .preview && mkdir -p .preview/tre-pro && cp -r out/. .preview/tre-pro/ && npx --yes serve@14 .preview -l 3000"
   },
   "dependencies": {
     "next": "16.2.7",

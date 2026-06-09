@@ -674,6 +674,17 @@ function Footer() {
 export default function Lp2Page() {
   return (
     <main className="min-h-screen scroll-smooth bg-white text-slate-900">
+      <div className="bg-gradient-to-r from-pink-500 to-purple-600 px-4 py-2 text-center text-xs font-bold text-white">
+        公開URL: /tre-pro/lp2/ —{" "}
+        <a
+          href="https://tatsuyakoike-cloud.github.io/tre-pro/lp2/"
+          className="underline"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub Pages で開く
+        </a>
+      </div>
       <style>{`
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

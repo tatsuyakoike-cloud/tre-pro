@@ -11,12 +11,14 @@ import type { NextConfig } from "next";
  *   app/lp2/page.tsx  → /tre-pro/lp2/
  */
 const repoName = "tre-pro";
-const isGithubPages = process.env.GITHUB_PAGES === "true";
+const basePath = `/${repoName}`;
 
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: isGithubPages ? `/${repoName}` : "",
-  assetPrefix: isGithubPages ? `/${repoName}/` : undefined,
+  // GitHub Pages（プロジェクトサイト）では /tre-pro/ がURLに必ず付く。
+  // 開発時も同じパスで開けるよう、常に basePath を有効にする。
+  basePath,
+  assetPrefix: `${basePath}/`,
   trailingSlash: true,
   images: {
     unoptimized: true,

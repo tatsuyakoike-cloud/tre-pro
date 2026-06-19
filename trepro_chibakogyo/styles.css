@@ -1133,11 +1133,11 @@ details {
 }
 
 .metric-row--wide-center {
-  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.36fr) minmax(0, 0.82fr);
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.44fr) minmax(0, 0.78fr);
 }
 
 .metric-row--wide-center .metric-cell--range {
-  padding-inline: 16px;
+  padding-inline: 18px;
 }
 
 .metric-row strong,
@@ -1214,12 +1214,34 @@ details {
 }
 
 .metric-value--range {
-  display: block;
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: nowrap;
   font-size: clamp(17px, 2.1vw, 26px);
   letter-spacing: -0.03em;
   line-height: 1.15;
   white-space: nowrap;
   max-width: 100%;
+}
+
+.metric-value--range .range-num {
+  font-size: 1em;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.metric-value--range .range-dash {
+  font-size: 0.72em;
+  font-weight: 900;
+  line-height: 1;
+  margin: 0 1px;
+}
+
+.metric-value--range .range-unit {
+  font-size: 0.76em;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .metric-row .metric-value:not(.metric-value--split):not(.metric-value--phrase) {
@@ -1924,7 +1946,7 @@ details p {
   }
 
   .metric-row--wide-center {
-    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.36fr) minmax(0, 0.82fr) !important;
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.44fr) minmax(0, 0.78fr) !important;
   }
 
   .catch--single {

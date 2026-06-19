@@ -11,9 +11,9 @@
   var current = 0;
   var touchStartX = 0;
   var touchStartY = 0;
+  var touchMode = null;
   var dragStartX = 0;
   var isDragging = false;
-  var touchActive = false;
   var navLocked = false;
   var lockTimer = null;
   var lastTouchTime = 0;
@@ -46,6 +46,7 @@
     if (counter) counter.textContent = label;
     slides.forEach(function (slide, i) {
       slide.classList.toggle("is-active", i === current);
+      if (i !== current) slide.scrollTop = 0;
     });
     if (prevBtn) prevBtn.disabled = current === 0;
     if (nextBtn) nextBtn.disabled = current === slides.length - 1;
@@ -95,6 +96,14 @@
       event.preventDefault();
       return;
     }
+    var activeSlide = slides[current];
+    if (activeSlide && Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
+      var canScrollDown = activeSlide.scrollTop + activeSlide.clientHeight < activeSlide.scrollHeight - 2;
+      var canScrollUp = activeSlide.scrollTop > 2;
+      if ((event.deltaY > 0 && canScrollDown) || (event.deltaY < 0 && canScrollUp)) {
+        return;
+      }
+    }
     var delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
     if (Math.abs(delta) < 12) return;
     event.preventDefault();
@@ -104,28 +113,32 @@
 
   deck.addEventListener("touchstart", function (event) {
     if (event.touches.length !== 1 || navLocked) return;
-    touchActive = true;
+    touchMode = null;
     touchStartX = event.touches[0].clientX;
     touchStartY = event.touches[0].clientY;
   }, { passive: true });
 
   deck.addEventListener("touchmove", function (event) {
-    if (!touchActive || event.touches.length !== 1) return;
+    if (event.touches.length !== 1) return;
     var dx = event.touches[0].clientX - touchStartX;
     var dy = event.touches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
-      event.preventDefault();
+    if (!touchMode && (Math.abs(dx) > 12 || Math.abs(dy) > 12)) {
+      touchMode = Math.abs(dx) > Math.abs(dy) * 1.2 ? "horizontal" : "vertical";
     }
+    if (touchMode === "vertical") return;
+    if (touchMode === "horizontal") event.preventDefault();
   }, { passive: false });
 
   deck.addEventListener("touchend", function (event) {
-    if (!touchActive) return;
-    touchActive = false;
     lastTouchTime = Date.now();
-    if (navLocked) return;
+    if (touchMode !== "horizontal" || navLocked) {
+      touchMode = null;
+      return;
+    }
     var touch = event.changedTouches[0];
     var dx = touch.clientX - touchStartX;
     var dy = touch.clientY - touchStartY;
+    touchMode = null;
     if (Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy)) return;
     if (dx < 0) step(1);
     else step(-1);

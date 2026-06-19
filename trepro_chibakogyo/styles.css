@@ -411,6 +411,14 @@ h3 {
   color: rgba(255, 255, 255, 0.9);
 }
 
+.hero .hero-company {
+  margin: 22px 0 0;
+  font-size: clamp(16px, 1.65vw, 21px);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.03em;
+}
+
 .hero-logo {
   display: none;
 }

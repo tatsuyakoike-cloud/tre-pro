@@ -1132,6 +1132,14 @@ details {
   z-index: 2;
 }
 
+.metric-row--wide-center {
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.36fr) minmax(0, 0.82fr);
+}
+
+.metric-row--wide-center .metric-cell--range {
+  padding-inline: 16px;
+}
+
 .metric-row strong,
 .metric-row .metric-value {
   display: flex;
@@ -1913,6 +1921,10 @@ details p {
 
   .metric-row {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .metric-row--wide-center {
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.36fr) minmax(0, 0.82fr) !important;
   }
 
   .catch--single {

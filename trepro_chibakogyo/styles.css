@@ -1074,7 +1074,6 @@ details {
   margin-top: 28px;
 }
 
-.metric-row div,
 .metric-row .metric-cell {
   background: #fff;
   color: var(--black);
@@ -1161,6 +1160,11 @@ details {
   justify-content: center;
   gap: 6px;
   width: 100%;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  min-height: 0;
 }
 
 .metric-stack .metric-value--split {
@@ -1196,6 +1200,11 @@ details {
 
 .metric-value--nowrap {
   white-space: nowrap;
+}
+
+.metric-value--range {
+  font-size: clamp(20px, 2.5vw, 32px);
+  letter-spacing: -0.02em;
 }
 
 .metric-row .metric-value:not(.metric-value--split):not(.metric-value--phrase) {

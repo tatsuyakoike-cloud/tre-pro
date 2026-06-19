@@ -1114,7 +1114,25 @@ details {
 }
 
 .metric-value--split {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: nowrap;
+  white-space: nowrap;
   gap: 2px;
+}
+
+.metric-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.metric-stack .metric-value--split {
+  width: auto;
 }
 
 .metric-value--phrase {
@@ -1129,6 +1147,7 @@ details {
   font-size: clamp(28px, 3.6vw, 44px);
   font-weight: 950;
   line-height: 1;
+  color: var(--red);
 }
 
 .metric-unit {

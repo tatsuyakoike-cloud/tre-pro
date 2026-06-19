@@ -12,7 +12,7 @@
   --max: 1120px;
   --header-h: 56px;
   --controls-h: 52px;
-  --slide-pad: clamp(56px, 8vh, 96px) clamp(24px, 5vw, 64px);
+  --slide-pad: clamp(48px, 7vh, 88px) clamp(24px, 5vw, 64px);
 }
 
 *,
@@ -111,25 +111,25 @@ img {
 }
 
 .slide-deck {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  height: calc(100svh - var(--header-h) - var(--controls-h));
-  margin-top: var(--header-h);
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  scrollbar-width: none;
+  position: fixed;
+  top: var(--header-h);
+  left: 0;
+  right: 0;
+  bottom: var(--controls-h);
+  overflow: hidden;
+  touch-action: pan-x pinch-zoom;
+  cursor: grab;
 }
 
-.slide-deck::-webkit-scrollbar {
-  display: none;
+.slide-deck.is-dragging {
+  cursor: grabbing;
 }
 
-.slide-deck main {
+.slide-track {
   display: flex;
   height: 100%;
+  will-change: transform;
+  transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .slide-controls {
@@ -162,9 +162,14 @@ img {
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 
-.slide-nav:hover {
+.slide-nav:hover:not(:disabled) {
   border-color: var(--red);
   color: var(--red);
+}
+
+.slide-nav:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 .swipe-hint {
@@ -178,8 +183,7 @@ img {
 .slide {
   position: relative;
   flex: 0 0 100%;
-  width: 100vw;
-  min-width: 100vw;
+  width: 100%;
   height: 100%;
   min-height: 0;
   padding: var(--slide-pad);
@@ -187,8 +191,6 @@ img {
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   background: var(--white);
   border-right: 1px solid var(--line);
 }
@@ -266,14 +268,14 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(36px, 5.5vw, 72px);
+  font-size: clamp(40px, 6vw, 68px);
   font-weight: 950;
 }
 
 h2 {
-  font-size: clamp(28px, 3.8vw, 48px);
+  font-size: clamp(32px, 4vw, 52px);
   font-weight: 950;
-  max-width: 14ch;
+  max-width: 12ch;
 }
 
 h2.wide {
@@ -287,11 +289,11 @@ h3 {
 
 .lead,
 .catch {
-  font-size: clamp(16px, 1.8vw, 22px);
+  font-size: clamp(15px, 1.6vw, 20px);
   color: var(--dark);
   font-weight: 700;
-  margin: 24px 0 0;
-  max-width: 42em;
+  margin: 20px 0 0;
+  max-width: 36em;
 }
 
 .catch {
@@ -726,14 +728,7 @@ details {
 }
 
 .insight {
-  margin-top: 24px;
-  background: #fff8f4;
-  border: 1px solid #f5d4c8;
-  border-left: 10px solid var(--red);
-  padding: 18px 22px;
-  border-radius: 14px;
-  font-weight: 800;
-  font-size: 15px;
+  display: none;
 }
 
 .result-grid {
@@ -970,6 +965,10 @@ details p {
     --header-h: 88px;
   }
 
+  .slide-deck {
+    top: var(--header-h);
+  }
+
   .slide {
     padding: 48px 20px;
   }
@@ -1056,21 +1055,21 @@ details p {
   }
 
   .slide-deck {
-    display: block;
+    position: static;
     overflow: visible;
-    height: auto;
-    margin-top: 0;
+    top: auto;
+    bottom: auto;
   }
 
-  .slide-deck main {
+  .slide-track {
     display: block;
-    height: auto;
+    transform: none !important;
+    transition: none !important;
   }
 
   .slide {
     flex: none;
     width: 100%;
-    min-width: 0;
     min-height: 0;
     height: 190mm;
     page-break-after: always;

@@ -1,8 +1,9 @@
 (function () {
   var deck = document.getElementById("slide-deck");
-  if (!deck) return;
+  var track = document.getElementById("slide-track");
+  if (!deck || !track) return;
 
-  var slides = Array.prototype.slice.call(deck.querySelectorAll(".slide"));
+  var slides = Array.prototype.slice.call(track.querySelectorAll(".slide"));
   var counter = document.getElementById("slide-counter");
   var prevBtn = document.querySelector(".slide-prev");
   var nextBtn = document.querySelector(".slide-next");
@@ -10,40 +11,39 @@
   var current = 0;
   var touchStartX = 0;
   var touchStartY = 0;
+  var dragStartX = 0;
   var isDragging = false;
+  var wheelLocked = false;
 
   function clamp(index) {
     return Math.max(0, Math.min(slides.length - 1, index));
   }
 
+  function slideWidth() {
+    return deck.clientWidth || window.innerWidth;
+  }
+
+  function applyTransform(index, animate) {
+    track.style.transition = animate === false ? "none" : "";
+    track.style.transform = "translate3d(-" + index * slideWidth() + "px, 0, 0)";
+  }
+
   function updateCounter(index) {
-    current = index;
-    var label = String(index + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+    current = clamp(index);
+    var label = String(current + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
     if (counter) counter.textContent = label;
     slides.forEach(function (slide, i) {
-      slide.classList.toggle("is-active", i === index);
+      slide.classList.toggle("is-active", i === current);
     });
+    if (prevBtn) prevBtn.disabled = current === 0;
+    if (nextBtn) nextBtn.disabled = current === slides.length - 1;
   }
 
-  function getIndexFromScroll() {
-    var width = deck.clientWidth || window.innerWidth;
-    return clamp(Math.round(deck.scrollLeft / width));
-  }
-
-  function goTo(index, behavior) {
+  function goTo(index, animate) {
     var target = clamp(index);
-    var width = deck.clientWidth || window.innerWidth;
-    deck.scrollTo({ left: target * width, behavior: behavior || "smooth" });
+    applyTransform(target, animate);
     updateCounter(target);
   }
-
-  function onScroll() {
-    window.requestAnimationFrame(function () {
-      updateCounter(getIndexFromScroll());
-    });
-  }
-
-  deck.addEventListener("scroll", onScroll, { passive: true });
 
   if (prevBtn) {
     prevBtn.addEventListener("click", function () {
@@ -70,41 +70,60 @@
 
   deck.addEventListener("wheel", function (event) {
     if (window.matchMedia("(print)").matches) return;
-    var delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-    if (delta === 0) return;
     event.preventDefault();
-    deck.scrollLeft += delta;
+    if (wheelLocked) return;
+    var delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+    if (Math.abs(delta) < 8) return;
+    wheelLocked = true;
+    if (delta > 0) goTo(current + 1);
+    else goTo(current - 1);
+    window.setTimeout(function () {
+      wheelLocked = false;
+    }, 420);
   }, { passive: false });
 
   deck.addEventListener("touchstart", function (event) {
     if (event.touches.length !== 1) return;
     touchStartX = event.touches[0].clientX;
     touchStartY = event.touches[0].clientY;
-    isDragging = true;
   }, { passive: true });
 
-  deck.addEventListener("touchmove", function (event) {
-    if (!isDragging || event.touches.length !== 1) return;
-    var dx = event.touches[0].clientX - touchStartX;
-    var dy = event.touches[0].clientY - touchStartY;
-    if (Math.abs(dx) > Math.abs(dy)) {
-      event.preventDefault();
-    }
-  }, { passive: false });
-
   deck.addEventListener("touchend", function (event) {
-    if (!isDragging) return;
-    isDragging = false;
     var touch = event.changedTouches[0];
     var dx = touch.clientX - touchStartX;
     var dy = touch.clientY - touchStartY;
-    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
     if (dx < 0) goTo(current + 1);
     else goTo(current - 1);
   }, { passive: true });
 
+  deck.addEventListener("mousedown", function (event) {
+    if (event.button !== 0) return;
+    if (event.target.closest("a, button, summary, input, textarea, select, label")) return;
+    isDragging = true;
+    dragStartX = event.clientX;
+    track.style.transition = "none";
+    deck.classList.add("is-dragging");
+  });
+
+  window.addEventListener("mousemove", function (event) {
+    if (!isDragging) return;
+    var dx = event.clientX - dragStartX;
+    track.style.transform = "translate3d(" + (-current * slideWidth() + dx) + "px, 0, 0)";
+  });
+
+  window.addEventListener("mouseup", function (event) {
+    if (!isDragging) return;
+    isDragging = false;
+    deck.classList.remove("is-dragging");
+    var dx = event.clientX - dragStartX;
+    if (dx < -60) goTo(current + 1);
+    else if (dx > 60) goTo(current - 1);
+    else goTo(current);
+  });
+
   document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowRight" || event.key === "PageDown") {
+    if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
       event.preventDefault();
       goTo(current + 1);
     }
@@ -115,8 +134,8 @@
   });
 
   window.addEventListener("resize", function () {
-    goTo(current, "auto");
+    goTo(current, false);
   });
 
-  updateCounter(0);
+  goTo(0, false);
 })();

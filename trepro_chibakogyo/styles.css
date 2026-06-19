@@ -1087,20 +1087,27 @@ details {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   min-height: 108px;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
-  isolation: isolate;
+  z-index: 1;
 }
 
 .metric-cell--stacked {
   min-height: 118px;
   padding: 14px 8px;
+  gap: 6px;
 }
 
-.metric-cell--stacked .metric-stack {
-  gap: 4px;
+.metric-cell--stacked .metric-value {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  width: auto;
 }
 
 .metric-cell--stacked .metric-num {
@@ -1111,9 +1118,18 @@ details {
   font-size: clamp(16px, 1.9vw, 22px);
 }
 
-.metric-cell--stacked > span {
-  margin-top: 6px;
+.metric-cell--stacked .metric-label {
+  margin-top: 2px;
   font-size: 11px;
+  color: var(--gray);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.metric-cell--range {
+  overflow: visible;
+  padding-inline: 14px;
+  z-index: 2;
 }
 
 .metric-row strong,
@@ -1126,6 +1142,11 @@ details {
   font-size: clamp(24px, 3.2vw, 40px);
   font-weight: 950;
   line-height: 1.1;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  position: relative;
+  z-index: 2;
 }
 
 .metric-value--split {
@@ -1153,25 +1174,7 @@ details {
   line-height: 1.1;
 }
 
-.metric-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: 100%;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  padding: 0;
-  min-height: 0;
-}
-
-.metric-stack .metric-value--split {
-  width: auto;
-}
-
-.metric-value--phrase {
+.metric-value--split {
   display: block;
   text-align: center;
   font-size: clamp(18px, 2.2vw, 28px);
@@ -1203,8 +1206,12 @@ details {
 }
 
 .metric-value--range {
-  font-size: clamp(20px, 2.5vw, 32px);
-  letter-spacing: -0.02em;
+  display: block;
+  font-size: clamp(17px, 2.1vw, 26px);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .metric-row .metric-value:not(.metric-value--split):not(.metric-value--phrase) {
@@ -1212,13 +1219,15 @@ details {
   text-align: center;
 }
 
-.metric-row span {
+.metric-row span:not(.metric-num):not(.metric-unit) {
   display: block;
   margin-top: 8px;
   font-size: 12px;
   color: var(--gray);
   font-weight: 700;
   line-height: 1.4;
+  position: relative;
+  z-index: 2;
 }
 
 .metric-caption {

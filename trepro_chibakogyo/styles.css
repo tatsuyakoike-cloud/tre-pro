@@ -278,23 +278,24 @@ h1,
 h2,
 h3 {
   margin: 0;
-  line-height: 1.28;
-  letter-spacing: -0.02em;
+  line-height: 1.32;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(38px, 5.5vw, 64px);
+  font-size: clamp(34px, 5vw, 60px);
   font-weight: 900;
 }
 
 h2 {
-  font-size: clamp(30px, 3.6vw, 46px);
+  font-size: clamp(28px, 3.2vw, 42px);
   font-weight: 900;
-  max-width: 14ch;
+  max-width: 18ch;
 }
 
 h2.wide {
-  max-width: 16ch;
+  max-width: 24ch;
 }
 
 h3 {
@@ -326,8 +327,8 @@ h3 {
 .hero {
   color: #fff;
   background:
-    radial-gradient(circle at 82% 18%, rgba(240, 120, 80, 0.35) 0, transparent 28%),
-    linear-gradient(135deg, #E03C20 0%, #9A3820 52%, #191919 100%);
+    radial-gradient(circle at 82% 18%, rgba(255, 180, 140, 0.4) 0, transparent 28%),
+    linear-gradient(135deg, #E03C20 0%, #C44A2A 48%, #9A3820 100%);
 }
 
 .hero::before {
@@ -745,10 +746,30 @@ details {
   background: linear-gradient(180deg, #fff, #fff8f4);
 }
 
+.slide-soft {
+  background: linear-gradient(180deg, #fff8f4 0%, #ffffff 100%);
+}
+
+.soft-card {
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid rgba(224, 60, 32, 0.16);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.slide-accent {
+  background: linear-gradient(135deg, #fff7f3 0%, #ffffff 60%, #fff5f0 100%);
+}
+
+.slide-accent .catch {
+  border-color: var(--red);
+}
+
 .dark,
 .final {
-  background: linear-gradient(135deg, #181818, #2a2a2a);
-  color: #fff;
+  background: linear-gradient(180deg, #fff8f4 0%, #ffffff 100%);
+  color: var(--black);
 }
 
 .dark::before,
@@ -760,14 +781,15 @@ details {
 .dark::after,
 .final::after,
 .plan::after {
-  color: rgba(255, 255, 255, 0.12);
+  color: rgba(224, 60, 32, 0.12);
 }
 
 .dark-card {
   padding: clamp(24px, 3vw, 36px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(224, 60, 32, 0.16);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.06);
+  background: #fff;
+  box-shadow: var(--shadow);
 }
 
 .versus {
@@ -798,7 +820,7 @@ details {
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: var(--black);
+  background: var(--red);
   color: #fff;
   font-size: 14px;
   font-weight: 950;
@@ -843,8 +865,9 @@ details {
 
 .note-strip {
   margin-top: 28px;
-  background: var(--black);
-  color: #fff;
+  background: #fff5f0;
+  color: var(--dark);
+  border: 1px solid rgba(224, 60, 32, 0.18);
   padding: 20px 24px;
   border-radius: 16px;
   display: flex;
@@ -854,11 +877,12 @@ details {
 }
 
 .note-strip strong {
-  font-size: 18px;
+  font-size: 16px;
+  color: var(--red);
 }
 
 .note-strip span {
-  color: rgba(255, 255, 255, 0.82);
+  color: var(--gray);
   font-weight: 600;
 }
 
@@ -927,16 +951,19 @@ details {
 }
 
 .metric-row div {
-  background: var(--black);
-  color: #fff;
+  background: #fff;
+  color: var(--black);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--red);
   border-radius: 16px;
   padding: 18px 16px;
   text-align: center;
+  box-shadow: var(--shadow);
 }
 
 .metric-row strong {
   display: block;
-  color: #fff;
+  color: var(--red);
   font-size: clamp(24px, 3.2vw, 40px);
   font-weight: 950;
   line-height: 1.05;
@@ -946,7 +973,7 @@ details {
   display: block;
   margin-top: 6px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--gray);
   font-weight: 700;
 }
 
@@ -1028,6 +1055,69 @@ details {
   color: var(--gray);
   margin: 0;
   font-size: 14px;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 32px;
+  align-items: stretch;
+}
+
+.plan-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.plan-card.featured {
+  border-color: rgba(224, 60, 32, 0.35);
+  background: linear-gradient(180deg, #fff, #fff8f4);
+  box-shadow: 0 16px 40px rgba(224, 60, 32, 0.12);
+}
+
+.plan-tier {
+  margin: 0 0 10px;
+  color: var(--red);
+  font-size: 14px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.plan-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  font-size: clamp(40px, 5vw, 56px);
+  line-height: 1;
+  font-weight: 950;
+  color: var(--red);
+  margin-bottom: 16px;
+}
+
+.plan-price span {
+  font-size: 14px;
+  color: var(--dark);
+  font-weight: 800;
+}
+
+.plan-card ul {
+  margin: 0;
+  padding-left: 1.1em;
+  flex: 1;
+}
+
+.plan-card li {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.55;
 }
 
 .plan {
@@ -1158,11 +1248,12 @@ details p {
   margin-top: 36px;
   padding: clamp(24px, 4vw, 32px);
   border-radius: var(--radius);
-  background: var(--black);
-  color: #fff;
-  font-size: clamp(22px, 3vw, 36px);
-  line-height: 1.45;
-  font-weight: 950;
+  background: linear-gradient(135deg, #fff5f0, #fff);
+  border: 1px solid rgba(224, 60, 32, 0.2);
+  color: var(--dark);
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.55;
+  font-weight: 800;
   text-align: center;
 }
 
@@ -1234,7 +1325,8 @@ details p {
   .theme-grid,
   .result-grid,
   .timeline,
-  .faq-grid {
+  .faq-grid,
+  .plans-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1261,7 +1353,8 @@ details p {
   .result-grid,
   .timeline,
   .faq-grid,
-  .metric-row {
+  .metric-row,
+  .plans-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1339,7 +1432,9 @@ details p {
   .hero,
   .dark,
   .final,
-  .plan {
+  .plan,
+  .slide-soft,
+  .slide-accent {
     background: #fff !important;
     color: #111 !important;
   }
@@ -1499,10 +1594,12 @@ details p {
 
   .metric-row div {
     padding: 10px;
+    box-shadow: none;
   }
 
   .metric-row strong {
     font-size: 18px;
+    color: var(--red) !important;
   }
 
   .metric-row span {
@@ -1593,8 +1690,29 @@ details p {
     font-size: 18px;
     padding: 14px;
     margin-top: 12px;
-    background: #111 !important;
-    color: #fff !important;
+    background: #fff5f0 !important;
+    color: #111 !important;
+    border: 1px solid #ddd;
+  }
+
+  .plans-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .plan-card {
+    padding: 10px;
+    box-shadow: none;
+  }
+
+  .plan-price {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .plan-card li {
+    font-size: 9px;
   }
 
   .flow-grid {

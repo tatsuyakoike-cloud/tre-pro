@@ -714,6 +714,7 @@ h3 {
 .state-grid article,
 .summary-grid article,
 .soft-card,
+.plan-card,
 .price-card,
 .versus article,
 .timeline div,
@@ -731,6 +732,7 @@ details {
 .compare-card::after,
 .case-card::after,
 .soft-card::after,
+.plan-card::after,
 .price-card::after,
 .versus article::after,
 .theme-grid article::after,
@@ -755,6 +757,7 @@ details {
 .compare-card::before,
 .case-card::before,
 .soft-card::before,
+.plan-card::before,
 .price-card::before,
 .theme-grid article::before,
 .result-grid article::before,
@@ -778,6 +781,7 @@ details {
 .compare-card > *,
 .case-card > *,
 .soft-card > *,
+.plan-card > *,
 .price-card > *,
 .versus article > *,
 .theme-grid article > *,
@@ -1044,7 +1048,7 @@ details {
 .case-layout {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(36px, 4vw, 64px);
+  gap: clamp(32px, 4vw, 56px);
   align-items: center;
 }
 
@@ -1066,40 +1070,8 @@ details {
 .metric-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 14px;
   margin-top: 28px;
-}
-
-.metric-row--tight {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr) minmax(0, 0.88fr);
-  gap: 10px;
-}
-
-.case-layout .metric-row {
-  gap: 10px;
-}
-
-.case-layout .metric-cell {
-  padding: 14px 8px;
-  min-height: 100px;
-}
-
-.metric-cell--dual {
-  gap: 4px;
-  padding: 12px 6px;
-}
-
-.metric-cell--dual .metric-value--split {
-  line-height: 1;
-}
-
-.metric-label {
-  display: block;
-  margin-top: 4px;
-  font-size: 11px;
-  color: var(--gray);
-  font-weight: 700;
-  line-height: 1.3;
 }
 
 .metric-row div,
@@ -1118,14 +1090,35 @@ details {
   justify-content: center;
   min-height: 108px;
   min-width: 0;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
 }
 
-.metric-cell--narrow {
-  padding: 16px 8px;
+.metric-cell--stacked {
+  min-height: 118px;
+  padding: 14px 8px;
 }
 
-.metric-row strong:not(.metric-value--split),
-.metric-row .metric-value:not(.metric-value--split) {
+.metric-cell--stacked .metric-stack {
+  gap: 4px;
+}
+
+.metric-cell--stacked .metric-num {
+  font-size: clamp(22px, 2.8vw, 34px);
+}
+
+.metric-cell--stacked .metric-unit {
+  font-size: clamp(12px, 1.4vw, 16px);
+}
+
+.metric-cell--stacked > span {
+  margin-top: 6px;
+  font-size: 11px;
+}
+
+.metric-row strong,
+.metric-row .metric-value {
   display: flex;
   align-items: baseline;
   justify-content: center;
@@ -1143,6 +1136,22 @@ details {
   flex-wrap: nowrap;
   white-space: nowrap;
   gap: 2px;
+}
+
+.metric-value--emphasis.metric-value--split {
+  font-size: clamp(24px, 3.2vw, 40px);
+}
+
+.metric-value--emphasis .metric-num {
+  font-size: 1em;
+  font-weight: 950;
+  line-height: 1.05;
+}
+
+.metric-value--emphasis .metric-unit {
+  font-size: 0.58em;
+  font-weight: 950;
+  line-height: 1.1;
 }
 
 .metric-stack {
@@ -1187,12 +1196,6 @@ details {
 
 .metric-value--nowrap {
   white-space: nowrap;
-  display: block;
-  font-size: clamp(24px, 3.2vw, 40px);
-  font-weight: 950;
-  color: var(--red);
-  line-height: 1.1;
-  text-align: center;
 }
 
 .metric-row .metric-value:not(.metric-value--split):not(.metric-value--phrase) {
@@ -1343,8 +1346,9 @@ details {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   margin-top: 32px;
-  padding-top: 14px;
+  padding-top: 4px;
   align-items: stretch;
+  overflow: visible;
 }
 
 .plan-card {
@@ -1359,47 +1363,20 @@ details {
   overflow: visible;
 }
 
-.plan-card::after {
-  content: "";
-  position: absolute;
-  right: 10%;
-  bottom: 8px;
-  width: 42px;
-  height: 64px;
-  background: radial-gradient(ellipse 50% 35% at 50% 0%, rgba(224, 60, 32, 0.16) 0%, rgba(224, 60, 32, 0.06) 50%, transparent 72%);
-  border-radius: 45% 45% 55% 55%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.plan-card::before {
-  content: "";
-  position: absolute;
-  left: 6%;
-  top: 8px;
-  width: 28px;
-  height: 48px;
-  background: radial-gradient(ellipse 50% 40% at 50% 100%, rgba(224, 60, 32, 0.1) 0%, transparent 68%);
-  border-radius: 50% 50% 40% 40%;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.plan-card > * {
-  position: relative;
-  z-index: 1;
-}
-
 .plan-card.featured {
   border-color: rgba(224, 60, 32, 0.35);
   background: linear-gradient(180deg, #fff, #fff8f4);
   box-shadow: 0 16px 40px rgba(224, 60, 32, 0.12);
-  padding-top: 28px;
+  padding-top: 24px;
+}
+
+.plan-card.featured::before {
+  display: none;
 }
 
 .plan-badge {
   position: absolute;
-  top: -14px;
+  top: -12px;
   left: 50%;
   transform: translateX(-50%);
   margin: 0;
@@ -1411,7 +1388,13 @@ details {
   font-weight: 900;
   letter-spacing: 0.08em;
   z-index: 2;
-  white-space: nowrap;
+}
+
+.plan-badge--inline {
+  position: static;
+  transform: none;
+  align-self: center;
+  margin: 0 0 10px;
 }
 
 .plan-tier {
@@ -1712,10 +1695,6 @@ details p {
     white-space: normal;
   }
 
-  .metric-row--tight {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .hero h1 {
     max-width: none;
   }
@@ -1916,10 +1895,6 @@ details p {
 
   .metric-row {
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  }
-
-  .metric-row--tight {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr) minmax(0, 0.88fr) !important;
   }
 
   .catch--single {

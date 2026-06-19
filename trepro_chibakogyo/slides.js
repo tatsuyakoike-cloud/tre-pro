@@ -13,7 +13,11 @@
   var touchStartY = 0;
   var dragStartX = 0;
   var isDragging = false;
-  var wheelLocked = false;
+  var touchActive = false;
+  var navLocked = false;
+  var lockTimer = null;
+  var lastTouchTime = 0;
+  var NAV_LOCK_MS = 720;
 
   function clamp(index) {
     return Math.max(0, Math.min(slides.length - 1, index));
@@ -21,6 +25,14 @@
 
   function slideWidth() {
     return deck.clientWidth || window.innerWidth;
+  }
+
+  function lockNav() {
+    navLocked = true;
+    window.clearTimeout(lockTimer);
+    lockTimer = window.setTimeout(function () {
+      navLocked = false;
+    }, NAV_LOCK_MS);
   }
 
   function applyTransform(index, animate) {
@@ -39,27 +51,37 @@
     if (nextBtn) nextBtn.disabled = current === slides.length - 1;
   }
 
-  function goTo(index, animate) {
+  function goTo(index, animate, options) {
+    var opts = options || {};
+    if (navLocked && !opts.force) return;
     var target = clamp(index);
+    if (target === current && !opts.force) return;
     applyTransform(target, animate);
     updateCounter(target);
+    if (!opts.skipLock) lockNav();
+  }
+
+  function step(delta) {
+    if (navLocked) return;
+    goTo(current + delta);
   }
 
   if (prevBtn) {
     prevBtn.addEventListener("click", function () {
-      goTo(current - 1);
+      step(-1);
     });
   }
 
   if (nextBtn) {
     nextBtn.addEventListener("click", function () {
-      goTo(current + 1);
+      step(1);
     });
   }
 
   navLinks.forEach(function (link) {
     link.addEventListener("click", function (event) {
       event.preventDefault();
+      if (navLocked) return;
       var id = link.getAttribute("data-slide");
       var target = slides.findIndex(function (slide) {
         return slide.id === id;
@@ -69,36 +91,49 @@
   });
 
   deck.addEventListener("wheel", function (event) {
-    if (window.matchMedia("(print)").matches) return;
-    event.preventDefault();
-    if (wheelLocked) return;
+    if (window.matchMedia("(print)").matches || navLocked) {
+      event.preventDefault();
+      return;
+    }
     var delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-    if (Math.abs(delta) < 8) return;
-    wheelLocked = true;
-    if (delta > 0) goTo(current + 1);
-    else goTo(current - 1);
-    window.setTimeout(function () {
-      wheelLocked = false;
-    }, 420);
+    if (Math.abs(delta) < 12) return;
+    event.preventDefault();
+    if (delta > 0) step(1);
+    else step(-1);
   }, { passive: false });
 
   deck.addEventListener("touchstart", function (event) {
-    if (event.touches.length !== 1) return;
+    if (event.touches.length !== 1 || navLocked) return;
+    touchActive = true;
     touchStartX = event.touches[0].clientX;
     touchStartY = event.touches[0].clientY;
   }, { passive: true });
 
+  deck.addEventListener("touchmove", function (event) {
+    if (!touchActive || event.touches.length !== 1) return;
+    var dx = event.touches[0].clientX - touchStartX;
+    var dy = event.touches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
+      event.preventDefault();
+    }
+  }, { passive: false });
+
   deck.addEventListener("touchend", function (event) {
+    if (!touchActive) return;
+    touchActive = false;
+    lastTouchTime = Date.now();
+    if (navLocked) return;
     var touch = event.changedTouches[0];
     var dx = touch.clientX - touchStartX;
     var dy = touch.clientY - touchStartY;
-    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
-    if (dx < 0) goTo(current + 1);
-    else goTo(current - 1);
+    if (Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy)) return;
+    if (dx < 0) step(1);
+    else step(-1);
   }, { passive: true });
 
   deck.addEventListener("mousedown", function (event) {
-    if (event.button !== 0) return;
+    if (event.button !== 0 || navLocked) return;
+    if (Date.now() - lastTouchTime < 500) return;
     if (event.target.closest("a, button, summary, input, textarea, select, label")) return;
     isDragging = true;
     dragStartX = event.clientX;
@@ -116,26 +151,31 @@
     if (!isDragging) return;
     isDragging = false;
     deck.classList.remove("is-dragging");
+    if (navLocked) {
+      goTo(current, true, { force: true, skipLock: true });
+      return;
+    }
     var dx = event.clientX - dragStartX;
-    if (dx < -60) goTo(current + 1);
-    else if (dx > 60) goTo(current - 1);
-    else goTo(current);
+    if (dx < -72) step(1);
+    else if (dx > 72) step(-1);
+    else goTo(current, true, { force: true, skipLock: true });
   });
 
   document.addEventListener("keydown", function (event) {
-    if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
+    if (navLocked) return;
+    if (event.key === "ArrowRight" || event.key === "PageDown") {
       event.preventDefault();
-      goTo(current + 1);
+      step(1);
     }
     if (event.key === "ArrowLeft" || event.key === "PageUp") {
       event.preventDefault();
-      goTo(current - 1);
+      step(-1);
     }
   });
 
   window.addEventListener("resize", function () {
-    goTo(current, false);
+    goTo(current, false, { force: true, skipLock: true });
   });
 
-  goTo(0, false);
+  goTo(0, false, { force: true, skipLock: true });
 })();

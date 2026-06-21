@@ -50,75 +50,22 @@
     }
 
     header {
-      background: var(--panel);
+      background: rgba(255, 255, 255, .96);
+      backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--line);
       position: sticky;
       top: 0;
       z-index: 10;
     }
 
-    .hero {
-      padding: 32px 0 24px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 750;
-      color: var(--primary);
-      margin-bottom: 10px;
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--primary);
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(24px, 3.2vw, 36px);
-      line-height: 1.25;
-    }
-
-    .lead {
-      margin: 12px 0 0;
-      color: var(--muted);
-      font-size: 15px;
-      max-width: 720px;
-    }
-
-    .meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .meta-chip {
-      display: inline-flex;
-      align-items: center;
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--muted);
-      background: #eef3f5;
-      border: 1px solid var(--line);
-    }
-
     nav.toc {
-      padding: 12px 0;
-      border-top: 1px solid var(--line);
+      padding: 8px 0;
     }
 
     nav.toc ul {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -126,9 +73,9 @@
 
     nav.toc a {
       display: inline-flex;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-radius: 999px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: var(--primary);
       background: var(--primary-soft);
@@ -138,11 +85,64 @@
 
     nav.toc a:hover { opacity: .8; }
 
-    main { padding: 28px 0 48px; }
+    main { padding: 24px 0 48px; }
+
+    .page-intro {
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 750;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 30px);
+      line-height: 1.25;
+    }
+
+    .lead {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 720px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      background: #eef3f5;
+      border: 1px solid var(--line);
+    }
 
     section {
       margin-bottom: 28px;
-      scroll-margin-top: 120px;
+      scroll-margin-top: 52px;
     }
 
     .section-card {
@@ -341,7 +341,23 @@
 <body>
   <header>
     <div class="wrap">
-      <div class="hero">
+      <nav class="toc" aria-label="ページ内ナビゲーション">
+        <ul>
+          <li><a href="#background">背景</a></li>
+          <li><a href="#current">現状</a></li>
+          <li><a href="#issues">課題</a></li>
+          <li><a href="#measures">対策</a></li>
+          <li><a href="#next">NA</a></li>
+          <li><a href="#reference">関連資料</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <div class="page-intro">
         <p class="eyebrow"><span class="dot" aria-hidden="true"></span>トレプロ 営業基盤整備</p>
         <h1>IS/FS最適化 議事整理</h1>
         <p class="lead">インサイドセールス（IS）からフィールドセールス（FS）への連携、および案件評価（ステージ・タグ付け）の仕組み化に向けた仕様確認と運用のすり合わせ。</p>
@@ -351,21 +367,6 @@
           <span class="meta-chip">ステージ・タグ運用</span>
         </div>
       </div>
-      <nav class="toc" aria-label="ページ内ナビゲーション">
-        <ul>
-          <li><a href="#background">背景</a></li>
-          <li><a href="#current">現状</a></li>
-          <li><a href="#issues">課題</a></li>
-          <li><a href="#measures">対策</a></li>
-          <li><a href="#next">ネクストアクション</a></li>
-          <li><a href="#reference">関連資料</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <div class="wrap">
 
       <section id="background" class="section-card" data-theme="primary">
         <div class="section-head">

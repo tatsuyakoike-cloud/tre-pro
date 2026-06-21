@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IS/FS最適化 議事整理 | トレプロ</title>
+  <meta name="description" content="トレプロのインサイドセールス・フィールドセールス最適化に向けた背景、現状、課題、対策、ネクストアクションの整理資料。" />
+  <meta property="og:title" content="IS/FS最適化 議事整理 | トレプロ" />
+  <meta property="og:description" content="案件評価（ステージ・タグ付け）の仕組み化とIS→FS連携の最適化に向けた議論まとめ。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#176b87" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #60707d;
+      --bg: #f5f7f8;
+      --panel: #ffffff;
+      --line: #dce3e8;
+      --primary: #176b87;
+      --primary-soft: #dff2f7;
+      --judge: #5b5aa8;
+      --judge-soft: #ecebff;
+      --tag: #23734c;
+      --tag-soft: #e4f5ea;
+      --risk: #b84335;
+      --risk-soft: #fde9e4;
+      --amber: #c98314;
+      --amber-soft: #fff0cf;
+      --shadow: 0 14px 34px rgba(23, 33, 43, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
+    }
+
+    .wrap {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .hero {
+      padding: 32px 0 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 750;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(24px, 3.2vw, 36px);
+      line-height: 1.25;
+    }
+
+    .lead {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 720px;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      background: #eef3f5;
+      border: 1px solid var(--line);
+    }
+
+    nav.toc {
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    nav.toc ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    nav.toc a {
+      display: inline-flex;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+
+    nav.toc a:hover { opacity: .8; }
+
+    main { padding: 28px 0 48px; }
+
+    section {
+      margin-bottom: 28px;
+      scroll-margin-top: 120px;
+    }
+
+    .section-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 850;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    section[data-theme="judge"] .section-num { background: var(--judge); }
+    section[data-theme="risk"] .section-num { background: var(--risk); }
+    section[data-theme="tag"] .section-num { background: var(--tag); }
+    section[data-theme="amber"] .section-num { background: var(--amber); }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    .section-body { padding: 20px 22px 22px; }
+
+    .section-lead {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    ul.points {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    ul.points li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-size: 14px;
+    }
+
+    .bullet {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 850;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .bullet.primary { background: var(--primary-soft); color: var(--primary); }
+    .bullet.judge { background: var(--judge-soft); color: var(--judge); }
+    .bullet.risk { background: var(--risk-soft); color: var(--risk); }
+    .bullet.tag { background: var(--tag-soft); color: var(--tag); }
+    .bullet.amber { background: var(--amber-soft); color: var(--amber); }
+
+    .point-title {
+      display: block;
+      font-weight: 750;
+      margin-bottom: 2px;
+    }
+
+    .point-desc {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .ref-box {
+      margin-top: 24px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .ref-box h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .ref-box p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .ref-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 750;
+      color: #fff;
+      background: var(--primary);
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+
+    .ref-link:hover { opacity: .88; }
+
+    .ref-link svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .action-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .action-item {
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+
+    .action-rank {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 850;
+      color: #fff;
+      background: var(--tag);
+    }
+
+    .action-item:nth-child(2) .action-rank { background: var(--judge); }
+    .action-item:nth-child(3) .action-rank { background: var(--amber); }
+
+    .deadline {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 750;
+      color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    footer {
+      padding: 20px 0 36px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 22px, 960px); }
+      .section-head { padding: 16px 18px; }
+      .section-body { padding: 16px 18px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="hero">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>トレプロ 営業基盤整備</p>
+        <h1>IS/FS最適化 議事整理</h1>
+        <p class="lead">インサイドセールス（IS）からフィールドセールス（FS）への連携、および案件評価（ステージ・タグ付け）の仕組み化に向けた仕様確認と運用のすり合わせ。</p>
+        <div class="meta-row">
+          <span class="meta-chip">2026年6月21日</span>
+          <span class="meta-chip">IS / FS 連携</span>
+          <span class="meta-chip">ステージ・タグ運用</span>
+        </div>
+      </div>
+      <nav class="toc" aria-label="ページ内ナビゲーション">
+        <ul>
+          <li><a href="#background">背景</a></li>
+          <li><a href="#current">現状</a></li>
+          <li><a href="#issues">課題</a></li>
+          <li><a href="#measures">対策</a></li>
+          <li><a href="#next">ネクストアクション</a></li>
+          <li><a href="#reference">関連資料</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <section id="background" class="section-card" data-theme="primary">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">1</span>
+          <h2>本日の話の背景</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">IS/FSの最適化をテーマに、案件評価の仕組み化と現場運用のすり合わせを行った。</p>
+          <ul class="points">
+            <li>
+              <span class="bullet primary">▶</span>
+              <div>
+                <span class="point-title">IS → FS 連携の標準化</span>
+                <span class="point-desc">インサイドセールスからフィールドセールスへの引き継ぎ基準と、担当アサインの判断ルールを明確にする。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet primary">▶</span>
+              <div>
+                <span class="point-title">案件評価（ステージ・タグ付け）の仕組み化</span>
+                <span class="point-desc">BANTを起点に、確度判定とステージタグで「誰が・何を・いつ」まで落とし込む運用設計の確認。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet primary">▶</span>
+              <div>
+                <span class="point-title">仕様確認と運用のすり合わせ</span>
+                <span class="point-desc">システム要件だけでなく、現場が実際に使える動線・入力負荷・通知設計まで含めて合意形成する。</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="current" class="section-card" data-theme="judge">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">2</span>
+          <h2>現状</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">ルールは存在するが、実行が属人化しており、システムへの転記や後追いが担当者依存になっている。</p>
+          <ul class="points">
+            <li>
+              <span class="bullet judge">●</span>
+              <div>
+                <span class="point-title">属人的な運用</span>
+                <span class="point-desc">案件報告が口頭やチャットベースで行われており、システムへの転記作業、後追い、担当アサインの判断が属人化している。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet judge">●</span>
+              <div>
+                <span class="point-title">ルールの形骸化</span>
+                <span class="point-desc">「一定の確度以上の案件を追客する」という方針はあるが、徹底する仕組みがない。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet judge">●</span>
+              <div>
+                <span class="point-title">開発基盤の保有</span>
+                <span class="point-desc">自社でカスタマイズ可能なAIシステムや過去の商談データを保有しており、内製での機能拡張ができる環境にある。</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="issues" class="section-card" data-theme="risk">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">3</span>
+          <h2>課題</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">導入だけでは定着せず、評価ロジックのブレと将来のセキュリティ要件が並行して解く必要がある。</p>
+          <ul class="points">
+            <li>
+              <span class="bullet risk">!</span>
+              <div>
+                <span class="point-title">ツールの形骸化リスク</span>
+                <span class="point-desc">過去のシステム導入時の傾向から、現場が入力せずツールが定着しない懸念がある。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet risk">!</span>
+              <div>
+                <span class="point-title">評価ロジックのブレ</span>
+                <span class="point-desc">現場の主観やタイミングにより、定義した案件評価ロジックが崩れるリスクがある。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet risk">!</span>
+              <div>
+                <span class="point-title">セキュリティの担保</span>
+                <span class="point-desc">将来的なプラットフォーム化・外部展開を見据えた際、顧客管理（CRM）領域における堅牢なセキュリティ要件の定義が必要。</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="measures" class="section-card" data-theme="tag">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">4</span>
+          <h2>対策</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">現場負荷を下げつつ、段階導入と自動通知でルールをシステム側から徹底する。</p>
+          <ul class="points">
+            <li>
+              <span class="bullet tag">✓</span>
+              <div>
+                <span class="point-title">AI統合による現場負荷の軽減</span>
+                <span class="point-desc">自社AIシステムに入力フォームを統合。入力補完機能やSlack通知（議事録や相談内容の自動メンション）を実装し、現場がメリットを感じる動線を作る。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet tag">✓</span>
+              <div>
+                <span class="point-title">ミニマムスタート（段階的導入）</span>
+                <span class="point-desc">最初は既存の動線・最小限の項目から開始。定着に合わせて段階的にタグなどの追加項目を拡張し、現場のストレスを抑える。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet tag">✓</span>
+              <div>
+                <span class="point-title">自動化によるルール徹底</span>
+                <span class="point-desc">システム側からステージに応じた自動通知（追客促進）を行い、漏れのない体制を作る。</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="next" class="section-card" data-theme="amber">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">5</span>
+          <h2>ネクストアクション</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">プロトタイプ検証とキックオフを即時進め、7月1日の新体制稼働に向けた基盤整備を完了させる。</p>
+          <div class="action-grid">
+            <div class="action-item">
+              <span class="action-rank">1</span>
+              <div>
+                <span class="point-title">プロトタイプの開発とテスト</span>
+                <span class="point-desc">自社AIへのフォーム組み込みを即時進め、一部メンバーでテスト運用とクイックな改善サイクルを回す。</span>
+                <span class="deadline">即時着手</span>
+              </div>
+            </div>
+            <div class="action-item">
+              <span class="action-rank">2</span>
+              <div>
+                <span class="point-title">プロジェクトのキックオフ</span>
+                <span class="point-desc">外部パートナー、要件定義メンバー、セキュリティ担当を巻き込んだキックオフを実施する。</span>
+                <span class="deadline">今週末まで</span>
+              </div>
+            </div>
+            <div class="action-item">
+              <span class="action-rank">3</span>
+              <div>
+                <span class="point-title">新体制稼働（7月1日）に向けた整備</span>
+                <span class="point-desc">7月からの新規営業人員の合流を見据え、それまでに最低限のシステム基盤と運用ルールを整備・完成させる。</span>
+                <span class="deadline">2026年7月1日まで</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div id="reference" class="ref-box">
+        <h3>関連資料：BANT拡張 × ステージタグ運用（統合版）</h3>
+        <p>本日の議論の技術的・運用的な前提となる、BANT拡張とステージタグの統合仕様。案件評価ロジック（Decision Process / Champion / Risk・Next Action）とステージタグの動かし方を詳述。</p>
+        <a class="ref-link" href="https://htmlpreview.github.io/?https://gist.githubusercontent.com/Fukuoka-desu/1c7c344b14a9dcc31483b4a4f5b0f71a/raw/2026-06-19_bant_stage_tag_integrated.html" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.41l-9.29 9.29-1.42-1.42L17.59 5H14V3zm5 18H5V5h7V3H5a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7z"/></svg>
+          BANT拡張とステージタグ運用 統合版を開く
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>作成日: 2026-06-21 / 対象: トレプロ IS・FS最適化、案件評価（ステージ・タグ）仕組み化</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -8,15 +8,19 @@ if (!existsSync(nojekyll)) {
   writeFileSync(nojekyll, "");
 }
 
-const staticLpDir = join(process.cwd(), "trepro_chibakogyo");
-const staticLpOut = join(outDir, "trepro_chibakogyo");
+const staticLpDirs = ["trepro_chibakogyo", "trepro_is_fs"];
 
-if (existsSync(staticLpDir)) {
-  cpSync(staticLpDir, staticLpOut, {
-    recursive: true,
-    filter: (src) => !src.includes("node_modules"),
-  });
-  console.log("Copied static LP:", staticLpOut);
+for (const dir of staticLpDirs) {
+  const staticLpDir = join(process.cwd(), dir);
+  const staticLpOut = join(outDir, dir);
+
+  if (existsSync(staticLpDir)) {
+    cpSync(staticLpDir, staticLpOut, {
+      recursive: true,
+      filter: (src) => !src.includes("node_modules"),
+    });
+    console.log("Copied static LP:", staticLpOut);
+  }
 }
 
 console.log("GitHub Pages artifact ready:", outDir);

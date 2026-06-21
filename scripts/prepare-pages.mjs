@@ -8,7 +8,7 @@ if (!existsSync(nojekyll)) {
   writeFileSync(nojekyll, "");
 }
 
-const staticLpDirs = ["trepro_chibakogyo", "trepro_is_fs"];
+const staticLpDirs = ["trepro_chibakogyo", "trepro_is_fs", "trepro_email_warmup"];
 
 for (const dir of staticLpDirs) {
   const staticLpDir = join(process.cwd(), dir);

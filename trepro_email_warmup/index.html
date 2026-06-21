@@ -1,0 +1,936 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>メールナーチャリング配信リスト設計 | トレプロ</title>
+  <meta name="description" content="過去リードを活用した初回一斉メール配信の要件定義とリスト定義。IPウォームアップのため2日間・5段階配信を行う設計資料。" />
+  <meta property="og:title" content="メールナーチャリング配信リスト設計 | トレプロ" />
+  <meta property="og:description" content="元マスター上の補助列と保存フィルターで、配信対象を安全かつ再現性高く抽出する設計。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="theme-color" content="#1d4ed8" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --ink: #0f172a;
+      --muted: #64748b;
+      --bg: #f1f5f9;
+      --panel: #ffffff;
+      --line: #e2e8f0;
+      --primary: #1d4ed8;
+      --primary-soft: #dbeafe;
+      --green: #15803d;
+      --green-soft: #dcfce7;
+      --amber: #b45309;
+      --amber-soft: #fef3c7;
+      --risk: #b91c1c;
+      --risk-soft: #fee2e2;
+      --violet: #6d28d9;
+      --violet-soft: #ede9fe;
+      --shadow: 0 14px 34px rgba(15, 23, 42, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 56px; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .wrap {
+      width: min(960px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header.site {
+      background: rgba(255, 255, 255, .96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav.toc { padding: 8px 0; }
+
+    nav.toc ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    nav.toc a {
+      display: inline-flex;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      text-decoration: none;
+    }
+
+    nav.toc a:hover { opacity: .85; }
+
+    main { padding: 20px 0 56px; }
+
+    .page-intro { margin-bottom: 20px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 750;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.25;
+    }
+
+    .intro-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .summary-box {
+      padding: 18px 20px;
+      border-radius: 10px;
+      border: 1px solid #bfdbfe;
+      background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+    }
+
+    .summary-box h2 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      color: var(--primary);
+    }
+
+    .summary-box p {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+
+    .summary-box p:last-child { margin-bottom: 0; }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+
+    section {
+      margin-bottom: 28px;
+      scroll-margin-top: 56px;
+    }
+
+    .section-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-num {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 850;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    section[data-theme="green"] .section-num { background: var(--green); }
+    section[data-theme="amber"] .section-num { background: var(--amber); }
+    section[data-theme="risk"] .section-num { background: var(--risk); }
+    section[data-theme="violet"] .section-num { background: var(--violet); }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+    }
+
+    h3 {
+      margin: 20px 0 10px;
+      font-size: 15px;
+    }
+
+    h3:first-child { margin-top: 0; }
+
+    .section-body { padding: 20px 22px 22px; }
+
+    .section-lead {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    ul.points {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    ul.points li {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-size: 14px;
+    }
+
+    .bullet {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 850;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .bullet.primary { background: var(--primary-soft); color: var(--primary); }
+    .bullet.green { background: var(--green-soft); color: var(--green); }
+    .bullet.amber { background: var(--amber-soft); color: var(--amber); }
+    .bullet.risk { background: var(--risk-soft); color: var(--risk); }
+    .bullet.violet { background: var(--violet-soft); color: var(--violet); }
+
+    .point-title {
+      display: block;
+      font-weight: 750;
+      margin-bottom: 2px;
+    }
+
+    .point-desc {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 12px 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    code, .code-block {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .code-block {
+      display: block;
+      padding: 12px 14px;
+      margin: 10px 0;
+      border-radius: 8px;
+      background: #0f172a;
+      color: #e2e8f0;
+      line-height: 1.6;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    .note {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      border-left: 4px solid var(--amber);
+      background: var(--amber-soft);
+      color: #78350f;
+    }
+
+    .flow {
+      display: grid;
+      gap: 10px;
+      counter-reset: step;
+    }
+
+    .flow-step {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+
+    .flow-step::before {
+      counter-increment: step;
+      content: counter(step);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 850;
+      color: #fff;
+      background: var(--primary);
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+
+    .status-chip {
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+    }
+
+    .two-col {
+      display: grid;
+      gap: 16px;
+    }
+
+    @media (min-width: 720px) {
+      .two-col { grid-template-columns: 1fr 1fr; }
+    }
+
+    footer {
+      padding: 20px 0 36px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 22px, 960px); }
+      .section-head { padding: 16px 18px; }
+      .section-body { padding: 16px 18px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <nav class="toc" aria-label="ページ内ナビゲーション">
+        <ul>
+          <li><a href="#overview">概要</a></li>
+          <li><a href="#requirements">要件定義</a></li>
+          <li><a href="#list-definition">リスト定義</a></li>
+          <li><a href="#volume">配信設計</a></li>
+          <li><a href="#filters">フィルター</a></li>
+          <li><a href="#operation">運用</a></li>
+          <li><a href="#rules">ルール</a></li>
+          <li><a href="#next">今後</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+
+      <div class="page-intro" id="overview">
+        <p class="eyebrow"><span class="dot" aria-hidden="true"></span>トレプロ メールナーチャリング</p>
+        <h1>ウォームアップ配信<br />要件定義・リスト定義</h1>
+        <p class="intro-meta">
+          <span>作成日: 2026-06-21</span>
+          <span>対象: 過去掘り起こしリスト × 初回一斉メール配信</span>
+          <span>配信期間: 2日間 / 5段階</span>
+        </p>
+
+        <div class="summary-box">
+          <h2>この資料について（第三者向けサマリー）</h2>
+          <p>
+            本資料は、<strong>過去リードを対象とした初回メールナーチャリング配信</strong>の設計書です。
+            別ファイルでリストを管理するのではなく、<strong>元マスタースプレッドシートに補助列を追加</strong>し、
+            保存済みフィルター3条件だけで配信対象を抽出できる状態を目指します。
+          </p>
+          <p>
+            初回大量配信によるレピュテーション低下を避けるため、<strong>IPウォームアップ</strong>の観点から
+            2日間で5回に分け、配信量を段階的に増やします（約140件 → 約600件）。
+          </p>
+          <div class="pill-row">
+            <span class="pill">自社メール配信ソフト使用</span>
+            <span class="pill">メール重複除外</span>
+            <span class="pill">バウンス・配信停止を恒久除外</span>
+            <span class="pill">配信ステータスで再配信防止</span>
+          </div>
+        </div>
+      </div>
+
+      <section id="requirements" class="section-card" data-theme="primary">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">1</span>
+          <h2>要件定義</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">ビジネス目的・制約・成功条件を整理したもの。開発・配信・営業の各担当が同じ前提で動くための定義です。</p>
+
+          <h3>1-1. 目的</h3>
+          <ul class="points">
+            <li>
+              <span class="bullet primary">▶</span>
+              <div>
+                <span class="point-title">ナーチャリング施策の開始</span>
+                <span class="point-desc">過去の掘り起こしリストを活用し、メール配信でリードとの接点を再開する。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet primary">▶</span>
+              <div>
+                <span class="point-title">安全な初回一斉配信</span>
+                <span class="point-desc">初めての一斉配信のため、IPウォームアップを意識し、少量から段階的に配信量を増やす。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet primary">▶</span>
+              <div>
+                <span class="point-title">再現性のあるリスト抽出</span>
+                <span class="point-desc">配信担当者が毎回同じ条件でリストを取り出せるよう、元マスター上で設計する。</span>
+              </div>
+            </li>
+          </ul>
+
+          <h3>1-2. 前提条件</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>項目</th><th>内容</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>データソース</td><td>過去の掘り起こしリスト（元マスター）</td></tr>
+                <tr><td>配信ツール</td><td>自社開発メール配信ソフト</td></tr>
+                <tr><td>配信スケジュール</td><td>2日間 / 5段階（1日目AM・PM、2日目AM・PM前半・PM後半）</td></tr>
+                <tr><td>リスト管理</td><td>別ファイルではなく元マスターに補助列を追加</td></tr>
+                <tr><td>目安総配信数</td><td>約1,710件（有効リスト件数に応じて比率で調整）</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>1-3. 考慮すべきリスク</h3>
+          <ul class="points">
+            <li>
+              <span class="bullet risk">!</span>
+              <div>
+                <span class="point-title">レピュテーション低下</span>
+                <span class="point-desc">一度に大量配信すると、送信ドメイン/IPの評価が下がる可能性がある。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet risk">!</span>
+              <div>
+                <span class="point-title">バウンス率上昇</span>
+                <span class="point-desc">古いリストほど無効アドレスが混在しやすく、到達率悪化の原因になる。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet risk">!</span>
+              <div>
+                <span class="point-title">重複・誤配信</span>
+                <span class="point-desc">同一メールへの二重配信、配信停止・バウンス済みへの再送を防ぐ必要がある。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet risk">!</span>
+              <div>
+                <span class="point-title">属人化</span>
+                <span class="point-desc">担当者ごとに抽出条件がブレると、品質と再現性が失われる。</span>
+              </div>
+            </li>
+          </ul>
+
+          <h3>1-4. 配信優先順位（並び替えルール）</h3>
+          <p class="section-lead" style="margin-top:0">有効リストを以下の順で並べ、上位から配信1〜5に割り当てる。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>順位</th><th>判定軸</th><th>意図</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>確度</td><td>成約見込みが高いリードを最優先</td></tr>
+                <tr><td>2</td><td>電話番号の取得</td><td>反応後の架電が可能なリードを優先</td></tr>
+                <tr><td>3</td><td>決裁者性</td><td>役職 / BANTコメント / 決裁者レベルで判断</td></tr>
+                <tr><td>4</td><td>直近接触の新しさ</td><td>アプローチ履歴・初回商談日・問い合わせ日から算出</td></tr>
+                <tr><td>5</td><td>メール有効性</td><td>形式チェック済みのアドレスのみ</td></tr>
+                <tr><td>6</td><td>重複なし</td><td>同一メールアドレスは1件のみ</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>1-5. 配信対象の包含・除外条件</h3>
+          <div class="two-col">
+            <div>
+              <p><strong>すべて満たす場合に配信対象</strong></p>
+              <ul class="points">
+                <li><span class="bullet green">✓</span><div><span class="point-desc">メールアドレスが空欄でない</span></div></li>
+                <li><span class="bullet green">✓</span><div><span class="point-desc">メール形式が有効</span></div></li>
+                <li><span class="bullet green">✓</span><div><span class="point-desc">メール重複判定 = 初回</span></div></li>
+                <li><span class="bullet green">✓</span><div><span class="point-desc">配信停止リストに含まれない</span></div></li>
+                <li><span class="bullet green">✓</span><div><span class="point-desc">ハードバウンス済みでない</span></div></li>
+                <li><span class="bullet green">✓</span><div><span class="point-desc">配信ステータス = 未配信</span></div></li>
+              </ul>
+            </div>
+            <div>
+              <p><strong>除外対象</strong></p>
+              <ul class="points">
+                <li><span class="bullet risk">×</span><div><span class="point-desc">メール空欄・形式不正</span></div></li>
+                <li><span class="bullet risk">×</span><div><span class="point-desc">重複行（2件目以降）</span></div></li>
+                <li><span class="bullet risk">×</span><div><span class="point-desc">配信停止依頼あり</span></div></li>
+                <li><span class="bullet risk">×</span><div><span class="point-desc">過去ハードバウンス</span></div></li>
+                <li><span class="bullet risk">×</span><div><span class="point-desc">配信済み</span></div></li>
+                <li><span class="bullet risk">×</span><div><span class="point-desc">明確な配信対象外</span></div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="list-definition" class="section-card" data-theme="violet">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">2</span>
+          <h2>リスト定義</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">元マスターに追加する補助列の定義。スプレッドシート実装者・配信担当者が参照する仕様です。</p>
+
+          <h3>2-1. 参照する既存カラム</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>カラム</th><th>用途</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>確度</td><td>優先度の最重要指標</td></tr>
+                <tr><td>担当者電話番号</td><td>架電可否の判定</td></tr>
+                <tr><td>役職 / BANTコメント / 決裁者レベル</td><td>決裁者性の判定</td></tr>
+                <tr><td>アプローチ履歴 / 初回商談日 / 問い合わせ日</td><td>直近接触日の算出</td></tr>
+                <tr><td>メールアドレス</td><td>配信先・重複除外</td></tr>
+                <tr><td>配信ステータス</td><td>未配信 / 配信済み / バウンス等の管理</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>2-2. 追加する補助列</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>列名</th><th>出力値</th><th>判定ロジック（概要）</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>メール正規化</strong></td>
+                  <td>文字列</td>
+                  <td>メールアドレスを小文字化・前後空白除去。表記ゆれを統一する。</td>
+                </tr>
+                <tr>
+                  <td><strong>メール重複判定</strong></td>
+                  <td>初回 / 重複</td>
+                  <td>正規化メールが複数行ある場合、優先順位が最も高い1行のみ「初回」。それ以外は「重複」。</td>
+                </tr>
+                <tr>
+                  <td><strong>配信可否</strong></td>
+                  <td>配信対象 / 除外</td>
+                  <td>メール有効・重複なし・配信停止/バウンスでない場合に「配信対象」。</td>
+                </tr>
+                <tr>
+                  <td><strong>確度スコア</strong></td>
+                  <td>数値</td>
+                  <td>確度を数値化（例: S=100, A=80, B=60, C=40, D=20）。並び替え用。</td>
+                </tr>
+                <tr>
+                  <td><strong>電話OK</strong></td>
+                  <td>OK / NG</td>
+                  <td>担当者電話番号が取得済みかつ有効形式。</td>
+                </tr>
+                <tr>
+                  <td><strong>決裁者OK</strong></td>
+                  <td>OK / NG</td>
+                  <td>役職・BANT・決裁者レベルから決裁者または準決裁者と判定。</td>
+                </tr>
+                <tr>
+                  <td><strong>直近接触日</strong></td>
+                  <td>日付</td>
+                  <td>アプローチ履歴・初回商談日・問い合わせ日の最新日付。</td>
+                </tr>
+                <tr>
+                  <td><strong>接触経過区分</strong></td>
+                  <td>3ヶ月以内 / 6ヶ月以内 / 12ヶ月以内 / 12ヶ月超</td>
+                  <td>直近接触日からの経過で分類。</td>
+                </tr>
+                <tr>
+                  <td><strong>優先順位</strong></td>
+                  <td>整数（1〜N）</td>
+                  <td>確度スコア降順 → 電話OK → 決裁者OK → 直近接触日降順で一意に付番。</td>
+                </tr>
+                <tr>
+                  <td><strong>配信回</strong></td>
+                  <td>配信1〜配信5 / 空欄</td>
+                  <td>配信可否=配信対象の行を優先順位順に並べ、累積比率で5分割。</td>
+                </tr>
+                <tr>
+                  <td><strong>配信ステータス</strong></td>
+                  <td>下表参照</td>
+                  <td>初期値「未配信」。配信後に手動またはCSV取込で更新。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>2-3. 配信回の割り当てロジック</h3>
+          <p>配信可否 = 配信対象 の行のみを対象に、優先順位の昇順（1が最上位）で並べたうえで、累積件数比率で分割する。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>配信回</th><th>累積比率（上限）</th><th>該当イメージ</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>配信1</td><td>〜 8%</td><td>最優先・最安全層</td></tr>
+                <tr><td>配信2</td><td>〜 20%（8%+12%）</td><td>高優先度層</td></tr>
+                <tr><td>配信3</td><td>〜 38%（+18%）</td><td>中位有望層</td></tr>
+                <tr><td>配信4</td><td>〜 65%（+27%）</td><td>掘り起こし拡大層</td></tr>
+                <tr><td>配信5</td><td>〜 100%（+35%）</td><td>残り全件</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note">
+            実際の件数は有効リスト総数 × 比率で算出する。総数が変動した場合も比率ベースで再計算し、配信回列を更新する。
+          </div>
+
+          <h3>2-4. 配信ステータス定義</h3>
+          <div class="status-grid">
+            <span class="status-chip">未配信</span>
+            <span class="status-chip">配信済み</span>
+            <span class="status-chip">バウンス</span>
+            <span class="status-chip">反応あり</span>
+            <span class="status-chip">配信停止</span>
+            <span class="status-chip">除外</span>
+          </div>
+          <div class="table-wrap" style="margin-top:12px">
+            <table>
+              <thead>
+                <tr><th>ステータス</th><th>定義</th><th>次回配信</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>未配信</td><td>まだ配信していない</td><td>対象（フィルター条件を満たす場合）</td></tr>
+                <tr><td>配信済み</td><td>配信完了</td><td>除外</td></tr>
+                <tr><td>バウンス</td><td>ハードバウンス等で不達</td><td>恒久除外</td></tr>
+                <tr><td>反応あり</td><td>返信・クリック・問い合わせあり</td><td>営業優先対応。一斉配信からは除外</td></tr>
+                <tr><td>配信停止</td><td>配信停止依頼</td><td>恒久除外</td></tr>
+                <tr><td>除外</td><td>形式不正・重複等</td><td>対象外</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>2-5. CSV出力項目（配信ツール取込用）</h3>
+          <p class="section-lead" style="margin-top:0">フィルター適用後にエクスポートする主要列。</p>
+          <div class="code-block">会社名 / 担当者名 / メールアドレス / 電話番号 / 役職 / 確度 / 直近接触日 / 配信回</div>
+        </div>
+      </section>
+
+      <section id="volume" class="section-card" data-theme="green">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">3</span>
+          <h2>配信ボリューム設計</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">2日間・5段階で配信量を増やす。1回目はテスト兼ウォームアップとして最小構成とする。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>配信回</th>
+                  <th>タイミング</th>
+                  <th>比率</th>
+                  <th>目安件数</th>
+                  <th>目的</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>配信1</td><td>1日目 AM</td><td>約8%</td><td>約140件</td><td>初回テスト・バウンス率確認</td></tr>
+                <tr><td>配信2</td><td>1日目 PM</td><td>約12%</td><td>約200件</td><td>初日追加・問題なければ拡大</td></tr>
+                <tr><td>配信3</td><td>2日目 AM</td><td>約18%</td><td>約310件</td><td>配信量拡大</td></tr>
+                <tr><td>配信4</td><td>2日目 PM前半</td><td>約27%</td><td>約460件</td><td>本格配信</td></tr>
+                <tr><td>配信5</td><td>2日目 PM後半</td><td>約35%</td><td>約600件</td><td>残リスト一括</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="note">
+            配信2以降に進む前に、前回配信のバウンス率・エラー・迷惑メール報告・配信停止依頼を確認する。異常があれば次回配信を停止し、リスト・文面・システム設定を見直す。
+          </div>
+        </div>
+      </section>
+
+      <section id="filters" class="section-card" data-theme="amber">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">4</span>
+          <h2>保存フィルター定義</h2>
+        </div>
+        <div class="section-body">
+          <p class="section-lead">配信担当者は、タイミングに応じて保存済みフィルターを選ぶだけでリストを抽出する。</p>
+
+          <h3>4-1. 配信用フィルター（5種）</h3>
+          <p>いずれも以下3条件の組み合わせ。配信回の値だけが異なる。</p>
+          <div class="code-block">配信可否 = 配信対象
+配信回 = 配信N（1〜5）
+配信ステータス = 未配信</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>保存名</th><th>タイミング</th><th>配信回</th><th>想定リストの特徴</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>配信1_1日目AM</td><td>1日目 AM</td><td>配信1</td><td>最高確度・電話/決裁者あり・接触新しい</td></tr>
+                <tr><td>配信2_1日目PM</td><td>1日目 PM</td><td>配信2</td><td>配信1に次ぐ高優先度</td></tr>
+                <tr><td>配信3_2日目AM</td><td>2日目 AM</td><td>配信3</td><td>中位有望・ナーチャリング向け</td></tr>
+                <tr><td>配信4_2日目PM前半</td><td>2日目 PM前半</td><td>配信4</td><td>確度やや低・接触古めも含む</td></tr>
+                <tr><td>配信5_2日目PM後半</td><td>2日目 PM後半</td><td>配信5</td><td>配信可能な残り全件</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>4-2. 管理用フィルター</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>保存名</th><th>条件</th><th>用途</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>除外_要確認</td><td>配信可否 = 除外</td><td>形式不正・重複等の確認</td></tr>
+                <tr><td>バウンス確認</td><td>配信ステータス = バウンス</td><td>不達アドレスの一覧</td></tr>
+                <tr><td>反応あり確認</td><td>配信ステータス = 反応あり</td><td>架電・個別対応優先リスト</td></tr>
+                <tr><td>配信停止確認</td><td>配信ステータス = 配信停止</td><td>恒久除外リストの確認</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="operation" class="section-card" data-theme="primary">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">5</span>
+          <h2>配信担当者の運用フロー</h2>
+        </div>
+        <div class="section-body">
+          <div class="flow">
+            <div class="flow-step">
+              <div>
+                <span class="point-title">元マスターを開く</span>
+                <span class="point-desc">補助列・配信回・配信ステータスが最新か確認する。</span>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div>
+                <span class="point-title">タイミングに合わせてフィルターを選択</span>
+                <span class="point-desc">例: 1日目AM →「配信1_1日目AM」</span>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div>
+                <span class="point-title">未配信のみであることを確認</span>
+                <span class="point-desc">配信済み行が混ざっていないか目視チェック。</span>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div>
+                <span class="point-title">CSV出力 → 配信ソフトへ取込</span>
+                <span class="point-desc">会社名・担当者名・メール・電話・役職・確度・直近接触日・配信回を出力。</span>
+              </div>
+            </div>
+            <div class="flow-step">
+              <div>
+                <span class="point-title">配信後、結果を元マスターへ反映</span>
+                <span class="point-desc">配信済み / バウンス / 反応あり / 配信停止 / 要架電 / 要個別対応 を更新。バウンス・配信停止は別シートにも記録。</span>
+              </div>
+            </div>
+          </div>
+
+          <h3>配信後チェック（次回配信前）</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>確認項目</th><th>判断基準</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>バウンス率</td><td>想定以上に高くないか</td></tr>
+                <tr><td>配信エラー</td><td>自社ソフト側の異常がないか</td></tr>
+                <tr><td>迷惑メール報告</td><td>クレーム・報告がないか</td></tr>
+                <tr><td>配信停止依頼</td><td>即時ステータス更新したか</td></tr>
+                <tr><td>返信内容</td><td>ネガティブ返信・営業機会の有無</td></tr>
+                <tr><td>到達状況</td><td>配信ログ上の異常がないか</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="rules" class="section-card" data-theme="risk">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">6</span>
+          <h2>重複防止・恒久除外ルール</h2>
+        </div>
+        <div class="section-body">
+          <ul class="points">
+            <li>
+              <span class="bullet risk">1</span>
+              <div>
+                <span class="point-title">メールアドレス単位で重複除外</span>
+                <span class="point-desc">同一正規化メールは1行のみ配信対象。<code>メール重複判定 = 初回</code> の行だけを含める。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet risk">2</span>
+              <div>
+                <span class="point-title">1リード = 1配信回</span>
+                <span class="point-desc">配信1〜5のいずれか1つのみ付与。複数回への重複割当は設計しない。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet risk">3</span>
+              <div>
+                <span class="point-title">配信後は必ずステータス更新</span>
+                <span class="point-desc">次回フィルターは必ず <code>配信ステータス = 未配信</code> を含める。</span>
+              </div>
+            </li>
+            <li>
+              <span class="bullet risk">4</span>
+              <div>
+                <span class="point-title">配信停止・バウンスは恒久除外</span>
+                <span class="point-desc">別シート（配信停止リスト / バウンスリスト）にも記録し、配信可否判定に反映する。</span>
+              </div>
+            </li>
+          </ul>
+
+          <h3>決定事項（合意内容）</h3>
+          <ul class="points">
+            <li><span class="bullet green">✓</span><div><span class="point-desc">別ファイル管理ではなく元マスター上で完結</span></div></li>
+            <li><span class="bullet green">✓</span><div><span class="point-desc">保存フィルター3条件で抽出（配信可否 / 配信回 / 配信ステータス）</span></div></li>
+            <li><span class="bullet green">✓</span><div><span class="point-desc">5段階ウォームアップ配信（2日間）</span></div></li>
+            <li><span class="bullet green">✓</span><div><span class="point-desc">メール単位の重複防止と配信後ステータス更新を必須化</span></div></li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="next" class="section-card" data-theme="violet">
+        <div class="section-head">
+          <span class="section-num" aria-hidden="true">7</span>
+          <h2>担当別 今後の対応</h2>
+        </div>
+        <div class="section-body">
+          <div class="two-col">
+            <div>
+              <h3>スプレッドシート</h3>
+              <ul class="points">
+                <li><span class="bullet violet">→</span><div><span class="point-desc">補助列の追加と判定式設定</span></div></li>
+                <li><span class="bullet violet">→</span><div><span class="point-desc">配信回の自動判定</span></div></li>
+                <li><span class="bullet violet">→</span><div><span class="point-desc">5種＋管理4種の保存フィルター作成</span></div></li>
+                <li><span class="bullet violet">→</span><div><span class="point-desc">配信ステータスの選択肢（データ検証）設定</span></div></li>
+              </ul>
+            </div>
+            <div>
+              <h3>配信ソフト</h3>
+              <ul class="points">
+                <li><span class="bullet violet">→</span><div><span class="point-desc">配信回ごとのCSV取込</span></div></li>
+                <li><span class="bullet violet">→</span><div><span class="point-desc">配信結果のCSV出力</span></div></li>
+                <li><span class="bullet violet">→</span><div><span class="point-desc">バウンス・配信停止・クリック・返信のエクスポート</span></div></li>
+              </ul>
+            </div>
+          </div>
+          <h3>営業運用</h3>
+          <ul class="points">
+            <li><span class="bullet violet">→</span><div><span class="point-desc">反応ありリードを優先架電</span></div></li>
+            <li><span class="bullet violet">→</span><div><span class="point-desc">バウンス・配信停止への即時対応</span></div></li>
+            <li><span class="bullet violet">→</span><div><span class="point-desc">配信結果を踏まえた次回ナーチャリング条件の見直し</span></div></li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>作成日: 2026-06-21 / 対象: トレプロ メールナーチャリング初回配信（IPウォームアップ） / 本資料は要件定義・リスト定義の合意内容を第三者向けに整理したものです。</p>
+    </div>
+  </footer>
+</body>
+</html>

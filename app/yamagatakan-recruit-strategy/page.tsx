@@ -1,5 +1,5 @@
-import YamagatakanDeck from "./yamagatakan-deck";
+import YamagatakanLp from "./yamagatakan-lp";
 
 export default function YamagatakanRecruitStrategyPage() {
-  return <YamagatakanDeck />;
+  return <YamagatakanLp />;
 }

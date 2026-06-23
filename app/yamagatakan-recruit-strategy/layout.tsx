@@ -41,9 +41,7 @@ export default function YamagatakanLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div
-      className={`${notoSerif.variable} ${notoSans.variable} h-[100dvh] overflow-hidden`}
-    >
+    <div className={`${notoSerif.variable} ${notoSans.variable} min-h-full`}>
       {children}
     </div>
   );

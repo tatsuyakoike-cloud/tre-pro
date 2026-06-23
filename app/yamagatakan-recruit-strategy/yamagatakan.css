@@ -282,6 +282,20 @@
   border: 1px solid var(--yk-line);
   background: rgba(255, 255, 255, 0.42);
   box-sizing: border-box;
+  text-align: left;
+}
+
+.yk-panel-body .yk-h3,
+.yk-panel .yk-h3 {
+  text-align: left;
+}
+
+.yk-panel-lead {
+  margin: 0 0 16px;
+  font-size: 0.93rem;
+  line-height: 1.9;
+  color: var(--yk-ink-muted);
+  text-align: left;
 }
 
 .yk-section.is-alt .yk-panel {
@@ -446,6 +460,11 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .yk-cards.is-3,
+  .yk-cards-panel.is-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .yk-cards.is-4,
   .yk-cards-panel.is-4 {
     grid-template-columns: repeat(2, 1fr);
@@ -481,6 +500,13 @@
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--yk-enji);
+  min-height: 2.8em;
+  display: flex;
+  align-items: flex-end;
+}
+
+.yk-cards-panel.is-3 .yk-card-label {
+  min-height: 2.4em;
 }
 
 .yk-card-text {
@@ -612,6 +638,10 @@
 
 .yk-tags-centered {
   justify-content: center;
+}
+
+.yk-tags-left {
+  justify-content: flex-start;
 }
 
 /* Cycle */
@@ -799,11 +829,20 @@
 
 .yk-table th,
 .yk-table td {
-  padding: 15px 18px;
+  padding: 16px 18px;
   border-bottom: 1px solid var(--yk-line);
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
   line-height: 1.75;
+}
+
+.yk-table tbody tr {
+  min-height: 56px;
+}
+
+.yk-table tbody th,
+.yk-table tbody td {
+  height: 1px;
 }
 
 .yk-table thead th {
@@ -984,6 +1023,33 @@
   margin-top: 6px;
   font-size: 0.78rem;
   color: var(--yk-ink-muted);
+}
+
+.yk-pricing-monthly {
+  margin: 24px 0 0;
+  padding: 20px;
+  border: 1px solid rgba(122, 30, 30, 0.25);
+  background: rgba(122, 30, 30, 0.05);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--yk-ink-muted);
+  text-align: center;
+}
+
+.yk-pricing-monthly strong {
+  font-family: var(--font-yk-serif-loaded), serif;
+  font-size: clamp(1.6rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--yk-enji);
+  margin: 0 4px;
+}
+
+.yk-pricing-monthly-note {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: #8a8278;
 }
 
 .yk-pricing-note {

@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import "./yamagatakan.css";
 import {
-  assetBase,
   navItems,
   premiseItems,
   skillCriteria,
@@ -37,7 +36,7 @@ import {
   closingQuotes,
 } from "./yamagatakan-content";
 
-const heroBg = `linear-gradient(180deg, rgba(10, 20, 16, 0.55) 0%, rgba(22, 40, 32, 0.78) 45%, rgba(12, 18, 15, 0.92) 100%), url('${assetBase}/images/yamagatakan-hero.svg')`;
+const heroBg = `linear-gradient(180deg, #0a1410 0%, #142820 42%, #1a2e24 68%, #0f1814 100%)`;
 
 function SectionHeader({
   num,
@@ -108,9 +107,14 @@ function PricingSection() {
           <span className="yk-pricing-row-value">
             <strong>{specialTotal}</strong>
             <span className="yk-pricing-unit">万円</span>
-            <small>（月{specialMonthly}万円換算）</small>
+            <small>（{period}）</small>
           </span>
         </div>
+
+        <p className="yk-pricing-monthly">
+          月額 <strong>{specialMonthly}万円</strong>
+          <span className="yk-pricing-monthly-note">× 4ヶ月</span>
+        </p>
       </div>
 
       <p className="yk-pricing-note">
@@ -196,7 +200,7 @@ export default function YamagatakanLp() {
             </div>
           </Panel>
 
-          <Panel className="yk-subsection-panel">
+          <Panel className="yk-subsection-panel yk-panel-body">
             <h3 className="yk-h3 yk-serif">提案の前提</h3>
             <ul className="yk-list">
               {premiseItems.map((item) => (
@@ -205,9 +209,9 @@ export default function YamagatakanLp() {
             </ul>
           </Panel>
 
-          <Panel className="yk-subsection-panel">
+          <Panel className="yk-subsection-panel yk-panel-body">
             <h3 className="yk-h3 yk-serif">採用対象の設計軸</h3>
-            <p className="yk-lead">
+            <p className="yk-panel-lead">
               国籍ではなく、<strong>接遇スキル・文化理解・日本語コミュニケーション力</strong>で設計する。
             </p>
             <ul className="yk-list">
@@ -252,7 +256,7 @@ export default function YamagatakanLp() {
             title="宿泊業界の採用は難化している"
             lead="需要の回復と人手不足が同時に進む中、採用前の理解促進が定着率を左右する。"
           />
-          <div className="yk-cards yk-cards-panel">
+          <div className="yk-cards yk-cards-panel is-3">
             {marketPoints.map((item) => (
               <div key={item.title} className="yk-card">
                 <p className="yk-card-label">{item.title}</p>
@@ -260,12 +264,12 @@ export default function YamagatakanLp() {
               </div>
             ))}
           </div>
-          <Panel className="yk-subsection-panel">
+          <Panel className="yk-subsection-panel yk-panel-body">
             <h3 className="yk-h3 yk-serif">山県館様における示唆</h3>
-            <p className="yk-lead">
+            <p className="yk-panel-lead">
               SNSと採用LPを使って、以下を候補者に伝える必要がある。
             </p>
-            <ul className="yk-tags">
+            <ul className="yk-tags yk-tags-left">
               {marketInsights.map((item) => (
                 <li key={item}>{item}</li>
               ))}
@@ -570,8 +574,8 @@ export default function YamagatakanLp() {
           <SectionHeader
             num="10"
             eyebrow="SCHEDULE"
-            title="7月〜11月のスケジュール"
-            lead="7月に設計と準備、8月に制作と発信準備、9月から本格運用。11月の求人媒体契約終了までに自社導線を整える。"
+            title="7月〜10月のスケジュール"
+            lead="7月に設計と準備、8月に制作と発信準備、9月から本格運用。10月までの4ヶ月間で自社採用導線を整える。"
           />
           <Panel>
             <div className="yk-table-wrap">
@@ -598,7 +602,7 @@ export default function YamagatakanLp() {
             </div>
           </Panel>
           <Panel className="yk-subsection-panel">
-            <h3 className="yk-h3 yk-serif">7月〜11月のゴール</h3>
+            <h3 className="yk-h3 yk-serif">7月〜10月のゴール</h3>
             <ul className="yk-check-list is-compact">
               {phaseGoals.map((item) => (
                 <li key={item}>{item}</li>

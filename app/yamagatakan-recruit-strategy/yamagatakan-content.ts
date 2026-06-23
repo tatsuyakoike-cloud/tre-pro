@@ -33,13 +33,13 @@ export const skillCriteria = [
 ];
 
 export const summaryTable = [
-  { item: "短期目標", policy: "7月〜11月の支援期間で、最低1名の採用につながる状態を作る" },
+  { item: "短期目標", policy: "7月〜10月の4ヶ月間で、最低1名の採用につながる状態を作る" },
   { item: "中長期目標", policy: "求人媒体に依存せず、自社SNS・採用LPから応募が生まれる導線を構築する" },
   { item: "Instagram", policy: "旅館公式アカウントとして、歴史・温泉・料理・文化を美しく発信し、ブランド価値を高める" },
   { item: "TikTok", policy: "堀内さんを軸に、働く裏側・スタッフの雰囲気・旅館の日常を親しみやすく発信する" },
   { item: "採用LP", policy: "SNSから流入した人が、仕事内容・人・想い・応募方法を理解できる受け皿にする" },
-  { item: "11月まで", policy: "求人媒体契約終了前に、SNSと採用LPの土台を構築する" },
-  { item: "12月以降", policy: "SNS主体の採用導線に移行し、状況に応じて媒体・紹介・外国人採用支援も選択肢として判断する" },
+  { item: "10月まで", policy: "4ヶ月の支援期間内に、SNSと採用LPの土台を構築する" },
+  { item: "11月以降", policy: "SNS主体の採用導線に移行し、状況に応じて媒体・紹介・外国人採用支援も選択肢として判断する" },
 ];
 
 export const essenceValues = [
@@ -206,13 +206,13 @@ export const scheduleRows = [
     goal: "候補者との接点形成",
   },
   {
-    period: "10〜11月",
+    period: "10月",
     phase: "運用・検証",
     content: "投稿改善、応募導線改善、KPI確認、半内製化に向けた運用整理",
-    goal: "11月の求人媒体契約終了に備える",
+    goal: "4ヶ月支援期間の成果検証と、11月の媒体契約終了に備える",
   },
   {
-    period: "12月以降",
+    period: "11月以降",
     phase: "判断・移行",
     content: "SNS主体の採用導線への移行、媒体継続の判断、追加施策の検討",
     goal: "自社採用導線の継続",
@@ -220,11 +220,11 @@ export const scheduleRows = [
 ];
 
 export const pricingInfo = {
-  period: "2025年7月〜11月（5ヶ月）",
+  period: "7月から10月までの4ヶ月間",
   regularTotal: 200,
   specialTotal: 80,
   regularMonthly: 50,
-  specialMonthly: 16,
+  specialMonthly: 20,
   discountAmount: 120,
   discountRate: 60,
   serviceLabel: "採用戦略設計・SNS運用・採用LP制作・運用伴走",
@@ -242,7 +242,7 @@ export const phaseGoals = [
 ];
 
 export const kpiFinal = [
-  { kpi: "採用人数", target: "7月〜11月の支援期間で最低1名" },
+  { kpi: "採用人数", target: "7月〜10月の4ヶ月間で最低1名" },
   { kpi: "応募数", target: "SNS・LP経由で応募または面談希望を創出" },
   { kpi: "採用単価", target: "中長期的に媒体・紹介依存より低減" },
   { kpi: "定着可能性", target: "事前理解を高め、早期離職リスクを下げる" },
@@ -329,7 +329,7 @@ export const nextActionConfirm = [
   "会社管理アカウントの開設方針",
   "採用LPの公開先URL",
   "応募導線：フォーム、電話、LINE、DMのどれを主軸にするか",
-  "7月〜11月支援の正式な対象期間",
+  "7月〜10月（4ヶ月間）支援の正式な対象期間",
   "80万円に含める制作範囲と別途費用の整理",
 ];
 
@@ -350,5 +350,5 @@ export const closingQuotes = [
   "山県館様の採用は、\nただ人を集める活動ではありません。",
   "五百年続いてきた湯宿の価値を、\n次の時代へ受け継いでくれる人と出会う活動です。",
   "求人媒体に依存する採用から、\n山県館様自身の言葉と発信で人が集まる採用へ。",
-  "その土台を、7月から11月までで作ります。",
+  "その土台を、7月から10月までの4ヶ月間で作ります。",
 ];

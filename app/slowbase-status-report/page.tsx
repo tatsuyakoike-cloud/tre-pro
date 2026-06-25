@@ -265,10 +265,6 @@ export default function SlowBaseStatusReportPage() {
           <p className="mt-2 text-lg font-medium text-stone-600 sm:text-xl">
             SlowBase 現状報告
           </p>
-          <p className="mt-5 max-w-2xl text-sm leading-7 text-stone-600 sm:text-base">
-            新規事業の状況、既存顧客支援の事例、売上シミュレーション、次の検証ステップを整理した資料です。
-            既存顧客の価値を、売上につながる形にできるかを見る取り組みとして共有します。
-          </p>
         </div>
       </section>
 

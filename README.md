@@ -7,6 +7,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | Instagram 採用運用ガイド | [docs/instagram-recruiting-strategy.md](docs/instagram-recruiting-strategy.md) | [/tre-pro/instagram-recruiting-strategy/](https://tatsuyakoike-cloud.github.io/tre-pro/instagram-recruiting-strategy/) |
 | SlowBase event（SERAMADE支援） | [docs/slowbase-event.md](docs/slowbase-event.md) | [/tre-pro/slowbase-event/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-event/) |
 | SlowBase SeraMade 現状報告（slim） | [docs/slowbase-seramade-report.md](docs/slowbase-seramade-report.md) | [/tre-pro/slowbase-seramade-report/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-seramade-report/) |
+| SlowBase 現状報告 | [docs/slowbase-status-report.md](docs/slowbase-status-report.md) | [/tre-pro/slowbase-status-report/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-status-report/) |
 
 ## Getting Started
 

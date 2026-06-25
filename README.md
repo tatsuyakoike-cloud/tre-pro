@@ -5,6 +5,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | タイトル | Markdown | Web |
 |---------|----------|-----|
 | Instagram 採用運用ガイド | [docs/instagram-recruiting-strategy.md](docs/instagram-recruiting-strategy.md) | [/tre-pro/instagram-recruiting-strategy/](https://tatsuyakoike-cloud.github.io/tre-pro/instagram-recruiting-strategy/) |
+| SlowBase event（SERAMADE支援） | [docs/slowbase-event.md](docs/slowbase-event.md) | [/tre-pro/slowbase-event/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-event/) |
 
 ## Getting Started
 

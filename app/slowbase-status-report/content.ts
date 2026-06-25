@@ -4,24 +4,24 @@ export const toc = [
   { id: "example", label: "3. 既存顧客支援の一例" },
   { id: "simulation", label: "4. 売上シミュレーション" },
   { id: "subscription", label: "5. 定期購入" },
+  { id: "subscription-growth", label: "6. 定期購入の伸び方" },
   { id: "combined", label: "7. 単体＋定期" },
   { id: "slowbase-view", label: "8. SlowBaseとして見たいこと" },
   { id: "walklog", label: "9. Walklogとの可能性" },
   { id: "next", label: "10. 次にやること" },
-  { id: "metrics", label: "11. 記録する数字" },
-  { id: "summary", label: "12. まとめ" },
+  { id: "summary", label: "11. まとめ" },
 ];
 
 export const summaryCards = [
   {
     label: "SlowBaseの軸",
     value: "唯一無二の価値をあるべき姿に",
-    sub: "イベント運営会社ではない",
+    sub: "自然 · 地域 · 生業 · 体験",
   },
   {
     label: "既存顧客の一例",
     value: "餅田農園 SERAMADE",
-    sub: "SNS · EC · イベント協賛",
+    sub: "Walklogイベント · SNS · EC",
   },
   {
     label: "初回実績",
@@ -31,7 +31,7 @@ export const summaryCards = [
   {
     label: "検証日程",
     value: "7/25 · 8/22",
-    sub: "Walklog「よりみちYoga」",
+    sub: "毎回50人前後",
   },
 ];
 
@@ -55,22 +55,22 @@ export const subscriptionGrowth = [
   { month: "1ヶ月目", subscribers: 1, monthlyRevenue: 4000 },
   { month: "2ヶ月目", subscribers: 2, monthlyRevenue: 8000 },
   { month: "3ヶ月目", subscribers: 3, monthlyRevenue: 12000 },
-  { month: "4ヶ月目", subscribers: 4, monthlyRevenue: 16000 },
-  { month: "5ヶ月目", subscribers: 5, monthlyRevenue: 20000 },
-  { month: "6ヶ月目", subscribers: 6, monthlyRevenue: 24000 },
-  { month: "7ヶ月目", subscribers: 7, monthlyRevenue: 28000 },
-  { month: "8ヶ月目", subscribers: 8, monthlyRevenue: 32000 },
-  { month: "9ヶ月目", subscribers: 9, monthlyRevenue: 36000 },
-  { month: "10ヶ月目", subscribers: 10, monthlyRevenue: 40000 },
-  { month: "11ヶ月目", subscribers: 11, monthlyRevenue: 44000 },
-  { month: "12ヶ月目", subscribers: 12, monthlyRevenue: 48000 },
+  { month: "4ヶ月目", subscribers: 5, monthlyRevenue: 20000 },
+  { month: "5ヶ月目", subscribers: 7, monthlyRevenue: 28000 },
+  { month: "6ヶ月目", subscribers: 10, monthlyRevenue: 40000 },
+  { month: "7ヶ月目", subscribers: 14, monthlyRevenue: 56000 },
+  { month: "8ヶ月目", subscribers: 20, monthlyRevenue: 80000 },
+  { month: "9ヶ月目", subscribers: 28, monthlyRevenue: 112000 },
+  { month: "10ヶ月目", subscribers: 39, monthlyRevenue: 156000 },
+  { month: "11ヶ月目", subscribers: 55, monthlyRevenue: 220000 },
+  { month: "12ヶ月目", subscribers: 77, monthlyRevenue: 308000 },
 ];
 
 export const combinedSales = [
-  { case: "5本 / 回", oneTime: 240000, subscription: 312000, total: 552000 },
-  { case: "10本 / 回", oneTime: 480000, subscription: 312000, total: 792000 },
-  { case: "20本 / 回", oneTime: 960000, subscription: 312000, total: 1272000 },
-  { case: "50本 / 回", oneTime: 2400000, subscription: 312000, total: 2712000 },
+  { case: "5本 / 回", oneTime: 240000, subscription: 1044000, total: 1284000 },
+  { case: "10本 / 回", oneTime: 480000, subscription: 1044000, total: 1524000 },
+  { case: "20本 / 回", oneTime: 960000, subscription: 1044000, total: 2004000 },
+  { case: "50本 / 回", oneTime: 2400000, subscription: 1044000, total: 3444000 },
 ];
 
 export const slowbaseFocus = [
@@ -117,19 +117,6 @@ export const augustImprovements = [
   "ECへの誘導方法",
   "当日の声かけ",
   "イベント後のフォロー",
-];
-
-export const metrics = [
-  { item: "来場者数", reason: "どれくらい接点を作れたか" },
-  { item: "試飲数", reason: "商品に興味を持ってもらえたか" },
-  { item: "販売本数", reason: "その場で購入された数" },
-  { item: "売上金額", reason: "餅田農園への売上貢献" },
-  { item: "QRコード読み込み数", reason: "ECやSNSへの導線が機能したか" },
-  { item: "Instagramフォロー数", reason: "継続接点が作れたか" },
-  { item: "EC流入数", reason: "イベントから購入ページへ送れたか" },
-  { item: "定期購入件数", reason: "継続売上につながったか" },
-  { item: "イベント後の問い合わせ数", reason: "後追いの反応があったか" },
-  { item: "次回購入見込み", reason: "次回改善の材料" },
 ];
 
 export function formatYen(value: number) {

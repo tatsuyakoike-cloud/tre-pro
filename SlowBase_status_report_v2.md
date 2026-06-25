@@ -1,5 +1,5 @@
 # SlowBase 現状報告  
-## 既存顧客の支援から、SlowBaseの次の形を探る
+## 既存顧客の支援から、次の事業の形を探る
 
 ---
 
@@ -378,7 +378,3 @@ SlowBaseが今後目指す方向のヒントを見つけたいです。
 
 この流れが作れれば、  
 SlowBaseとして撮影だけに頼らない仕事の形が見えてきます。
-
----
-
-*Web 版: `/tre-pro/slowbase-status-report/`（GitHub Pages デプロイ時）*

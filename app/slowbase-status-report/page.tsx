@@ -6,7 +6,6 @@ import {
   formatYen,
   futureFees,
   julyPoints,
-  metrics,
   oneTimeSales,
   slowbaseFocus,
   subscriptionGrowth,
@@ -180,7 +179,7 @@ function BarChart({
 }
 
 function LineChartMini() {
-  const maxRevenue = 48000;
+  const maxRevenue = 308000;
   const points = subscriptionGrowth.map((item, index) => {
     const x = (index / (subscriptionGrowth.length - 1)) * 100;
     const y = 100 - (item.monthlyRevenue / maxRevenue) * 100;
@@ -190,7 +189,7 @@ function LineChartMini() {
   return (
     <div className="mt-6 rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50/80 to-white p-6">
       <h3 className="text-base font-bold text-stone-900">
-        定期購入者が毎月1人増えた場合の月間売上
+        定期購入が伸びた場合の月間売上
       </h3>
       <div className="mt-6 rounded-xl border border-stone-100 bg-white p-4">
         <svg viewBox="0 0 100 100" className="h-48 w-full" preserveAspectRatio="none">
@@ -208,12 +207,13 @@ function LineChartMini() {
         <div className="mt-3 flex justify-between text-[0.65rem] text-stone-500">
           <span>1ヶ月目</span>
           <span>6ヶ月目</span>
-          <span>12ヶ月目（48,000円/月）</span>
+          <span>12ヶ月目（308,000円/月）</span>
         </div>
       </div>
       <p className="mt-4 rounded-xl bg-white px-4 py-3 text-sm leading-7 text-stone-700">
         1年目の定期購入売上合計は{" "}
-        <strong className="font-bold text-emerald-800">312,000円</strong>。
+        <strong className="font-bold text-emerald-800">1,044,000円</strong>
+        （伸びた場合の試算）。SNS・EC導線がうまくつながれば、継続購入の売上も伸ばせる可能性があります。
       </p>
     </div>
   );
@@ -256,18 +256,18 @@ export default function SlowBaseStatusReportPage() {
         />
         <div className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24">
           <p className="mb-4 inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-bold text-emerald-800">
-            現状報告 · 既存顧客支援 · 次の事業の形
+            現状報告 · 既存顧客支援 · SlowBaseの次の形
           </p>
           <h1 className="max-w-3xl font-[family-name:var(--font-sb-serif)] text-3xl font-bold leading-tight tracking-tight sm:text-5xl">
-            既存顧客の支援から、
-            <span className="text-emerald-700"> 次の事業の形を探る</span>
+            <span className="block">既存顧客の支援から</span>
+            <span className="block text-emerald-700">SlowBaseの次の形を探る</span>
           </h1>
           <p className="mt-2 text-lg font-medium text-stone-600 sm:text-xl">
             SlowBase 現状報告
           </p>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-stone-600 sm:text-base">
             新規事業の状況、既存顧客支援の事例、売上シミュレーション、次の検証ステップを整理した資料です。
-            イベント運営ではなく、売上につながる導線を作れるかを見る取り組みとして共有します。
+            既存顧客の価値を、売上につながる形にできるかを見る取り組みとして共有します。
           </p>
         </div>
       </section>
@@ -305,7 +305,6 @@ export default function SlowBaseStatusReportPage() {
                   SlowBaseは、自然・地域・生業・体験の中にある価値を見つけて、伝わる形に整えて、成果につなげていく会社です。
                 </p>
                 <p className="font-bold text-emerald-900">
-                  前提として、SlowBaseはイベント運営会社ではありません。
                   今回整理したいのは、既存顧客の中にある価値を、売上につながる形にできるかという話です。
                 </p>
               </Prose>
@@ -350,37 +349,58 @@ export default function SlowBaseStatusReportPage() {
               kicker="CASE STUDY"
               title="3. 既存顧客支援の一例"
             />
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <div className="mt-6 space-y-4">
               <div className="rounded-2xl border border-stone-200 bg-white p-6">
-                <h3 className="font-bold text-stone-900">3-1. SERAMADEで起きている動き</h3>
+                <h3 className="font-bold text-stone-900">3-1. Walklog社との接点</h3>
                 <Prose>
                   <p>
-                    Walklog社のヨガイベントに協賛し、SERAMADEの青パパイヤドリンクなどを出品。
-                    健康・美容・体のケアに関心がある人が集まり、商品との相性は悪くありません。
+                    Walklog社が運営するヨガイベントとの接点から始まっています。
+                    リアルな場や体験を活用しながら、人やブランドとの接点を作っている会社です。
+                    代表の樋高さんは元Amazon出身でECの知見もあり、今後Walklog側でもECを作っていく予定があります。
+                  </p>
+                  <p>
+                    SlowBaseとしては、単なる出品機会ではなく、
+                    <strong className="font-bold text-emerald-900">
+                      既存顧客の商品を、リアル接点から販売導線につなげる場
+                    </strong>
+                    として見ています。
                   </p>
                 </Prose>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {eventSchedule.map((date) => (
-                    <span
-                      key={date}
-                      className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800"
-                    >
-                      {date}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-3 text-xs text-stone-500">毎回50人前後 · 小さく検証するにはちょうど良い</p>
               </div>
-              <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-700 to-emerald-900 p-6 text-white">
-                <h3 className="font-bold">3-2. 反応と実績</h3>
-                <p className="mt-4 text-4xl font-bold tabular-nums">5本</p>
-                <p className="mt-1 text-sm text-white/80">単体販売 · 20,000円</p>
-                <Prose>
-                  <p className="text-white/85">
-                    SNS上で反応あり。過去にはイベントをきっかけに定期購入につながった実績も。
-                    大事なのは、イベントをきっかけに購入や定期購入につながる流れを作れるかです。
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl border border-stone-200 bg-white p-6">
+                  <h3 className="font-bold text-stone-900">3-2. SERAMADEで起きている動き</h3>
+                  <Prose>
+                    <p>
+                      ヨガイベントに協賛し、SERAMADEの青パパイヤドリンクなどを出品。
+                      健康・美容・体のケアに関心がある人が集まり、商品との相性は悪くありません。
+                    </p>
+                  </Prose>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {eventSchedule.map((date) => (
+                      <span
+                        key={date}
+                        className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800"
+                      >
+                        {date}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-3 text-xs text-stone-500">
+                    毎回50人前後 · 小さく検証するにはちょうど良い
                   </p>
-                </Prose>
+                </div>
+                <div className="rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-700 to-emerald-900 p-6 text-white">
+                  <h3 className="font-bold">3-3. 反応と実績</h3>
+                  <p className="mt-4 text-4xl font-bold tabular-nums">5本</p>
+                  <p className="mt-1 text-sm text-white/80">単体販売 · 20,000円</p>
+                  <Prose>
+                    <p className="text-white/85">
+                      SNS上で反応あり。過去にはイベントをきっかけに定期購入につながった実績も。
+                      大事なのは、イベントをきっかけに購入や定期購入につながる流れを作れるかです。
+                    </p>
+                  </Prose>
+                </div>
               </div>
             </div>
           </section>
@@ -422,7 +442,28 @@ export default function SlowBaseStatusReportPage() {
                 月1本購入で1人あたり年間{" "}
                 <strong className="font-bold text-emerald-800">48,000円</strong>。
               </p>
+              <p>
+                毎月1人ずつ増えるような単純な伸び方ではなく、SNSの反応・イベントでの接点・EC導線が噛み合うと、
+                定期購入者は少しずつ増え方が大きくなる可能性があります。
+              </p>
             </Prose>
+          </section>
+
+          <section id="subscription-growth" className="scroll-mt-24">
+            <SectionHeading
+              id="subscription-growth-heading"
+              kicker="GROWTH"
+              title="6. グラフ用データ：定期購入の伸び方"
+              description="イベントやSNS、EC導線が改善され、定期購入者の増え方が徐々に大きくなった場合のイメージ。"
+            />
+            <DataTable
+              headers={["月", "定期購入者数", "月間売上"]}
+              rows={subscriptionGrowth.map((row) => [
+                row.month,
+                `${row.subscribers}人`,
+                row.monthlyRevenue,
+              ])}
+            />
             <LineChartMini />
           </section>
 
@@ -443,14 +484,14 @@ export default function SlowBaseStatusReportPage() {
             />
             <BarChart
               title="単体販売と定期購入を合わせた年間売上"
-              description="20本で1,272,000円、50本で2,712,000円。販促施策として続ける意味が出てきます。"
+              description="20本で2,004,000円、50本で3,444,000円。販促施策として続ける意味が出てきます。"
               data={combinedSales.map((row) => ({
                 case: row.case,
                 total: row.total,
               }))}
               valueKey="total"
               labelKey="case"
-              maxValue={2712000}
+              maxValue={3444000}
             />
           </section>
 
@@ -501,41 +542,17 @@ export default function SlowBaseStatusReportPage() {
             </p>
           </section>
 
-          <section id="metrics" className="scroll-mt-24">
-            <SectionHeading
-              id="metrics-heading"
-              kicker="METRICS"
-              title="11. 毎回記録する数字"
-            />
-            <div className="mt-6 overflow-x-auto rounded-2xl border border-stone-200 bg-white">
-              <table className="w-full min-w-[560px] text-left text-sm">
-                <thead>
-                  <tr className="border-b border-stone-100 bg-stone-50">
-                    <th className="px-4 py-3 font-bold text-stone-500">項目</th>
-                    <th className="px-4 py-3 font-bold text-stone-500">見る理由</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {metrics.map((row) => (
-                    <tr key={row.item} className="border-b border-stone-100 last:border-0">
-                      <td className="px-4 py-3 font-medium text-stone-800">{row.item}</td>
-                      <td className="px-4 py-3 text-stone-600">{row.reason}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
           <section id="summary" className="scroll-mt-24">
-            <SectionHeading id="summary-heading" kicker="SUMMARY" title="12. まとめ" />
+            <SectionHeading id="summary-heading" kicker="SUMMARY" title="11. まとめ" />
             <div className="mt-6 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-700 to-emerald-900 p-6 text-white sm:p-8">
               <Prose>
                 <p className="text-white/90">
-                  SlowBaseはイベント運営会社ではありません。今回整理しているのは、既存顧客の中で、SNS運用、EC販売支援、リアルイベントでの反応を見ながら、売上につながる導線を作れるかを試す取り組みです。
+                  今回整理しているのは、既存顧客の中で、SNS運用、EC販売支援、リアルイベントでの反応を見ながら、
+                  売上につながる導線を作れるかを試す取り組みです。
                 </p>
                 <p className="text-white/90">
-                  お酒の支援や撮影営業から大きく案件が広がっているわけではないからこそ、今すでに動いている既存顧客の事例から、SlowBaseが今後目指す方向のヒントを見つけたいです。
+                  お酒の支援や撮影営業から大きく案件が広がっているわけではないからこそ、
+                  今すでに動いている既存顧客の事例から、SlowBaseが今後目指す方向のヒントを見つけたいです。
                 </p>
               </Prose>
               <p className="mt-6 text-sm font-bold leading-8 text-lime-200">
@@ -549,7 +566,7 @@ export default function SlowBaseStatusReportPage() {
 
       <footer className="border-t border-stone-200 bg-white px-4 py-10">
         <div className="mx-auto max-w-6xl text-center text-xs text-stone-400">
-          <p>SlowBase 現状報告 — 既存顧客の支援から、次の事業の形を探る</p>
+          <p>SlowBase 現状報告 — 既存顧客の支援から、SlowBaseの次の形を探る</p>
           <p className="mt-1">
             Web版: /tre-pro/slowbase-status-report/ ·{" "}
             <a

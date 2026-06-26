@@ -10,7 +10,7 @@ import {
   dayTimeline,
   environmentItems,
   careerSteps,
-  stats,
+  members,
   snsLinks,
   recruitFaq,
   jobs,
@@ -279,18 +279,26 @@ export default function InotecRecruitLp() {
           </div>
         </section>
 
-        <section className="inotec-section inotec-section-alt">
+        <section id="members" className="inotec-section inotec-section-alt">
           <div className="inotec-container">
-            <SectionHead {...sectionCopy.data} />
-            <div className="inotec-stat-grid">
-              {stats.map((item) => (
-                <div key={item.label} className="inotec-stat">
-                  <p className="inotec-stat-value">
-                    {item.value}
-                    <span style={{ marginLeft: "0.25rem", fontSize: "1rem" }}>{item.unit}</span>
-                  </p>
-                  <p className="inotec-stat-label">{item.label}</p>
-                </div>
+            <SectionHead {...sectionCopy.members} />
+            <div className="inotec-member-grid">
+              {members.map((member) => (
+                <article key={member.name} className="inotec-member-card">
+                  <div className="inotec-member-photo-wrap">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      className={`inotec-member-photo${member.role === "代表取締役" ? " inotec-member-photo--contain" : ""}`}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="inotec-member-body">
+                    <p className="inotec-member-role">{member.role}</p>
+                    <h3 className="inotec-member-name">{member.name}</h3>
+                    <p className="inotec-member-text">{member.text}</p>
+                  </div>
+                </article>
               ))}
             </div>
           </div>

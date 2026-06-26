@@ -105,11 +105,25 @@ export const careerSteps = [
   { step: "04", title: "リーダー・管理者へ", text: "施工管理、営業、協力会社管理などへ広がる道も。" },
 ];
 
-export const stats = [
-  { value: "2024", unit: "年", label: "設立" },
-  { value: "8", unit: "カテゴリ", label: "施工対応" },
-  { value: "2", unit: "県", label: "中心エリア" },
-  { value: "50+", unit: "項目", label: "対応工事" },
+export const members = [
+  {
+    name: "井上 順史",
+    role: "代表取締役",
+    text: "現場の声を大切に、INOTECの仕組みと文化を一緒につくっていきたいと考えています。",
+    image: "https://inotec.jp/wp-content/uploads/2024/01/001-17.png",
+  },
+  {
+    name: "現場スタッフ",
+    role: "施工",
+    text: "未経験から入社し、先輩と一緒に網戸や収納工事を覚えています。完成した現場がやりがいです。",
+    image: "/tre-pro/images/inotec-recruit/inotec-hero-worksite.png",
+  },
+  {
+    name: "事務スタッフ",
+    role: "一般事務",
+    text: "見積りやスケジュール調整など、現場を支える仕事です。声をかけやすい雰囲気づくりを心がけています。",
+    image: "/tre-pro/images/inotec-recruit/inotec-story-house.png",
+  },
 ];
 
 export const snsLinks = [
@@ -298,12 +312,12 @@ export const sectionCopy = {
       "一緒に、関東の住まいを支えるチームをつくりませんか。",
     ],
   },
-  data: {
-    label: "数字で見るINOTEC",
-    title: "数字で見るINOTEC",
+  members: {
+    label: "メンバー紹介",
+    title: "メンバー紹介",
     lead: [
-      "設立間もない会社だからこそ、",
-      "事業データと対応範囲で信頼の輪郭をお伝えします。",
+      "INOTECで働く仲間の雰囲気や、",
+      "仕事に対する想いをご紹介します。",
     ],
   },
   sns: {

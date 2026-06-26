@@ -1,0 +1,604 @@
+.inotec-root {
+  --inotec-blue: #1e4d7b;
+  --inotec-blue-dark: #0f2f4f;
+  --inotec-blue-light: #e8f1f8;
+  --inotec-gray: #4a5568;
+  --inotec-gray-light: #f7f9fc;
+  --inotec-border: #e2e8f0;
+  --inotec-shadow: 0 12px 40px rgba(15, 47, 79, 0.08);
+  --inotec-radius: 1.25rem;
+  font-family: var(--font-inotec-sans), "Hiragino Sans", "Noto Sans JP", sans-serif;
+  color: #1a202c;
+  background: #fff;
+}
+
+.inotec-serif {
+  font-family: var(--font-inotec-serif), "Hiragino Mincho ProN", "Noto Serif JP", serif;
+}
+
+.inotec-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 47, 79, 0.92);
+  backdrop-filter: blur(12px);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inotec-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom-color: var(--inotec-border);
+  box-shadow: 0 4px 24px rgba(15, 47, 79, 0.06);
+}
+
+.inotec-header.is-scrolled .inotec-logo-text,
+.inotec-header.is-scrolled .inotec-nav-link {
+  color: var(--inotec-blue-dark);
+}
+
+.inotec-header.is-scrolled .inotec-nav-link:hover {
+  color: var(--inotec-blue);
+}
+
+.inotec-header.is-scrolled .inotec-nav-toggle {
+  color: var(--inotec-blue-dark);
+  border-color: var(--inotec-border);
+}
+
+.inotec-logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #2a6ba8, var(--inotec-blue-dark));
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.inotec-logo-text {
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.inotec-nav-link {
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.inotec-nav-link:hover {
+  color: #fff;
+}
+
+.inotec-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: #fff;
+}
+
+.inotec-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  animation: inotec-hero-zoom 20s ease-in-out infinite alternate;
+}
+
+.inotec-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 47, 79, 0.88) 0%,
+    rgba(15, 47, 79, 0.72) 45%,
+    rgba(30, 77, 123, 0.55) 100%
+  );
+}
+
+.inotec-hero-content {
+  position: relative;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 7rem 1.25rem 4rem;
+}
+
+.inotec-eyebrow {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.375rem 0.875rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.inotec-hero-title {
+  max-width: 14ch;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+.inotec-hero-lead {
+  margin-top: 1.25rem;
+  max-width: 42rem;
+  font-size: clamp(0.9375rem, 2vw, 1.125rem);
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.inotec-cta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .inotec-cta-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.inotec-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-align: center;
+  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.inotec-btn:hover {
+  transform: translateY(-2px);
+}
+
+.inotec-btn-primary {
+  background: #fff;
+  color: var(--inotec-blue-dark);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.inotec-btn-primary:hover {
+  background: var(--inotec-blue-light);
+}
+
+.inotec-btn-secondary {
+  background: var(--inotec-blue);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.inotec-btn-secondary:hover {
+  background: #2569a0;
+}
+
+.inotec-btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.inotec-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.inotec-section {
+  padding: 4.5rem 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .inotec-section {
+    padding: 6rem 2rem;
+  }
+}
+
+.inotec-section-alt {
+  background: var(--inotec-gray-light);
+}
+
+.inotec-section-dark {
+  background: var(--inotec-blue-dark);
+  color: #fff;
+}
+
+.inotec-container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.inotec-section-head {
+  margin-bottom: 2.5rem;
+}
+
+.inotec-section-label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--inotec-blue);
+}
+
+.inotec-section-dark .inotec-section-label {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.inotec-h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.inotec-lead {
+  margin-top: 1rem;
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--inotec-gray);
+}
+
+.inotec-section-dark .inotec-lead {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.inotec-card {
+  border: 1px solid var(--inotec-border);
+  border-radius: var(--inotec-radius);
+  background: #fff;
+  overflow: hidden;
+  box-shadow: var(--inotec-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inotec-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(15, 47, 79, 0.12);
+}
+
+.inotec-card img {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.inotec-card:hover img {
+  transform: scale(1.04);
+}
+
+.inotec-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .inotec-stat-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.inotec-stat {
+  padding: 1.5rem;
+  border-radius: var(--inotec-radius);
+  background: #fff;
+  border: 1px solid var(--inotec-border);
+  text-align: center;
+}
+
+.inotec-stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--inotec-blue);
+  line-height: 1;
+}
+
+.inotec-stat-label {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--inotec-gray);
+}
+
+.inotec-timeline {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.inotec-timeline::before {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  width: 2px;
+  background: linear-gradient(180deg, var(--inotec-blue), var(--inotec-border));
+}
+
+.inotec-timeline-item {
+  position: relative;
+  padding-bottom: 1.75rem;
+}
+
+.inotec-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.inotec-timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -1.28rem;
+  top: 0.45rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background: var(--inotec-blue);
+  box-shadow: 0 0 0 4px var(--inotec-blue-light);
+}
+
+.inotec-timeline-time {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--inotec-blue);
+}
+
+.inotec-timeline-title {
+  margin-top: 0.25rem;
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.inotec-timeline-text {
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--inotec-gray);
+}
+
+.inotec-faq details {
+  border: 1px solid var(--inotec-border);
+  border-radius: 0.875rem;
+  background: #fff;
+  overflow: hidden;
+}
+
+.inotec-faq details + details {
+  margin-top: 0.75rem;
+}
+
+.inotec-faq summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.125rem 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+
+.inotec-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.inotec-faq summary::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--inotec-blue);
+  transition: transform 0.2s ease;
+}
+
+.inotec-faq details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.inotec-faq-answer {
+  padding: 0 1.25rem 1.125rem;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--inotec-gray);
+}
+
+.inotec-sns-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--inotec-border);
+  border-radius: var(--inotec-radius);
+  background: #fff;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.inotec-sns-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--inotec-shadow);
+}
+
+.inotec-sns-banner::after {
+  content: "→";
+  flex-shrink: 0;
+  font-size: 1.125rem;
+  color: var(--inotec-blue);
+  transition: transform 0.25s ease;
+}
+
+.inotec-sns-banner:hover::after {
+  transform: translateX(4px);
+}
+
+.inotec-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.inotec-form label {
+  display: grid;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.inotec-form input,
+.inotec-form select,
+.inotec-form textarea {
+  width: 100%;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--inotec-border);
+  border-radius: 0.625rem;
+  font: inherit;
+  background: #fff;
+}
+
+.inotec-form input:focus,
+.inotec-form select:focus,
+.inotec-form textarea:focus {
+  outline: 2px solid rgba(30, 77, 123, 0.35);
+  outline-offset: 1px;
+}
+
+.inotec-flow-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.inotec-flow-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--inotec-blue-light);
+  color: var(--inotec-blue);
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.inotec-fade-in {
+  animation: inotec-fade-in 0.6s ease both;
+}
+
+@keyframes inotec-hero-zoom {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes inotec-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inotec-mobile-nav {
+  position: fixed;
+  inset: 4rem 0 0;
+  z-index: 40;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.98);
+  border-top: 1px solid var(--inotec-border);
+  overflow-y: auto;
+}
+
+.inotec-mobile-nav a {
+  display: block;
+  padding: 0.875rem 0.5rem;
+  border-bottom: 1px solid var(--inotec-border);
+  font-weight: 600;
+  color: var(--inotec-blue-dark);
+}
+
+.inotec-footer {
+  background: var(--inotec-blue-dark);
+  color: rgba(255, 255, 255, 0.82);
+  padding: 3rem 1.25rem 2rem;
+}
+
+.inotec-footer a {
+  color: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.inotec-footer a:hover {
+  opacity: 0.8;
+}
+
+.inotec-switch {
+  display: inline-flex;
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.inotec-switch a {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.75);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.inotec-switch a:hover {
+  color: #fff;
+}
+
+.inotec-header.is-scrolled .inotec-switch {
+  background: var(--inotec-gray-light);
+  border-color: var(--inotec-border);
+}
+
+.inotec-header.is-scrolled .inotec-switch a {
+  color: var(--inotec-gray);
+}
+
+.inotec-header.is-scrolled .inotec-switch a:hover {
+  color: var(--inotec-blue-dark);
+}
+
+@media print {
+  .inotec-header,
+  .inotec-mobile-nav,
+  .inotec-footer {
+    display: none;
+  }
+}

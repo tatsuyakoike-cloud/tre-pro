@@ -6,7 +6,6 @@ import {
   navItems,
   heroCtas,
   sectionCopy,
-  storyHighlights,
   workCategories,
   dayTimeline,
   environmentItems,
@@ -165,13 +164,6 @@ export default function InotecRecruitLp() {
                 <p className="inotec-body">
                   <PcLines lines={[...sectionCopy.story.body]} />
                 </p>
-                <div className="inotec-highlight-grid">
-                  {storyHighlights.map((value) => (
-                    <span key={value} className="inotec-highlight-value">
-                      {value}
-                    </span>
-                  ))}
-                </div>
               </div>
               <img
                 src={images.story}
@@ -218,9 +210,12 @@ export default function InotecRecruitLp() {
         <section id="day" className="inotec-section inotec-section-alt">
           <div className="inotec-container">
             <SectionHead {...sectionCopy.day} />
-            <div className="inotec-day-grid">
-              {dayTimeline.map((item) => (
+            <div className="inotec-day-scroll" aria-label="1日の流れステップ">
+              {dayTimeline.map((item, index) => (
                 <div key={item.time} className="inotec-day-panel">
+                  <span className="inotec-day-step">
+                    STEP {String(index + 1).padStart(2, "0")}
+                  </span>
                   <p className="inotec-day-time">{item.time}</p>
                   <h3 className="inotec-day-title">{item.title}</h3>
                   <p className="inotec-day-text">{item.text}</p>

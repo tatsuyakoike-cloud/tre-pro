@@ -37,8 +37,6 @@ export const heroCtas = [
   { href: "#sns", label: "仕事の雰囲気を見る", variant: "outline" as const },
 ];
 
-export const storyHighlights = ["2024年", "千葉・埼玉", "関東近辺"];
-
 const inotecImg = "https://inotec.jp/wp-content/uploads";
 
 export const workCategories = [
@@ -352,7 +350,7 @@ export const sectionCopy = {
 } as const;
 
 export const images = {
-  hero: `${inotecImg}/2023/12/h007.png`,
-  story: `${inotecImg}/2024/01/003-15.png`,
+  hero: "/tre-pro/images/inotec-recruit/inotec-hero-worksite.png",
+  story: "/tre-pro/images/inotec-recruit/inotec-story-house.png",
   message: `${inotecImg}/2024/01/001-17.png`,
 };

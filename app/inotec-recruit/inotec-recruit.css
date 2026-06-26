@@ -138,9 +138,9 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(38, 50, 70, 0.45) 42%,
-    rgba(38, 50, 70, 0.62) 100%
+    rgba(38, 50, 70, 0.08) 0%,
+    rgba(38, 50, 70, 0.28) 55%,
+    rgba(38, 50, 70, 0.42) 100%
   );
 }
 
@@ -408,12 +408,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 2rem;
 }
 
 .inotec-work-row {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.75rem;
   width: 100%;
 }
 
@@ -437,21 +437,59 @@
   }
 }
 
-.inotec-day-grid {
-  display: grid;
+.inotec-day-scroll {
+  display: flex;
   gap: 1rem;
+  margin: 0 -1.25rem;
+  padding: 0.25rem 1.25rem 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
-@media (min-width: 640px) {
-  .inotec-day-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.inotec-day-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.inotec-day-scroll::-webkit-scrollbar-thumb {
+  background: var(--inotec-border);
+  border-radius: 999px;
 }
 
 .inotec-day-panel {
+  flex: 0 0 min(78vw, 16rem);
+  scroll-snap-align: start;
   border: 1px solid var(--inotec-border);
   background: #fff;
-  padding: 1.375rem 1.5rem;
+  padding: 1.375rem 1.25rem;
+}
+
+.inotec-day-step {
+  display: inline-block;
+  margin-bottom: 0.625rem;
+  padding: 0.25rem 0.625rem;
+  background: var(--inotec-green-soft);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--inotec-green);
+}
+
+@media (min-width: 1024px) {
+  .inotec-day-scroll {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .inotec-day-panel {
+    flex: initial;
+    min-width: 0;
+  }
 }
 
 .inotec-day-time {
@@ -863,8 +901,8 @@
 .inotec-story-photo {
   width: 100%;
   min-height: 17.5rem;
-  object-fit: contain;
-  background: var(--inotec-gray-light);
+  object-fit: cover;
+  border: 1px solid var(--inotec-border);
 }
 
 .inotec-entry-grid {

@@ -105,7 +105,7 @@ export default function InotecRecruitLp() {
             <img
               src={site.logoUrl}
               alt={site.name}
-              className="inotec-logo-img"
+              className="inotec-logo-img inotec-logo-img--white"
               width={467}
               height={58}
             />
@@ -165,12 +165,11 @@ export default function InotecRecruitLp() {
                 <p className="inotec-body">
                   <PcLines lines={[...sectionCopy.story.body]} />
                 </p>
-                <div className="inotec-highlight-grid" style={{ marginTop: "2rem" }}>
-                  {storyHighlights.map((item) => (
-                    <div key={item.label} className="inotec-highlight-card">
-                      <p className="inotec-highlight-label">{item.label}</p>
-                      <p className="inotec-highlight-value">{item.value}</p>
-                    </div>
+                <div className="inotec-highlight-grid">
+                  {storyHighlights.map((value) => (
+                    <span key={value} className="inotec-highlight-value">
+                      {value}
+                    </span>
                   ))}
                 </div>
               </div>
@@ -187,32 +186,44 @@ export default function InotecRecruitLp() {
         <section id="work" className="inotec-section inotec-section-alt">
           <div className="inotec-container">
             <SectionHead {...sectionCopy.work} />
-            <div className="inotec-grid-work">
-              {workCategories.map((cat) => (
-                <article key={cat.title} className="inotec-card">
-                  <img src={cat.image} alt={cat.title} loading="lazy" />
-                  <div className="inotec-card-body">
-                    <p className="inotec-card-category">{cat.title}</p>
-                    <h3 className="inotec-card-title">{cat.recruitLabel}</h3>
-                    <p className="inotec-card-text">{cat.items.join(" / ")}</p>
-                  </div>
-                </article>
-              ))}
+            <div className="inotec-work-bento">
+              <div className="inotec-work-row inotec-work-row--3">
+                {workCategories.slice(0, 3).map((cat) => (
+                  <article key={cat.title} className="inotec-card">
+                    <img src={cat.image} alt={cat.title} loading="lazy" />
+                    <div className="inotec-card-body">
+                      <p className="inotec-card-category">{cat.title}</p>
+                      <h3 className="inotec-card-title">{cat.recruitLabel}</h3>
+                      <p className="inotec-card-text">{cat.items.join(" / ")}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <div className="inotec-work-row inotec-work-row--2">
+                {workCategories.slice(3).map((cat) => (
+                  <article key={cat.title} className="inotec-card">
+                    <img src={cat.image} alt={cat.title} loading="lazy" />
+                    <div className="inotec-card-body">
+                      <p className="inotec-card-category">{cat.title}</p>
+                      <h3 className="inotec-card-title">{cat.recruitLabel}</h3>
+                      <p className="inotec-card-text">{cat.items.join(" / ")}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        <section id="day" className="inotec-section">
-          <div className="inotec-container inotec-story-grid">
-            <div>
-              <SectionHead {...sectionCopy.day} />
-            </div>
-            <div className="inotec-timeline">
+        <section id="day" className="inotec-section inotec-section-alt">
+          <div className="inotec-container">
+            <SectionHead {...sectionCopy.day} />
+            <div className="inotec-day-grid">
               {dayTimeline.map((item) => (
-                <div key={item.time} className="inotec-timeline-item">
-                  <p className="inotec-timeline-time">{item.time}</p>
-                  <h3 className="inotec-timeline-title">{item.title}</h3>
-                  <p className="inotec-timeline-text">{item.text}</p>
+                <div key={item.time} className="inotec-day-panel">
+                  <p className="inotec-day-time">{item.time}</p>
+                  <h3 className="inotec-day-title">{item.title}</h3>
+                  <p className="inotec-day-text">{item.text}</p>
                 </div>
               ))}
             </div>
@@ -233,7 +244,7 @@ export default function InotecRecruitLp() {
           </div>
         </section>
 
-        <section id="career" className="inotec-section inotec-section-dark">
+        <section id="career" className="inotec-section inotec-section-soft">
           <div className="inotec-container">
             <SectionHead {...sectionCopy.career} />
             <div className="inotec-grid-2">
@@ -248,23 +259,24 @@ export default function InotecRecruitLp() {
           </div>
         </section>
 
-        <section id="message" className="inotec-section">
+        <section id="message" className="inotec-section inotec-message-section">
           <div className="inotec-container inotec-message-grid">
-            <img
-              src={images.message}
-              alt="代表メッセージ"
-              className="inotec-story-photo"
-              style={{ minHeight: "18rem" }}
-              loading="lazy"
-            />
+            <div className="inotec-message-photo-wrap">
+              <img
+                src={images.message}
+                alt="代表メッセージ"
+                className="inotec-message-photo"
+                loading="lazy"
+              />
+            </div>
             <div>
               <SectionHead {...sectionCopy.message} />
-              <blockquote className="inotec-quote">
+              <blockquote className="inotec-quote" style={{ marginTop: "1.5rem" }}>
                 <PcLines lines={[...sectionCopy.message.quote]} />
               </blockquote>
               <p
                 className="inotec-body"
-                style={{ marginTop: "1rem", fontWeight: 700, color: "var(--inotec-green)" }}
+                style={{ marginTop: "1.75rem", fontWeight: 700, color: "var(--inotec-green)" }}
               >
                 代表取締役　{site.representative}
               </p>
@@ -376,13 +388,13 @@ export default function InotecRecruitLp() {
           </div>
         </section>
 
-        <section id="corporate" className="inotec-section inotec-section-dark">
+        <section id="corporate" className="inotec-section">
           <div className="inotec-container">
             <SectionHead {...sectionCopy.corporate} />
 
             <div className="inotec-grid-3" style={{ marginBottom: "3rem" }}>
               {corporateReasons.map((reason) => (
-                <div key={reason} className="inotec-dark-panel">
+                <div key={reason} className="inotec-corporate-panel">
                   {reason}
                 </div>
               ))}
@@ -393,11 +405,9 @@ export default function InotecRecruitLp() {
             </h3>
             <div className="inotec-grid-3" style={{ marginBottom: "3rem" }}>
               {serviceCategories.map((cat) => (
-                <div key={cat.title} className="inotec-dark-panel">
-                  <h4 style={{ fontWeight: 700 }}>{cat.title}</h4>
-                  <p style={{ marginTop: "0.5rem", fontSize: "0.875rem", lineHeight: 1.75, color: "rgba(255,255,255,0.75)" }}>
-                    {cat.items.join(" / ")}
-                  </p>
+                <div key={cat.title} className="inotec-corporate-panel">
+                  <h4>{cat.title}</h4>
+                  <p style={{ marginTop: "0.5rem" }}>{cat.items.join(" / ")}</p>
                 </div>
               ))}
             </div>
@@ -411,7 +421,7 @@ export default function InotecRecruitLp() {
                   <span className="inotec-flow-num">{step.step}</span>
                   <div>
                     <h4 style={{ fontWeight: 700 }}>{step.title}</h4>
-                    <p style={{ marginTop: "0.375rem", fontSize: "0.875rem", lineHeight: 1.75, color: "rgba(255,255,255,0.75)" }}>
+                    <p className="inotec-body" style={{ marginTop: "0.375rem" }}>
                       {step.text}
                     </p>
                   </div>
@@ -422,7 +432,7 @@ export default function InotecRecruitLp() {
             <h3 className="inotec-h2 inotec-serif" style={{ fontSize: "1.25rem", marginBottom: "1rem" }}>
               よくある質問（お客様向け）
             </h3>
-            <div className="inotec-faq" style={{ maxWidth: "48rem" }}>
+            <div className="inotec-faq inotec-faq--light" style={{ maxWidth: "48rem" }}>
               {corporateFaq.map((item) => (
                 <details key={item.q}>
                   <summary>{item.q}</summary>
@@ -436,11 +446,11 @@ export default function InotecRecruitLp() {
                 href={site.officialUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inotec-btn inotec-btn-secondary"
+                className="inotec-btn inotec-btn-primary"
               >
                 公式サイトを見る
               </a>
-              <a href={site.telLink} className="inotec-btn inotec-btn-outline">
+              <a href={site.telLink} className="inotec-btn inotec-btn-dark">
                 無料現地調査の相談 {site.tel}
               </a>
             </div>
@@ -570,8 +580,8 @@ export default function InotecRecruitLp() {
             <img
               src={site.logoUrl}
               alt={site.name}
-              className="inotec-logo-img"
-              style={{ filter: "brightness(0) invert(1)", marginBottom: "1rem" }}
+              className="inotec-logo-img inotec-logo-img--white"
+              style={{ marginBottom: "1rem" }}
               width={467}
               height={58}
             />

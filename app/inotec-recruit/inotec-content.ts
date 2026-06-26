@@ -37,57 +37,47 @@ export const heroCtas = [
   { href: "#sns", label: "仕事の雰囲気を見る", variant: "outline" as const },
 ];
 
-export const storyHighlights = [
-  { label: "設立", value: "2024年" },
-  { label: "中心エリア", value: "千葉・埼玉" },
-  { label: "対応エリア", value: "関東近辺" },
-];
+export const storyHighlights = ["2024年", "千葉・埼玉", "関東近辺"];
+
+const inotecImg = "https://inotec.jp/wp-content/uploads";
 
 export const workCategories = [
   {
     title: "窓まわり",
     recruitLabel: "暮らしの安全性・快適性を支える仕事",
     items: ["網戸", "シャッター", "面格子", "カーテンレール", "ブラインド"],
-    image:
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80",
+    image: `${inotecImg}/2023/12/h001.png`,
   },
   {
     title: "キッチンまわり",
     recruitLabel: "新生活の使いやすさを整える仕事",
     items: ["食洗器", "カップボード", "キッチンライト"],
-    image:
-      "https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=800&q=80",
+    image: `${inotecImg}/2023/12/h004.png`,
   },
   {
     title: "電気・エアコン",
     recruitLabel: "住まいのインフラを支える仕事",
     items: ["TVアンテナ", "コンセント増設", "エアコン工事", "照明"],
-    image:
-      "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80",
+    image: `${inotecImg}/2023/12/h002.png`,
   },
   {
     title: "収納・造作",
     recruitLabel: "暮らしに合わせて形にする仕事",
     items: ["枕棚", "可動棚", "グルニエ", "室内手すり"],
-    image:
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80",
+    image: `${inotecImg}/2023/12/h010.png`,
   },
   {
     title: "外構・庭まわり",
     recruitLabel: "第一印象と生活動線を整える仕事",
     items: ["テラス屋根", "ウッドデッキ", "カーポート", "フェンス"],
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+    image: `${inotecImg}/2023/12/h007.png`,
   },
 ];
 
 export const dayTimeline = [
-  { time: "08:00", title: "出社・集合", text: "当日の現場を確認し、必要な部材・工具を準備します。" },
-  { time: "09:00", title: "現場へ移動", text: "千葉・埼玉を中心に、戸建住宅の現場へ向かいます。" },
-  { time: "09:30", title: "施工前確認", text: "お客様や現場の状態を確認し、安全に作業を進めます。" },
-  { time: "10:00", title: "工事開始", text: "網戸、収納、エアコンなど、当日の施工内容に取り組みます。" },
+  { time: "08:00", title: "出社・集合", text: "当日の現場と必要な部材・工具を確認します。" },
+  { time: "10:00", title: "工事開始", text: "網戸、収納、エアコンなど、当日の施工に取り組みます。" },
   { time: "12:00", title: "お昼休憩", text: "現場近くまたは車内で休憩。無理のないペースで進めます。" },
-  { time: "13:00", title: "施工・確認", text: "仕上がりを確認しながら、丁寧に作業を続けます。" },
   { time: "16:00", title: "片付け・報告", text: "現場を清掃し、完了内容を報告して帰社または退勤。" },
 ];
 
@@ -362,12 +352,7 @@ export const sectionCopy = {
 } as const;
 
 export const images = {
-  hero:
-    "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80",
-  story:
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-  message:
-    "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
-  office:
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+  hero: `${inotecImg}/2023/12/h007.png`,
+  story: `${inotecImg}/2024/01/003-15.png`,
+  message: `${inotecImg}/2024/01/001-17.png`,
 };

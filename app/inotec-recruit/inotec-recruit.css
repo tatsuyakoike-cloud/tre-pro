@@ -1,13 +1,14 @@
 .inotec-root {
   --inotec-green: #04840e;
   --inotec-green-dark: #036a0b;
+  --inotec-green-soft: #edf7ee;
   --inotec-navy: #263246;
   --inotec-navy-dark: #00102e;
-  --inotec-text: #060509;
+  --inotec-text: #233452;
   --inotec-gray: #6d7685;
-  --inotec-gray-light: #f4f5f7;
-  --inotec-border: #dbdbdb;
-  --inotec-shadow: 0 8px 24px rgba(0, 16, 46, 0.06);
+  --inotec-gray-light: #f7f9fb;
+  --inotec-border: #e3e7ec;
+  --inotec-shadow: 0 8px 28px rgba(35, 52, 82, 0.06);
   --inotec-radius: 0;
   font-family: var(--font-inotec-sans), "Hiragino Sans", "Noto Sans JP", sans-serif;
   color: var(--inotec-text);
@@ -50,6 +51,10 @@
   height: 2.25rem;
   max-width: min(220px, 52vw);
   object-fit: contain;
+}
+
+.inotec-logo-img--white {
+  filter: brightness(0) invert(1);
 }
 
 @media (min-width: 768px) {
@@ -133,9 +138,9 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0, 16, 46, 0.72) 0%,
-    rgba(38, 50, 70, 0.82) 55%,
-    rgba(38, 50, 70, 0.9) 100%
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(38, 50, 70, 0.45) 42%,
+    rgba(38, 50, 70, 0.62) 100%
   );
 }
 
@@ -245,6 +250,10 @@
 
 .inotec-section-alt {
   background: var(--inotec-gray-light);
+}
+
+.inotec-section-soft {
+  background: var(--inotec-green-soft);
 }
 
 .inotec-section-dark {
@@ -372,42 +381,156 @@
 }
 
 .inotec-highlight-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.875rem;
-}
-
-@media (max-width: 639px) {
-  .inotec-highlight-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.inotec-highlight-card {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 5.75rem;
-  padding: 1.125rem 0.875rem;
-  border: 1px solid var(--inotec-border);
-  background: #fff;
-  text-align: center;
-}
-
-.inotec-highlight-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.4;
-  color: var(--inotec-gray);
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  margin-top: 2.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--inotec-border);
 }
 
 .inotec-highlight-value {
-  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 7.5rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--inotec-border);
+  background: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--inotec-green);
+}
+
+.inotec-work-bento {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.inotec-work-row {
+  display: grid;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.inotec-work-row--3 {
+  max-width: 58rem;
+  grid-template-columns: 1fr;
+}
+
+.inotec-work-row--2 {
+  max-width: 39rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .inotec-work-row--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .inotec-work-row--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.inotec-day-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .inotec-day-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.inotec-day-panel {
+  border: 1px solid var(--inotec-border);
+  background: #fff;
+  padding: 1.375rem 1.5rem;
+}
+
+.inotec-day-time {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--inotec-green);
+}
+
+.inotec-day-title {
+  margin-top: 0.375rem;
   font-size: 1.0625rem;
   font-weight: 700;
-  line-height: 1.45;
-  color: var(--inotec-green);
+}
+
+.inotec-day-text {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--inotec-gray);
+}
+
+.inotec-message-section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.inotec-message-grid {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .inotec-message-grid {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 4rem;
+  }
+}
+
+.inotec-message-photo-wrap {
+  padding: 1rem;
+  border: 1px solid var(--inotec-border);
+  background: var(--inotec-gray-light);
+}
+
+.inotec-message-photo {
+  display: block;
+  width: 100%;
+  max-width: 18rem;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.inotec-corporate-panel {
+  border: 1px solid var(--inotec-border);
+  background: #fff;
+  padding: 1.25rem 1.375rem;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--inotec-gray);
+}
+
+.inotec-corporate-panel h4 {
+  font-weight: 700;
+  color: var(--inotec-text);
+}
+
+.inotec-faq--light details {
+  border: 1px solid var(--inotec-border);
+  background: #fff;
+}
+
+.inotec-faq--light summary {
+  color: var(--inotec-text);
+}
+
+.inotec-faq--light .inotec-faq-answer {
+  color: var(--inotec-gray);
 }
 
 .inotec-timeline {
@@ -574,8 +697,8 @@
   justify-content: center;
   width: 2.25rem;
   height: 2.25rem;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: var(--inotec-green-soft);
+  color: var(--inotec-green);
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -740,19 +863,8 @@
 .inotec-story-photo {
   width: 100%;
   min-height: 17.5rem;
-  object-fit: cover;
-}
-
-.inotec-message-grid {
-  display: grid;
-  gap: 2rem;
-  align-items: center;
-}
-
-@media (min-width: 1024px) {
-  .inotec-message-grid {
-    grid-template-columns: 0.95fr 1.05fr;
-  }
+  object-fit: contain;
+  background: var(--inotec-gray-light);
 }
 
 .inotec-entry-grid {
@@ -785,28 +897,29 @@
 
 .inotec-career-panel {
   padding: 1.375rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--inotec-border);
+  background: #fff;
 }
 
 .inotec-career-step {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--inotec-green);
 }
 
 .inotec-career-title {
   margin-top: 0.375rem;
   font-size: 1.0625rem;
   font-weight: 700;
+  color: var(--inotec-text);
 }
 
 .inotec-career-text {
   margin-top: 0.5rem;
   font-size: 0.9375rem;
   line-height: 1.75;
-  color: rgba(255, 255, 255, 0.78);
+  color: var(--inotec-gray);
 }
 
 @media print {

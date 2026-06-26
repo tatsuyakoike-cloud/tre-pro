@@ -4,8 +4,6 @@ export const site = {
   logoUrl: "https://inotec.jp/wp-content/uploads/2024/04/logo-1.png",
   tagline: ["住まいの“あと少し”を、", "技術で叶える。"],
   subCopy: [
-    "新築住宅のオプション工事を通じて、",
-    "暮らしの快適さと安心をつくる仕事。",
     "INOTECは、関東の住まいに向き合いながら、",
     "これからの会社を一緒につくる仲間を募集しています。",
   ],
@@ -40,10 +38,9 @@ export const heroCtas = [
 ];
 
 export const storyHighlights = [
-  { value: "2024", label: "設立" },
-  { value: "千葉・埼玉", label: "中心エリア" },
-  { value: "8+", label: "施工カテゴリ" },
-  { value: "関東近辺", label: "対応エリア" },
+  { label: "設立", value: "2024年" },
+  { label: "中心エリア", value: "千葉・埼玉" },
+  { label: "対応エリア", value: "関東近辺" },
 ];
 
 export const workCategories = [

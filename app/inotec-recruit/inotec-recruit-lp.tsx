@@ -140,10 +140,10 @@ export default function InotecRecruitLp() {
           <div className="inotec-hero-content">
             <p className="inotec-hero-label">採用・コーポレート</p>
             <h1 className="inotec-hero-title inotec-serif">
-              <PcLines lines={[...site.tagline]} />
+              <PcLines lines={[...site.tagline]} always />
             </h1>
             <p className="inotec-hero-lead">
-              <PcLines lines={[...site.subCopy]} />
+              <PcLines lines={[...site.subCopy]} always />
             </p>
             <div className="inotec-cta-row">
               {heroCtas.map((cta) => (
@@ -165,11 +165,11 @@ export default function InotecRecruitLp() {
                 <p className="inotec-body">
                   <PcLines lines={[...sectionCopy.story.body]} />
                 </p>
-                <div className="inotec-stat-grid" style={{ marginTop: "2rem" }}>
+                <div className="inotec-highlight-grid" style={{ marginTop: "2rem" }}>
                   {storyHighlights.map((item) => (
-                    <div key={item.label} className="inotec-stat">
-                      <p className="inotec-stat-value">{item.value}</p>
-                      <p className="inotec-stat-label">{item.label}</p>
+                    <div key={item.label} className="inotec-highlight-card">
+                      <p className="inotec-highlight-label">{item.label}</p>
+                      <p className="inotec-highlight-value">{item.value}</p>
                     </div>
                   ))}
                 </div>

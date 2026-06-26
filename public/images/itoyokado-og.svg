@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#1e2d42"/>
+  <rect y="400" width="1200" height="230" fill="#f5f3ef"/>
+  <path d="M0 440 Q300 400 600 430 T1200 420 V630 H0 Z" fill="#2c4a6e" opacity="0.15"/>
+  <ellipse cx="600" cy="280" rx="320" ry="120" fill="#c41e3a" opacity="0.08"/>
+  <text x="600" y="240" text-anchor="middle" fill="#f5f3ef" font-family="serif" font-size="38" letter-spacing="2">a Т/HЛ’Л</text>
+  <text x="600" y="300" text-anchor="middle" fill="#8b7355" font-family="sans-serif" font-size="16" letter-spacing="6">°(Џ-ынь…ё√„</text>
+  <line x1="380" y1="340" x2="820" y2="340" stroke="#c41e3a" stroke-width="2"/>
+  <text x="600" y="520" text-anchor="middle" fill="#2c4a6e" font-family="sans-serif" font-size="14" letter-spacing="4">§»ьиьЂ ∞ЁwЛm</text>
+</svg>

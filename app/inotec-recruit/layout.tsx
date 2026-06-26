@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, Noto_Serif_JP } from "next/font/google";
+import { Noto_Sans_JP, Shippori_Mincho } from "next/font/google";
 
 const notoSans = Noto_Sans_JP({
   subsets: ["latin"],
@@ -8,9 +8,9 @@ const notoSans = Noto_Sans_JP({
   display: "swap",
 });
 
-const notoSerif = Noto_Serif_JP({
+const shippori = Shippori_Mincho({
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-inotec-serif",
   display: "swap",
 });
@@ -42,7 +42,7 @@ export default function InotecRecruitLayout({
   return (
     <div
       lang="ja"
-      className={`${notoSans.variable} ${notoSerif.variable} min-h-full`}
+      className={`${notoSans.variable} ${shippori.variable} min-h-full`}
     >
       {children}
     </div>

@@ -8,6 +8,42 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | SlowBase event（SERAMADE支援） | [docs/slowbase-event.md](docs/slowbase-event.md) | [/tre-pro/slowbase-event/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-event/) |
 | SlowBase SeraMade 現状報告（slim） | [docs/slowbase-seramade-report.md](docs/slowbase-seramade-report.md) | [/tre-pro/slowbase-seramade-report/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-seramade-report/) |
 | SlowBase 現状報告 | [docs/slowbase-status-report.md](docs/slowbase-status-report.md) | [/tre-pro/slowbase-status-report/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-status-report/) |
+| トレプロ営業プロトタイプ構築方針 | [trepro_sales_web_requirements.md](trepro_sales_web_requirements.md) | [/tre-pro/trepro-sales-prototype/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-sales-prototype/) |
+
+## トレプロ営業プロトタイプ — ローカル起動・公開
+
+### ローカル開発
+
+```bash
+npm install
+npm run dev
+```
+
+ブラウザで [http://localhost:3000/tre-pro/trepro-sales-prototype/](http://localhost:3000/tre-pro/trepro-sales-prototype/) を開く。
+
+### ビルド（GitHub Pages 用）
+
+```bash
+npm run build
+```
+
+静的ファイルは `out/` に出力される。`trepro-sales-prototype` ページは `out/trepro-sales-prototype/index.html` に生成される。
+
+### GitHub Pages 公開手順
+
+1. 変更を `main` ブランチに push する
+2. GitHub リポジトリの **Settings → Pages** で Source が **GitHub Actions** になっていることを確認
+3. `.github/workflows/deploy.yml` が push 時に自動ビルド・デプロイする
+4. 公開 URL: [https://tatsuyakoike-cloud.github.io/tre-pro/trepro-sales-prototype/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-sales-prototype/)
+
+### KPI データの更新
+
+数値データは JSON で管理している。Excel 集計後に以下を更新する。
+
+- `app/trepro-sales-prototype/data/kpi.json` — CAC/LTV、週次KPI、ファネル
+- `app/trepro-sales-prototype/data/tier-summary.json` — Tier別件数
+
+更新後に `npm run build` で再ビルドし、`main` に push する。
 
 ## Getting Started
 

@@ -1,0 +1,44 @@
+{
+  "cacComparison": {
+    "labels": ["過去", "現在"],
+    "data": [60, 200],
+    "unit": "万円",
+    "note": "現在値はExcelの最新集計に合わせて更新"
+  },
+  "ltvComparison": {
+    "labels": ["過去平均", "現在平均"],
+    "data": [18, 10],
+    "unit": "ヶ月"
+  },
+  "kpiCards": [
+    { "label": "過去CAC", "value": "約60万円", "note": "過去に高効率で獲得できていた状態" },
+    { "label": "現在CAC", "value": "約200万〜330万円", "note": "入力データ・集計条件により要精査" },
+    { "label": "過去LTV期間", "value": "約18ヶ月", "note": "平均継続期間の目安" },
+    { "label": "現在LTV期間", "value": "約10ヶ月", "note": "継続期間の低下" },
+    { "label": "判断ライン", "value": "LTV / CAC = 3倍以上", "note": "営業施策継続の目安" },
+    { "label": "直近重点", "value": "7月・8月で回復", "note": "LP撤退ラインに入る前の改善期間" }
+  ],
+  "weeklyTrend": {
+    "labels": ["7月第1週", "7月第2週", "7月第3週", "7月第4週", "8月第1週"],
+    "datasets": [
+      { "label": "配信数", "data": [null, null, null, null, null] },
+      { "label": "開封率", "data": [null, null, null, null, null], "unit": "%" },
+      { "label": "返信率", "data": [null, null, null, null, null], "unit": "%" },
+      { "label": "アポ数", "data": [null, null, null, null, null] },
+      { "label": "商談数", "data": [null, null, null, null, null] },
+      { "label": "受注数", "data": [null, null, null, null, null] }
+    ]
+  },
+  "cacLtvRatio": {
+    "labels": ["7月第1週", "7月第2週", "7月第3週", "7月第4週", "8月第1週"],
+    "cac": [null, null, null, null, null],
+    "ltvCacRatio": [null, null, null, null, null],
+    "targetLine": 3.0,
+    "unit": { "cac": "万円", "ratio": "倍" }
+  },
+  "funnel": {
+    "labels": ["配信対象", "開封", "クリック", "返信", "架電接続", "アポ", "商談", "受注"],
+    "data": [null, null, null, null, null, null, null, null],
+    "status": "集計中"
+  }
+}

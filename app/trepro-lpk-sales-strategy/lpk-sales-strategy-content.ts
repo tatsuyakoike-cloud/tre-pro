@@ -28,7 +28,7 @@ export const policyRationale =
 export const augustEndState = [
   { item: "営業体制", state: "オフライン営業とオンライン営業の役割が明確になっている" },
   { item: "LP経由", state: "既存リストから商談・受注が生まれている" },
-  { item: "数値管理", state: "成約数、LTV合計、総獲得コスト、倍率を確認できる" },
+  { item: "数値管理", state: "成約数、LTV合計、総獲得コスト、LTV/CAC倍率を確認できる" },
   { item: "リスト管理", state: "確度別・Tier別に営業対象が整理されている" },
   { item: "ナーチャリング", state: "メール、ホワイトペーパー、ウェビナー、LINE等で継続接点を作れている" },
   { item: "Q4準備", state: "9月以降、CRM・SFA・MAへ接続できる運用ルールが整理されている" },
@@ -46,48 +46,64 @@ export const responsePolicy = [
   "オフライン営業では、代理店・紹介・地方営業・飛び込みを活用し、短期の受注機会を作る。",
   "オンライン営業では、LP経由の既存リストを整理し、掘り起こし施策を新たに企画・実行する。",
   "これまでの商談受注率を前提に置きすぎず、今回の掘り起こし施策で新しい基準値を作る。",
-  "施策ごとに、成約数・LTV合計・総獲得コスト・倍率を確認する。",
+  "施策ごとに、成約数・LTV合計・総獲得コスト・LTV/CAC倍率を確認する。",
+];
+
+export const keyMetrics = [
+  { label: "総獲得コスト", value: "約700万円", note: "税抜概算" },
+  { label: "必要LTV", value: "2,100万円", note: "700万 × 3.0倍" },
+  { label: "最低成約数", value: "7社", note: "継続判断ライン", accent: true },
+  { label: "1社LTV目安", value: "330万円", note: "期待LTV" },
+  { label: "判断基準", value: "3.0倍以上", note: "LTV/CAC" },
 ];
 
 export const metricsPremise = [
-  { item: "総獲得コスト", value: "800万円", note: "LP広告・営業人件費・外注費・ツール費などを含めた施策全体のコスト" },
-  { item: "目標倍率", value: "3.0倍以上", note: "撤退ラインを超える最低基準" },
-  { item: "必要LTV合計", value: "2,400万円", note: "800万円 × 3.0倍" },
-  { item: "1社あたりLTV目安", value: "330万円", note: "月額単価 × 想定継続月数で算出する期待値" },
-  { item: "現状例のLTV合計", value: "900万円", note: "330万円 + 240万円 + 330万円" },
-  { item: "現状例の倍率", value: "1.13倍", note: "900万円 ÷ 800万円", accent: true },
+  { item: "総獲得コスト", value: "約700万円", note: "LP経由施策の税抜概算コスト。広告費・営業人件費・外注費等を含む" },
+  { item: "判断基準", value: "LTV/CAC 3.0倍以上", note: "継続判断の最低ライン" },
+  { item: "必要LTV", value: "2,100万円", note: "700万円 × 3.0倍" },
+  { item: "1社あたりLTV目安", value: "330万円", note: "受注1社あたりの期待LTV" },
+  { item: "最低必要成約数", value: "7社", note: "2,100万円 ÷ 330万円 ≒ 6.36社 → 切り上げ", accent: true },
 ];
 
 export const metricsProvisionalNote = [
   "以下の数字は、現時点での仮置きである。",
-  "確定値ではなく、シミュレーション上の目標値として、まずはこの水準を目指す。",
+  "確定値ではなく、LP経由施策を継続判断できる水準まで戻すための、シミュレーション上の目標値として扱う。",
+];
+
+export const metricsTaxBasis =
+  "今回の計算は、税抜概算ベースで統一する。参考として、税込ベースでは総コストは約790〜800万円となるが、資料内のシミュレーションでは税抜概算の約700万円を基準にする。";
+
+export const metricsDefinitions = [
+  { indicator: "CAC", definition: "顧客獲得にかかったコスト", usage: "LP経由施策の税抜概算総コストとして約700万円で置く" },
+  { indicator: "LTV", definition: "顧客から将来的に得られる売上・価値", usage: "受注1社あたり330万円を目安に置く" },
+  { indicator: "ユニットエコノミクス", definition: "LTV ÷ CAC", usage: "LP経由施策全体では「LTV合計 ÷ 総獲得コスト」で見る" },
 ];
 
 export const metricsNotes = [
-  "800万円は、1社あたりのCACではなく、施策全体の総獲得コストとして仮置きする。",
-  "2,400万円は、総獲得コスト800万円に対して3倍を達成するために必要なLTV合計。",
-  "330万円は、1社あたりのLTV目安として置く。",
-  "900万円は、例として3社分のLTVを合計した数字。",
+  "「総獲得コスト 約700万円」は、LP経由施策全体にかかる税抜概算コストとして扱う。",
+  "税込ベースで保守的に見る場合、総コストは約790〜800万円となる。",
+  "税込800万円ベースで見る場合は、必要LTVは2,400万円、必要成約数は8社となる。",
+  "資料上では、税抜概算ベースの約700万円に統一し、最低7社成約を基準に管理する。",
   "今後、実績が出次第、総獲得コスト・LTV・必要成約数は更新する。",
 ];
 
 export const simulationRows = [
-  { deals: 3, ltvTotal: 990, cacPerDeal: 267, ratio: 1.24, judgment: "不足" },
-  { deals: 4, ltvTotal: 1320, cacPerDeal: 200, ratio: 1.65, judgment: "不足" },
-  { deals: 5, ltvTotal: 1650, cacPerDeal: 160, ratio: 2.06, judgment: "不足" },
-  { deals: 6, ltvTotal: 1980, cacPerDeal: 133, ratio: 2.48, judgment: "不足" },
-  { deals: 7, ltvTotal: 2310, cacPerDeal: 114, ratio: 2.89, judgment: "ほぼ到達" },
-  { deals: 8, ltvTotal: 2640, cacPerDeal: 100, ratio: 3.30, judgment: "最低ライン達成", highlight: "min" },
-  { deals: 10, ltvTotal: 3300, cacPerDeal: 80, ratio: 4.13, judgment: "良好", highlight: "good" },
-  { deals: 13, ltvTotal: 4290, cacPerDeal: 62, ratio: 5.36, judgment: "目標水準", highlight: "target" },
+  { deals: 3, ltvTotal: 990, ratio: 1.41, judgment: "不足" },
+  { deals: 4, ltvTotal: 1320, ratio: 1.89, judgment: "不足" },
+  { deals: 5, ltvTotal: 1650, ratio: 2.36, judgment: "不足" },
+  { deals: 6, ltvTotal: 1980, ratio: 2.83, judgment: "不足" },
+  { deals: 7, ltvTotal: 2310, ratio: 3.3, judgment: "最低ライン達成", highlight: "min" as const },
+  { deals: 8, ltvTotal: 2640, ratio: 3.77, judgment: "良好", highlight: "good" as const },
+  { deals: 10, ltvTotal: 3300, ratio: 4.71, judgment: "目標水準", highlight: "target" as const },
 ];
 
 export const augustTargets = [
-  { label: "最低目標", value: "8社成約" },
-  { label: "最低LTV合計", value: "2,640万円" },
-  { label: "最低倍率", value: "3.30倍" },
-  { label: "目標水準", value: "10〜13社成約" },
-  { label: "目標倍率", value: "4.0〜5.0倍台" },
+  { label: "最低目標", value: "7社成約", primary: true },
+  { label: "最低到達ライン", value: "LTV/CAC 3.0倍以上" },
+  { label: "最低LTV合計", value: "2,310万円" },
+  { label: "推奨目標", value: "8〜10社成約" },
+  { label: "推奨倍率", value: "3.77〜4.71倍" },
+  { label: "見たい状態", value: "LP経由単体でも継続判断できる水準" },
 ];
 
 export const offlineStrategy = {

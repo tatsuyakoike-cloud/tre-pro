@@ -1,13 +1,15 @@
 {
-  "totalCost": 800,
+  "totalCost": 700,
+  "totalCostTaxIncludedMin": 790,
+  "totalCostTaxIncludedMax": 800,
   "ltvPerDeal": 330,
+  "requiredLtv": 2100,
   "minRatio": 3.0,
-  "targetRatioMin": 4.0,
-  "targetRatioMax": 5.0,
-  "minDeals": 8,
-  "targetDealsMin": 10,
-  "targetDealsMax": 13,
-  "currentLtvTotal": 900,
-  "currentRatio": 1.13,
-  "unit": "万円"
+  "minDeals": 7,
+  "targetDealsMin": 8,
+  "targetDealsMax": 10,
+  "targetRatioMin": 3.77,
+  "targetRatioMax": 4.71,
+  "unit": "万円",
+  "basis": "税抜概算"
 }

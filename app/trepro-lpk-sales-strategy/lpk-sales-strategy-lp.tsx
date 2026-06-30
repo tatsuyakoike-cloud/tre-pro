@@ -7,8 +7,11 @@ import {
   augustEndState,
   currentChallengesTable,
   responsePolicy,
+  keyMetrics,
   metricsPremise,
   metricsProvisionalNote,
+  metricsTaxBasis,
+  metricsDefinitions,
   metricsNotes,
   simulationRows,
   augustTargets,
@@ -86,18 +89,23 @@ function DataTable({
   );
 }
 
+function formatRatio(ratio: number) {
+  return Number.isInteger(ratio) ? `${ratio.toFixed(1)}倍` : `${ratio.toFixed(2)}倍`;
+}
+
 function SimulationSection() {
   return (
     <>
-      <h3 className="lpk-subsection-title">1社あたりLTVを330万円とした場合</h3>
+      <h3 className="lpk-subsection-title">
+        CAC約700万円、1社あたりLTV330万円で試算
+      </h3>
       <div className="lpk-table-desktop-only">
         <DataTable
-          headers={["成約数", "LTV合計", "1社あたりCAC", "LTV/CAC倍率", "判定"]}
+          headers={["成約数", "LTV合計", "LTV/CAC倍率", "判定"]}
           rows={simulationRows.map((row) => [
             `${row.deals}社`,
             `${row.ltvTotal.toLocaleString()}万円`,
-            `${row.cacPerDeal}万円`,
-            `${row.ratio.toFixed(2)}倍`,
+            formatRatio(row.ratio),
             row.judgment,
           ])}
           rowClass={(index) => {
@@ -105,7 +113,6 @@ function SimulationSection() {
             if (highlight === "min") return "is-min";
             if (highlight === "good") return "is-good";
             if (highlight === "target") return "is-target";
-            if (simulationRows[index].judgment === "ほぼ到達") return "is-near";
             return undefined;
           }}
         />
@@ -121,10 +128,8 @@ function SimulationSection() {
             <dl className="lpk-sim-card-grid">
               <dt>LTV合計</dt>
               <dd>{row.ltvTotal.toLocaleString()}万円</dd>
-              <dt>1社CAC</dt>
-              <dd>{row.cacPerDeal}万円</dd>
-              <dt>倍率</dt>
-              <dd>{row.ratio.toFixed(2)}倍</dd>
+              <dt>LTV/CAC</dt>
+              <dd>{formatRatio(row.ratio)}</dd>
               <dt>判定</dt>
               <dd>{row.judgment}</dd>
             </dl>
@@ -135,7 +140,10 @@ function SimulationSection() {
       <h3 className="lpk-subsection-title">8月末までの目標水準</h3>
       <div className="lpk-target-cards">
         {augustTargets.map((target) => (
-          <div key={target.label} className="lpk-target-card">
+          <div
+            key={target.label}
+            className={`lpk-target-card${target.primary ? " is-primary" : ""}`}
+          >
             <p className="lpk-kpi-label">{target.label}</p>
             <p className="lpk-kpi-value">{target.value}</p>
           </div>
@@ -277,13 +285,28 @@ export default function LpkSalesStrategyLp() {
         <div className="lpk-container">
           <SectionHead eyebrow="METRICS" title="LP経由の数値前提" />
 
+          <div className="lpk-key-metrics" aria-label="主要指標">
+            {keyMetrics.map((item) => (
+              <div
+                key={item.label}
+                className={`lpk-key-metric${item.accent ? " is-accent" : ""}`}
+              >
+                <p className="lpk-key-metric-label">{item.label}</p>
+                <p className="lpk-key-metric-value">{item.value}</p>
+                <p className="lpk-key-metric-note">{item.note}</p>
+              </div>
+            ))}
+          </div>
+
           <h3 className="lpk-subsection-title">数値の位置づけ</h3>
           <div className="lpk-panel lpk-panel-provisional">
             <BulletList items={metricsProvisionalNote} />
           </div>
 
+          <p className="lpk-tax-callout">{metricsTaxBasis}</p>
+
           <DataTable
-            headers={["項目", "仮置き数値", "補足"]}
+            headers={["項目", "数値", "説明"]}
             rows={metricsPremise.map((item) => [
               item.item,
               item.value,
@@ -292,6 +315,16 @@ export default function LpkSalesStrategyLp() {
             rowClass={(index) =>
               metricsPremise[index].accent ? "is-alert-row" : undefined
             }
+          />
+
+          <h3 className="lpk-subsection-title">LTV・CAC・ユニットエコノミクスの整理</h3>
+          <DataTable
+            headers={["指標", "定義", "今回の扱い"]}
+            rows={metricsDefinitions.map((row) => [
+              row.indicator,
+              row.definition,
+              row.usage,
+            ])}
           />
 
           <div className="lpk-panel" style={{ marginTop: 20 }}>
@@ -459,7 +492,7 @@ export default function LpkSalesStrategyLp() {
         <div className="lpk-container">
           <p>トレプロ営業方針改善計画 — 社内共有用ドキュメント</p>
           <p className="lpk-note">
-            元資料: trepro_sales_improvement_plan.md / 数値: app/trepro-lpk-sales-strategy/data/metrics.json
+            元資料: trepro_sales_improvement_plan.md（最新版） / 数値: app/trepro-lpk-sales-strategy/data/metrics.json
           </p>
         </div>
       </footer>

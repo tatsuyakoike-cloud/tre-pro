@@ -1,0 +1,10 @@
+{
+  "ltvPerDeal": 330,
+  "totalCost": 330,
+  "minRatio": 3,
+  "targetRatio": 5,
+  "currentDeals": 2,
+  "minDealsFor10M": 4,
+  "unit": "万円",
+  "note": "数値はExcel集計後に更新してください"
+}

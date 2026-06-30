@@ -9,6 +9,19 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | SlowBase SeraMade 現状報告（slim） | [docs/slowbase-seramade-report.md](docs/slowbase-seramade-report.md) | [/tre-pro/slowbase-seramade-report/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-seramade-report/) |
 | SlowBase 現状報告 | [docs/slowbase-status-report.md](docs/slowbase-status-report.md) | [/tre-pro/slowbase-status-report/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-status-report/) |
 | トレプロ営業プロトタイプ構築方針 | [trepro_sales_web_requirements.md](trepro_sales_web_requirements.md) | [/tre-pro/trepro-sales-prototype/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-sales-prototype/) |
+| トレプロ UE改善計画 | [trepro_sales_unit_economics_plan.md](trepro_sales_unit_economics_plan.md) | [/tre-pro/trepro-unit-economics/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-unit-economics/) |
+
+## トレプロ UE改善計画 — ローカル起動・公開
+
+```bash
+npm install
+npm run dev
+# → http://localhost:3000/tre-pro/trepro-unit-economics/
+```
+
+公開 URL: [https://tatsuyakoike-cloud.github.io/tre-pro/trepro-unit-economics/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-unit-economics/)
+
+数値は `app/trepro-unit-economics/data/metrics.json` を更新後、`main` に push すると GitHub Pages に反映されます。
 
 ## トレプロ営業プロトタイプ — ローカル起動・公開
 

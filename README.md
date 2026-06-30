@@ -10,6 +10,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 | SlowBase 現状報告 | [docs/slowbase-status-report.md](docs/slowbase-status-report.md) | [/tre-pro/slowbase-status-report/](https://tatsuyakoike-cloud.github.io/tre-pro/slowbase-status-report/) |
 | トレプロ営業プロトタイプ構築方針 | [trepro_sales_web_requirements.md](trepro_sales_web_requirements.md) | [/tre-pro/trepro-sales-prototype/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-sales-prototype/) |
 | トレプロ UE改善計画 | [trepro_sales_unit_economics_plan.md](trepro_sales_unit_economics_plan.md) | [/tre-pro/trepro-unit-economics/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-unit-economics/) |
+| トレプロ LPK営業方針 | [trepro_lpk_sales_strategy.md](trepro_lpk_sales_strategy.md) | [/tre-pro/trepro-lpk-sales-strategy/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-lpk-sales-strategy/) |
 
 ## トレプロ UE改善計画 — ローカル起動・公開
 
@@ -22,6 +23,18 @@ npm run dev
 公開 URL: [https://tatsuyakoike-cloud.github.io/tre-pro/trepro-unit-economics/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-unit-economics/)
 
 数値は `app/trepro-unit-economics/data/metrics.json` を更新後、`main` に push すると GitHub Pages に反映されます。
+
+## トレプロ LPK営業方針 — ローカル起動・公開
+
+```bash
+npm install
+npm run dev
+# → http://localhost:3000/tre-pro/trepro-lpk-sales-strategy/
+```
+
+公開 URL: [https://tatsuyakoike-cloud.github.io/tre-pro/trepro-lpk-sales-strategy/](https://tatsuyakoike-cloud.github.io/tre-pro/trepro-lpk-sales-strategy/)
+
+元資料は `trepro_lpk_sales_strategy.md`。数値は `app/trepro-lpk-sales-strategy/data/metrics.json` を更新後、`main` に push すると GitHub Pages に反映されます。
 
 ## トレプロ営業プロトタイプ — ローカル起動・公開
 

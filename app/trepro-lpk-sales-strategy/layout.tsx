@@ -10,11 +10,11 @@ const notoSans = Noto_Sans_JP({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://tatsuyakoike-cloud.github.io/tre-pro"),
-  title: "トレプロ営業方針・LPKユニットエコノミクス改善計画",
+  title: "トレプロ営業方針改善計画",
   description:
-    "7月・8月でオフライン・オンライン2軸体制を立ち上げ、Q4に向けてLPKの回復モデルを作る。総獲得コスト800万円、最低8社成約。",
+    "オフライン・オンライン2軸体制でLP経由リストの掘り起こしと営業基盤づくりを進める改善計画。",
   openGraph: {
-    title: "トレプロ営業方針・LPKユニットエコノミクス改善計画",
+    title: "トレプロ営業方針改善計画",
     description:
       "2軸営業体制、Tier設計、シミュレーション、7月・8月ロードマップ。",
     locale: "ja_JP",

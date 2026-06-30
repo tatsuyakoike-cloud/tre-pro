@@ -150,11 +150,33 @@
   line-height: 1.35;
 }
 
-.lpk-hero-sub {
-  margin: 16px auto 0;
-  max-width: 680px;
+.lpk-hero-policy {
+  margin-top: 40px;
+}
+
+.lpk-hero-policy .lpk-section-head {
+  margin-bottom: 24px;
+}
+
+.lpk-policy-text {
+  margin: 20px auto 0;
+  max-width: 760px;
+  font-size: 14px;
+  line-height: 1.85;
   color: var(--lpk-muted);
-  font-size: 15px;
+  text-align: center;
+}
+
+.lpk-subsection-title {
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--lpk-text);
+}
+
+.lpk-panel-provisional {
+  border-left: 4px solid var(--lpk-accent);
+  margin-bottom: 16px;
 }
 
 .lpk-summary-grid {
@@ -479,8 +501,13 @@
   color: var(--lpk-green);
 }
 
-.lpk-table .is-near {
-  background: #fff8ed;
+.lpk-table .is-alert-row {
+  background: var(--lpk-accent-soft);
+  font-weight: 700;
+}
+
+.lpk-table .is-alert-row td:nth-child(2) {
+  color: var(--lpk-accent);
 }
 
 .lpk-target-cards {
@@ -551,20 +578,26 @@
 
 .lpk-split-strategy {
   display: grid;
-  gap: 20px;
+  gap: 24px;
+  align-items: start;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 @media (min-width: 900px) {
   .lpk-split-strategy {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 .lpk-strategy-panel {
+  width: 100%;
+  box-sizing: border-box;
   padding: 24px 22px;
   border: 1px solid var(--lpk-border);
   border-radius: 16px;
   background: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .lpk-strategy-panel.is-offline {
@@ -686,12 +719,63 @@
 
 .lpk-roadmap-table th:nth-child(2),
 .lpk-roadmap-table td:nth-child(2) {
-  width: 43%;
+  width: 34%;
 }
 
 .lpk-roadmap-table th:nth-child(3),
 .lpk-roadmap-table td:nth-child(3) {
-  width: 43%;
+  width: 34%;
+}
+
+.lpk-roadmap-table th:nth-child(4),
+.lpk-roadmap-table td:nth-child(4) {
+  width: 12%;
+  white-space: nowrap;
+}
+
+.lpk-assignee-panel {
+  margin-top: 24px;
+  padding: 22px 24px;
+  border: 1px solid var(--lpk-border);
+  border-radius: 16px;
+  background: #fff;
+  text-align: center;
+}
+
+.lpk-assignee-panel h3 {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.lpk-assignee-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 480px;
+  margin-inline: auto;
+}
+
+.lpk-assignee-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: var(--lpk-soft-bg);
+  font-size: 14px;
+}
+
+.lpk-assignee-role {
+  color: var(--lpk-muted);
+  font-weight: 600;
+}
+
+.lpk-assignee-name {
+  font-weight: 800;
+  color: var(--lpk-text);
 }
 
 .lpk-roadmap-card {

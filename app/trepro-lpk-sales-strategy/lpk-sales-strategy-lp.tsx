@@ -2,24 +2,25 @@ import type { ReactNode } from "react";
 import "./lpk-sales-strategy.css";
 import {
   navItems,
-  heroCards,
-  policyAxes,
+  policyAxesTable,
   policyRationale,
-  currentChallenges,
+  augustEndState,
+  currentChallengesTable,
+  responsePolicy,
   metricsPremise,
+  metricsProvisionalNote,
   metricsNotes,
   simulationRows,
   augustTargets,
-  q4IdealState,
   offlineStrategy,
   onlineStrategy,
   tierDefinitions,
-  tierNotes,
+  tierCertaintyRules,
   tierApproaches,
   roadmapRows,
+  roadmapAssignees,
   abTestPolicy,
   crmMeasures,
-  pendingDecisions,
 } from "./lpk-sales-strategy-content";
 
 function SectionHead({
@@ -27,13 +28,13 @@ function SectionHead({
   title,
   lead,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   lead?: string;
 }) {
   return (
     <header className="lpk-section-head">
-      <p className="lpk-eyebrow">{eyebrow}</p>
+      {eyebrow && <p className="lpk-eyebrow">{eyebrow}</p>}
       <h2 className="lpk-h2">{title}</h2>
       {lead && <p className="lpk-lead">{lead}</p>}
     </header>
@@ -88,6 +89,7 @@ function DataTable({
 function SimulationSection() {
   return (
     <>
+      <h3 className="lpk-subsection-title">1社あたりLTVを330万円とした場合</h3>
       <div className="lpk-table-desktop-only">
         <DataTable
           headers={["成約数", "LTV合計", "1社あたりCAC", "LTV/CAC倍率", "判定"]}
@@ -130,6 +132,7 @@ function SimulationSection() {
         ))}
       </div>
 
+      <h3 className="lpk-subsection-title">8月末までの目標水準</h3>
       <div className="lpk-target-cards">
         {augustTargets.map((target) => (
           <div key={target.label} className="lpk-target-card">
@@ -142,33 +145,56 @@ function SimulationSection() {
   );
 }
 
-function StrategyPanel({
-  variant,
-  title,
-  data,
-}: {
-  variant: "offline" | "online";
-  title: string;
-  data: typeof offlineStrategy;
-}) {
+function OfflineStrategyPanel() {
   return (
-    <div className={`lpk-strategy-panel is-${variant}`}>
-      <h3>{title}</h3>
-      <p className="lpk-purpose">{data.purpose}</p>
+    <div className="lpk-strategy-panel is-offline">
+      <h3>オフライン営業</h3>
+      <p className="lpk-purpose">{offlineStrategy.purpose}</p>
 
-      <p className="lpk-subhead">中心テーマ</p>
+      <p className="lpk-subhead">重点テーマ</p>
       <DataTable
         headers={["テーマ", "内容"]}
-        rows={data.themes.map((t) => [t.theme, t.content])}
+        rows={offlineStrategy.themes.map((t) => [t.theme, t.content])}
       />
 
       <p className="lpk-subhead">実行内容</p>
-      <BulletList items={data.actions} />
+      <BulletList items={offlineStrategy.actions} />
 
       <p className="lpk-subhead">見るKPI</p>
       <DataTable
         headers={["KPI", "確認内容"]}
-        rows={data.kpis.map((k) => [k.kpi, k.detail])}
+        rows={offlineStrategy.kpis.map((k) => [k.kpi, k.detail])}
+      />
+    </div>
+  );
+}
+
+function OnlineStrategyPanel() {
+  return (
+    <div className="lpk-strategy-panel is-online">
+      <h3>オンライン営業</h3>
+      <p className="lpk-purpose">{onlineStrategy.purpose}</p>
+
+      <p className="lpk-subhead">重点テーマ</p>
+      <DataTable
+        headers={["テーマ", "内容"]}
+        rows={onlineStrategy.themes.map((t) => [t.theme, t.content])}
+      />
+
+      <p className="lpk-subhead">実行内容</p>
+      <DataTable
+        headers={["実行項目", "内容", "担当者"]}
+        rows={onlineStrategy.actionRows.map((row) => [
+          row.task,
+          row.content,
+          row.assignee,
+        ])}
+      />
+
+      <p className="lpk-subhead">見るKPI</p>
+      <DataTable
+        headers={["KPI", "確認内容"]}
+        rows={onlineStrategy.kpis.map((k) => [k.kpi, k.detail])}
       />
     </div>
   );
@@ -178,7 +204,7 @@ export default function LpkSalesStrategyLp() {
   return (
     <div className="lpk-root">
       <header className="lpk-header">
-        <p className="lpk-logo">TREPRO LPK SALES</p>
+        <p className="lpk-logo">TREPRO SALES STRATEGY</p>
         <nav className="lpk-nav" aria-label="ページ内ナビ">
           {navItems.map((item) => (
             <a key={item.id} href={`#${item.id}`}>
@@ -198,66 +224,34 @@ export default function LpkSalesStrategyLp() {
         </details>
       </header>
 
-      <section className="lpk-hero">
+      <section id="policy" className="lpk-hero scroll-mt-24">
         <div className="lpk-container">
-          <p className="lpk-kicker">LPK SALES STRATEGY</p>
-          <h1 className="lpk-hero-title">
-            トレプロ営業方針・LPKユニットエコノミクス改善計画
-          </h1>
-          <p className="lpk-hero-sub">
-            7月・8月で、オフライン営業とオンライン営業の2軸体制を立ち上げ、Q4に向けてLPKの回復モデルを作る。
-          </p>
-          <div className="lpk-summary-grid">
-            {heroCards.map((card) => (
-              <div key={card.title} className="lpk-summary-card">
-                <h3>{card.title}</h3>
-                <p>{card.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <h1 className="lpk-hero-title">トレプロ営業方針改善計画</h1>
 
-      <section id="policy" className="lpk-section scroll-mt-24">
-        <div className="lpk-container">
-          <SectionHead
-            eyebrow="POLICY"
-            title="全体方針"
-            lead="オフラインで短期売上、オンラインで既存リストの再活用と仕組み化。"
-          />
+          <div className="lpk-hero-policy">
+            <SectionHead
+              title="全体方針"
+              lead="今後の営業活動は、オフライン営業とオンライン営業の2軸で進める。"
+            />
 
-          <div className="lpk-axis-visual" aria-label="2軸営業体制">
-            <div className="lpk-axis-pillar is-offline">
-              <div className="lpk-axis-icon" aria-hidden="true">
-                1
-              </div>
-              <h3>{policyAxes[0].axis}</h3>
-              <p>
-                <strong>{policyAxes[0].purpose}</strong>
-                <br />
-                {policyAxes[0].roles}
-              </p>
+            <DataTable
+              headers={["領域", "役割", "目的"]}
+              rows={policyAxesTable.map((row) => [
+                row.area,
+                row.roles,
+                row.purpose,
+              ])}
+            />
+
+            <p className="lpk-policy-text">{policyRationale}</p>
+
+            <div className="lpk-panel" style={{ marginTop: 24 }}>
+              <h3>7月・8月は、Q4に向けて以下の状態を作る</h3>
+              <DataTable
+                headers={["項目", "8月末時点で作る状態"]}
+                rows={augustEndState.map((row) => [row.item, row.state])}
+              />
             </div>
-            <span className="lpk-axis-connector" aria-hidden="true">
-              ＋
-            </span>
-            <div className="lpk-axis-pillar is-online">
-              <div className="lpk-axis-icon" aria-hidden="true">
-                2
-              </div>
-              <h3>{policyAxes[1].axis}</h3>
-              <p>
-                <strong>{policyAxes[1].purpose}</strong>
-                <br />
-                {policyAxes[1].roles}
-              </p>
-            </div>
-          </div>
-
-          <div className="lpk-spacer" />
-          <div className="lpk-panel">
-            <h3>なぜ2軸で進めるのか</h3>
-            <BulletList items={policyRationale} />
           </div>
         </div>
       </section>
@@ -265,34 +259,43 @@ export default function LpkSalesStrategyLp() {
       <section id="current" className="lpk-section is-soft scroll-mt-24">
         <div className="lpk-container">
           <SectionHead eyebrow="CURRENT STATE" title="現状認識" />
-          <div className="lpk-panel">
-            <h3>現状の課題</h3>
-            <BulletList items={currentChallenges} />
+
+          <h3 className="lpk-subsection-title">現状の課題</h3>
+          <DataTable
+            headers={["課題", "内容"]}
+            rows={currentChallengesTable.map((row) => [row.issue, row.content])}
+          />
+
+          <div className="lpk-panel" style={{ marginTop: 24 }}>
+            <h3>今回の対応方針</h3>
+            <BulletList items={responsePolicy} />
           </div>
         </div>
       </section>
 
       <section id="metrics" className="lpk-section scroll-mt-24">
         <div className="lpk-container">
-          <SectionHead
-            eyebrow="METRICS"
-            title="LPKの数値前提"
-            lead="施策全体の総獲得コスト800万円を基準に、LTV合計 ÷ 総獲得コストで判断する。"
-          />
-          <div className="lpk-kpi-grid">
-            {metricsPremise.map((item) => (
-              <div
-                key={item.item}
-                className={`lpk-kpi-card${item.accent ? " is-alert" : ""}`}
-              >
-                <p className="lpk-kpi-label">{item.item}</p>
-                <p className="lpk-kpi-value">{item.value}</p>
-                <p className="lpk-kpi-note">{item.note}</p>
-              </div>
-            ))}
+          <SectionHead eyebrow="METRICS" title="LP経由の数値前提" />
+
+          <h3 className="lpk-subsection-title">数値の位置づけ</h3>
+          <div className="lpk-panel lpk-panel-provisional">
+            <BulletList items={metricsProvisionalNote} />
           </div>
+
+          <DataTable
+            headers={["項目", "仮置き数値", "補足"]}
+            rows={metricsPremise.map((item) => [
+              item.item,
+              item.value,
+              item.note,
+            ])}
+            rowClass={(index) =>
+              metricsPremise[index].accent ? "is-alert-row" : undefined
+            }
+          />
+
           <div className="lpk-panel" style={{ marginTop: 20 }}>
-            <h3>注意点</h3>
+            <h3>補足</h3>
             <BulletList items={metricsNotes} />
           </div>
         </div>
@@ -300,55 +303,22 @@ export default function LpkSalesStrategyLp() {
 
       <section id="simulation" className="lpk-section is-soft scroll-mt-24">
         <div className="lpk-container">
-          <SectionHead
-            eyebrow="SIMULATION"
-            title="シミュレーション"
-            lead="1社あたりLTV330万円・総獲得コスト800万円を前提とした成約数別の試算。"
-          />
+          <SectionHead eyebrow="SIMULATION" title="シミュレーション" />
           <SimulationSection />
-          <p className="lpk-note">
-            8社成約で最低ライン（3.3倍）達成。目標は10〜13社で4〜5倍水準。
-          </p>
         </div>
       </section>
 
-      <section id="q4" className="lpk-section scroll-mt-24">
-        <div className="lpk-container">
-          <SectionHead
-            eyebrow="Q4 VISION"
-            title="Q4に向けた理想状態"
-            lead="8月末時点で作る状態"
-          />
-          <div className="lpk-q4-grid">
-            {q4IdealState.map((item) => (
-              <article key={item.area} className="lpk-q4-card">
-                <h3>{item.area}</h3>
-                <p>{item.state}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="strategy" className="lpk-section is-soft scroll-mt-24">
+      <section id="strategy" className="lpk-section scroll-mt-24">
         <div className="lpk-container">
           <SectionHead eyebrow="STRATEGY" title="営業戦略の2軸" />
           <div className="lpk-split-strategy">
-            <StrategyPanel
-              variant="offline"
-              title="オフライン営業"
-              data={offlineStrategy}
-            />
-            <StrategyPanel
-              variant="online"
-              title="オンライン営業"
-              data={onlineStrategy}
-            />
+            <OfflineStrategyPanel />
+            <OnlineStrategyPanel />
           </div>
         </div>
       </section>
 
-      <section id="tier" className="lpk-section scroll-mt-24">
+      <section id="tier" className="lpk-section is-soft scroll-mt-24">
         <div className="lpk-container">
           <SectionHead eyebrow="TIER" title="Tier定義" />
 
@@ -381,9 +351,12 @@ export default function LpkSalesStrategyLp() {
             ])}
           />
 
-          <div className="lpk-panel" style={{ marginTop: 20 }}>
-            <h3>補足</h3>
-            <BulletList items={tierNotes} />
+          <div style={{ marginTop: 20 }}>
+            <h3 className="lpk-subsection-title">補足</h3>
+            <DataTable
+              headers={["確度", "定義"]}
+              rows={tierCertaintyRules.map((row) => [row.rate, row.definition])}
+            />
           </div>
 
           <div style={{ marginTop: 28 }}>
@@ -401,7 +374,7 @@ export default function LpkSalesStrategyLp() {
         </div>
       </section>
 
-      <section id="roadmap" className="lpk-section is-soft scroll-mt-24">
+      <section id="roadmap" className="lpk-section scroll-mt-24">
         <div className="lpk-container">
           <SectionHead
             eyebrow="ROADMAP"
@@ -412,11 +385,12 @@ export default function LpkSalesStrategyLp() {
           <div className="lpk-roadmap-desktop">
             <DataTable
               className="lpk-roadmap-table"
-              headers={["時期", "オフライン営業", "オンライン営業"]}
+              headers={["時期", "オフライン営業", "オンライン営業", "オンライン担当"]}
               rows={roadmapRows.map((row) => [
                 row.period,
                 row.offline,
                 row.online,
+                row.onlineAssignee,
               ])}
             />
           </div>
@@ -433,13 +407,29 @@ export default function LpkSalesStrategyLp() {
                   <h4>オンライン営業</h4>
                   <p>{row.online}</p>
                 </div>
+                <div className="lpk-roadmap-block">
+                  <h4>オンライン担当</h4>
+                  <p>{row.onlineAssignee}</p>
+                </div>
               </article>
             ))}
+          </div>
+
+          <div className="lpk-assignee-panel">
+            <h3>担当振り分け</h3>
+            <ul className="lpk-assignee-list">
+              {roadmapAssignees.map((item) => (
+                <li key={item.role}>
+                  <span className="lpk-assignee-role">{item.role}</span>
+                  <span className="lpk-assignee-name">{item.assignee}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>
 
-      <section id="tactics" className="lpk-section scroll-mt-24">
+      <section id="tactics" className="lpk-section is-soft scroll-mt-24">
         <div className="lpk-container">
           <SectionHead
             eyebrow="TACTICS"
@@ -465,21 +455,11 @@ export default function LpkSalesStrategyLp() {
         </div>
       </section>
 
-      <section id="decisions" className="lpk-section is-soft scroll-mt-24">
-        <div className="lpk-container">
-          <SectionHead eyebrow="DECISIONS" title="直近で決めること" />
-          <DataTable
-            headers={["項目", "決める内容"]}
-            rows={pendingDecisions.map((row) => [row.item, row.content])}
-          />
-        </div>
-      </section>
-
       <footer className="lpk-footer">
         <div className="lpk-container">
-          <p>トレプロ営業方針・LPKユニットエコノミクス改善計画 — 社内共有用ドキュメント</p>
+          <p>トレプロ営業方針改善計画 — 社内共有用ドキュメント</p>
           <p className="lpk-note">
-            元資料: trepro_lpk_sales_strategy.md / 数値: app/trepro-lpk-sales-strategy/data/metrics.json
+            元資料: trepro_sales_improvement_plan.md / 数値: app/trepro-lpk-sales-strategy/data/metrics.json
           </p>
         </div>
       </footer>

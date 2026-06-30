@@ -3,56 +3,50 @@ export const navItems = [
   { id: "current", label: "現状" },
   { id: "metrics", label: "数値" },
   { id: "simulation", label: "シミュレーション" },
-  { id: "q4", label: "Q4" },
   { id: "strategy", label: "2軸" },
   { id: "tier", label: "Tier" },
   { id: "roadmap", label: "ロードマップ" },
   { id: "tactics", label: "施策" },
-  { id: "decisions", label: "決定事項" },
 ];
 
-export const heroCards = [
+export const policyAxesTable = [
   {
-    title: "2軸体制",
-    text: "オフラインで短期売上、オンラインで既存リストの掘り起こしと仕組み化。",
+    area: "オフライン営業",
+    roles: "代理店・紹介・地方営業・飛び込み・訪問・クロージング",
+    purpose: "短期で商談と受注を作る",
   },
   {
-    title: "判断基準",
-    text: "総獲得コスト800万円に対し、LTV合計 ÷ 総獲得コストで3倍以上を最低ラインとする。",
-  },
-  {
-    title: "8月末目標",
-    text: "最低8社成約（2640万円・3.3倍）。目標は10〜13社で4〜5倍水準。",
+    area: "オンライン営業",
+    roles: "LP経由リストの整理・掘り起こし・配信・架電・ナーチャリング",
+    purpose: "既存リストを営業資産化し、再現性のある商談創出を作る",
   },
 ];
 
-export const policyAxes = [
-  {
-    axis: "オフライン営業",
-    purpose: "短期売上の創出",
-    roles: "代理店、紹介、地方営業、飛び込み、訪問、クロージング",
-  },
-  {
-    axis: "オンライン営業",
-    purpose: "既存リストの再活用と仕組み化",
-    roles: "LPKリスト整理、掘り起こし、メール配信、架電検証、ナーチャリング",
-  },
+export const policyRationale =
+  "この2軸で進める理由は、LP広告の獲得効率が悪化している中で、広告単体の改善だけに依存せず、短期の受注創出と中長期の営業基盤づくりを同時に進める必要があるためである。";
+
+export const augustEndState = [
+  { item: "営業体制", state: "オフライン営業とオンライン営業の役割が明確になっている" },
+  { item: "LP経由", state: "既存リストから商談・受注が生まれている" },
+  { item: "数値管理", state: "成約数、LTV合計、総獲得コスト、倍率を確認できる" },
+  { item: "リスト管理", state: "確度別・Tier別に営業対象が整理されている" },
+  { item: "ナーチャリング", state: "メール、ホワイトペーパー、ウェビナー、LINE等で継続接点を作れている" },
+  { item: "Q4準備", state: "9月以降、CRM・SFA・MAへ接続できる運用ルールが整理されている" },
 ];
 
-export const policyRationale = [
-  "LP広告の獲得効率が悪化しており、広告単体での回復には限界がある。",
-  "過去に接点を持ったリストが残っているが、十分に営業資産として活用できていない。",
-  "代理店・紹介・地方営業は短期の受注機会を作れる一方で、属人的になりやすい。",
-  "オンライン側で、リスト・配信・架電・商談化の流れを作ることで、再現性のある営業基盤を作れる。",
-  "7月・8月は、短期売上を作りながら、Q4に向けて継続的に商談が生まれる状態を作る期間とする。",
+export const currentChallengesTable = [
+  { issue: "LP経由の獲得コスト悪化", content: "広告費をかけても、以前より効率よく顧客獲得できていない" },
+  { issue: "LTVの低下", content: "顧客の継続期間が短くなり、1社あたりの将来売上が下がっている" },
+  { issue: "広告依存の限界", content: "広告改善だけで短期的に大きく回復する見込みが立ちづらい" },
+  { issue: "既存リストの未活用", content: "過去接点・商談履歴がある企業を十分に掘り起こせていない" },
+  { issue: "営業ルールの未整備", content: "確度、優先順位、失注理由、次回アクションの管理が統一されていない" },
 ];
 
-export const currentChallenges = [
-  "LPKの獲得コストが上がっている。",
-  "顧客の継続月数が以前より短くなり、LTVが下がっている。",
-  "以前よりも、広告費をかけても利益が残りづらい構造になっている。",
-  "現状のままでは、LPK施策が撤退ラインに入る可能性がある。",
-  "そのため、7月・8月で既存リストの掘り起こしと営業体制の再設計を進める必要がある。",
+export const responsePolicy = [
+  "オフライン営業では、代理店・紹介・地方営業・飛び込みを活用し、短期の受注機会を作る。",
+  "オンライン営業では、LP経由の既存リストを整理し、掘り起こし施策を新たに企画・実行する。",
+  "これまでの商談受注率を前提に置きすぎず、今回の掘り起こし施策で新しい基準値を作る。",
+  "施策ごとに、成約数・LTV合計・総獲得コスト・倍率を確認する。",
 ];
 
 export const metricsPremise = [
@@ -64,10 +58,17 @@ export const metricsPremise = [
   { item: "現状例の倍率", value: "1.13倍", note: "900万円 ÷ 800万円", accent: true },
 ];
 
+export const metricsProvisionalNote = [
+  "以下の数字は、現時点での仮置きである。",
+  "確定値ではなく、シミュレーション上の目標値として、まずはこの水準を目指す。",
+];
+
 export const metricsNotes = [
-  "800万円は、1社あたりのCACではなく、施策全体の総獲得コスト。",
-  "成約数が増えるほど、1社あたりCACは下がる。",
-  "3倍ラインを見る場合は、施策全体で LTV合計 ÷ 総獲得コスト を確認する。",
+  "800万円は、1社あたりのCACではなく、施策全体の総獲得コストとして仮置きする。",
+  "2,400万円は、総獲得コスト800万円に対して3倍を達成するために必要なLTV合計。",
+  "330万円は、1社あたりのLTV目安として置く。",
+  "900万円は、例として3社分のLTVを合計した数字。",
+  "今後、実績が出次第、総獲得コスト・LTV・必要成約数は更新する。",
 ];
 
 export const simulationRows = [
@@ -89,23 +90,13 @@ export const augustTargets = [
   { label: "目標倍率", value: "4.0〜5.0倍台" },
 ];
 
-export const q4IdealState = [
-  { area: "営業体制", state: "オフライン営業とオンライン営業が分かれ、それぞれの役割が明確になっている" },
-  { area: "LPK", state: "既存リストの掘り起こしから商談・受注が生まれている" },
-  { area: "数値管理", state: "成約数、LTV合計、総獲得コスト、倍率を施策別に確認できる" },
-  { area: "リスト管理", state: "確度別・Tier別に営業対象が整理されている" },
-  { area: "ナーチャリング", state: "メール配信、ホワイトペーパー、ウェビナー、LINE等で接点を継続できる" },
-  { area: "営業資料", state: "料金表、事例集、稟議・税理士向け資料が使える状態になっている" },
-  { area: "Q4準備", state: "9月以降、CRM・SFA・MAに接続できる営業運用が整理されている" },
-];
-
 export const offlineStrategy = {
   purpose: "短期の商談・受注を作る。",
   themes: [
-    { theme: "代理店・紹介", content: "既存の代理店・紹介ルートを活用し、短期で受注可能性のある案件を進める" },
+    { theme: "代理店・紹介", content: "既存の代理店・紹介ルートを活用し、受注可能性の高い案件を進める" },
     { theme: "地方営業・飛び込み", content: "地方企業への直接営業、訪問、飛び込みを実施する" },
-    { theme: "クロージング", content: "受注確度の高い案件を個別対応し、早期に契約へ進める" },
-    { theme: "価格検証", content: "料金がボトルネックの案件に対し、値引き・初月無料などのABテストを行う" },
+    { theme: "クロージング", content: "高確度案件を個別対応し、早期に契約へ進める" },
+    { theme: "価格検証", content: "料金がボトルネックの案件で、値引き・初月無料等を限定検証する" },
   ],
   actions: [
     "代理店・紹介経由のホットリードを整理する。",
@@ -120,27 +111,26 @@ export const offlineStrategy = {
     { kpi: "受注数", detail: "契約に至った件数" },
     { kpi: "平均LTV", detail: "受注1社あたりの期待LTV" },
     { kpi: "値引き有無別受注率", detail: "値引きあり・なしで受注率に差が出るか" },
-    { kpi: "施策別CAC", detail: "オフライン施策にかかったコストと受注数の関係" },
+    { kpi: "施策別CAC", detail: "施策にかかったコストと受注数の関係" },
   ],
 };
 
 export const onlineStrategy = {
   purpose: "既存リストを再活用し、低コストで商談機会を作る。",
   themes: [
-    { theme: "リスト整理", content: "LPK・過去商談リストを確度別に整理する" },
+    { theme: "リスト整理", content: "LP経由・過去商談リストを確度別に整理する" },
     { theme: "掘り起こし", content: "メール配信と架電で、過去接点から再商談化を狙う" },
     { theme: "ナーチャリング", content: "ホワイトペーパー、ウェビナー、LINE等で継続接点を作る" },
     { theme: "データ化", content: "配信反応、架電結果、商談化率を記録し、次のKPIを作る" },
     { theme: "仕組み化", content: "CRM・SFA・MAへ接続できる運用ルールを整える" },
   ],
-  actions: [
-    "LPKリストをTier1〜4に分類する。",
-    "Tierごとに送付物を変える。",
-    "メール配信後、開封・クリック・返信を確認する。",
-    "反応企業を中心に架電する。",
-    "最初の検証として、100件程度の架電データを作る。",
-    "反応が薄い層にはホワイトペーパーやウェビナーで接点を継続する。",
-    "今回の掘り起こし施策は、過去の商談受注率を前提にせず、新しく基準値を作る。",
+  actionRows: [
+    { task: "リスト整理", content: "LP経由リストをTier1〜4に分類する", assignee: "小池・その他メンバー" },
+    { task: "メール配信", content: "Tierごとに送付物を変える", assignee: "小池・その他メンバー" },
+    { task: "反応分析", content: "開封・クリック・返信を確認する", assignee: "小池・その他メンバー" },
+    { task: "架電検証", content: "反応企業を中心に架電し、初期データを作る", assignee: "小池・その他メンバー" },
+    { task: "ナーチャリング", content: "ホワイトペーパー、ウェビナー、LINEで接点を継続する", assignee: "小池・その他メンバー" },
+    { task: "運用整備", content: "CRM・SFA・MA接続を前提に項目を整理する", assignee: "小池・その他メンバー" },
   ],
   kpis: [
     { kpi: "配信数", detail: "Tier別のメール送付数" },
@@ -148,7 +138,6 @@ export const onlineStrategy = {
     { kpi: "クリック数", detail: "資料・リンクがクリックされた件数" },
     { kpi: "返信数", detail: "反応があった件数" },
     { kpi: "架電数", detail: "配信後に架電した件数" },
-    { kpi: "接続数", detail: "電話がつながった件数" },
     { kpi: "アポ数", detail: "アポイント化した件数" },
     { kpi: "商談数", detail: "実際に商談化した件数" },
     { kpi: "受注数", detail: "契約に至った件数" },
@@ -163,11 +152,11 @@ export const tierDefinitions = [
   { tier: "Tier 4", target: "それ以外", purpose: "ステイ", action: "原則アプローチしない" },
 ];
 
-export const tierNotes = [
-  "40%は、課題とネクストアクションが明確な状態とする。",
-  "20%は、過去接点があり、再商談化の余地がある状態とする。",
-  "10%は、すぐに商談化はしないが、情報提供を続ける価値がある状態とする。",
-  "Tier4は、明確NG、電話NG、対象外、情報不足などを含む。",
+export const tierCertaintyRules = [
+  { rate: "40%以上", definition: "課題とネクストアクションが明確な状態" },
+  { rate: "20%", definition: "過去接点があり、再商談化の余地がある状態" },
+  { rate: "10%", definition: "すぐに商談化はしないが、情報提供を続ける価値がある状態" },
+  { rate: "その他", definition: "明確NG、電話NG、対象外、情報不足など" },
 ];
 
 export const tierApproaches = [
@@ -178,14 +167,20 @@ export const tierApproaches = [
 ];
 
 export const roadmapRows = [
-  { period: "7月第1週", offline: "代理店・紹介・地方営業の対象整理", online: "リスト整理、Tier付与、初回メール配信" },
-  { period: "7月第2週", offline: "高確度案件への訪問・クロージング開始", online: "配信反応の分析、架電検証、アポ獲得" },
-  { period: "7月第3週", offline: "値引きあり/なしのABテスト開始", online: "商談実施、失注理由・反応データの記録" },
-  { period: "7月第4週", offline: "受注見込み整理、価格検証の一次確認", online: "受注・商談結果をもとにKPI更新" },
-  { period: "8月第1週", offline: "地方・代理店案件の追加展開", online: "ホワイトペーパー第2弾、ウェビナー準備" },
-  { period: "8月第2週", offline: "クロージング強化", online: "ウェビナー・LINE等のナーチャリング開始" },
-  { period: "8月第3週", offline: "受注確度の高い案件を集中対応", online: "反応企業への再架電、商談化" },
-  { period: "8月第4週", offline: "Q4に向けた受注見込み整理", online: "施策別CAC・LTV・受注率を整理" },
+  { period: "7月第1週", offline: "代理店・紹介・地方営業の対象整理", online: "リスト整理、Tier付与、初回メール配信", onlineAssignee: "小池・その他メンバー" },
+  { period: "7月第2週", offline: "高確度案件への訪問・クロージング開始", online: "配信反応の分析、架電検証、アポ獲得", onlineAssignee: "小池・その他メンバー" },
+  { period: "7月第3週", offline: "値引きあり/なしのABテスト開始", online: "商談実施、失注理由・反応データの記録", onlineAssignee: "小池・その他メンバー" },
+  { period: "7月第4週", offline: "受注見込み整理、価格検証の一次確認", online: "受注・商談結果をもとにKPI更新", onlineAssignee: "小池・その他メンバー" },
+  { period: "8月第1週", offline: "地方・代理店案件の追加展開", online: "ホワイトペーパー第2弾、ウェビナー準備", onlineAssignee: "小池・その他メンバー" },
+  { period: "8月第2週", offline: "クロージング強化", online: "ウェビナー・LINE等のナーチャリング開始", onlineAssignee: "小池・その他メンバー" },
+  { period: "8月第3週", offline: "受注確度の高い案件を集中対応", online: "反応企業への再架電、商談化", onlineAssignee: "小池・その他メンバー" },
+  { period: "8月第4週", offline: "Q4に向けた受注見込み整理", online: "施策別CAC・LTV・受注率を整理", onlineAssignee: "小池・その他メンバー" },
+];
+
+export const roadmapAssignees = [
+  { role: "オフライン営業", assignee: "橋口" },
+  { role: "オンライン営業", assignee: "小池・その他メンバー" },
+  { role: "全体調整", assignee: "必要に応じて都度整理" },
 ];
 
 export const abTestPolicy = [
@@ -202,15 +197,4 @@ export const crmMeasures = [
   { measure: "ウェビナー", purpose: "採用広報・SNS採用の考え方をまとめて伝える" },
   { measure: "LINEコミュニティ", purpose: "継続的にSNS採用の情報を届ける" },
   { measure: "CRM/SFA/MA", purpose: "配信・架電・商談・受注を一元管理する" },
-];
-
-export const pendingDecisions = [
-  { item: "総獲得コスト", content: "800万円で固定して見るか、月次で変動させるか" },
-  { item: "LTV", content: "1社330万円を標準値として扱うか" },
-  { item: "目標成約数", content: "最低8社、目標10〜13社で置くか" },
-  { item: "Tier反映", content: "Excel上のどの列にTierを追加するか" },
-  { item: "配信対象", content: "Tier1〜3の対象企業をどこまで含めるか" },
-  { item: "価格調整", content: "値引き・初月無料の適用条件をどうするか" },
-  { item: "架電検証", content: "100件架電の対象と担当範囲" },
-  { item: "9月以降", content: "CRM・SFA・MAに接続する項目" },
 ];

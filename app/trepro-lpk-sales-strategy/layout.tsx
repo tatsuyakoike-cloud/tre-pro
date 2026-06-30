@@ -26,7 +26,9 @@ export default function LpkSalesStrategyLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className={`${notoSans.variable} min-h-full w-full max-w-full overflow-x-hidden`}>
+    <div
+      className={`lpk-page-shell ${notoSans.variable} min-h-full w-full max-w-full overflow-x-clip`}
+    >
       {children}
     </div>
   );
